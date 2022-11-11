@@ -33,8 +33,10 @@ cert-manager-controller-arm64                                   v1.10.0-41-g6c51
 cert-manager-controller-amd64                                   v1.10.0-41-g6c5189c916dc17   640d4e9e64f3   About an hour ago   60MB
 ```
 
-### _bin/tools/trivy image cert-manager-ctl-amd64:v1.10.0-41-g6c5189c916dc17 
+#### cert-manager-ctl-amd64:v1.10.0-41-g6c5189c916dc17
 ```shell
+_bin/tools/trivy image cert-manager-ctl-amd64:v1.10.0-41-g6c5189c916dc17
+
 2022-11-11T15:04:19.308+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T15:04:19.308+0530	INFO	Secret scanning is enabled
 2022-11-11T15:04:19.308+0530	INFO	If your scanning is slow, please try '--security-checks vuln' to disable secret scanning
@@ -49,8 +51,9 @@ cert-manager-ctl-amd64:v1.10.0-41-g6c5189c916dc17 (debian 11.5)
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ```
 
-### _bin/tools/trivy image cert-manager-acmesolver-amd64:v1.10.0-41-g6c5189c916dc17
+#### cert-manager-acmesolver-amd64:v1.10.0-41-g6c5189c916dc17
 ```shell
+_bin/tools/trivy image cert-manager-acmesolver-amd64:v1.10.0-41-g6c5189c916dc17
 2022-11-11T15:06:13.944+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T15:06:13.944+0530	INFO	Secret scanning is enabled
 2022-11-11T15:06:13.944+0530	INFO	If your scanning is slow, please try '--security-checks vuln' to disable secret scanning
@@ -65,8 +68,9 @@ cert-manager-acmesolver-amd64:v1.10.0-41-g6c5189c916dc17 (debian 11.5)
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ```
 
-### _bin/tools/trivy image cert-manager-cainjector-amd64:v1.10.0-41-g6c5189c916dc17
+#### cert-manager-cainjector-amd64:v1.10.0-41-g6c5189c916dc17
 ```shell
+_bin/tools/trivy image cert-manager-cainjector-amd64:v1.10.0-41-g6c5189c916dc17
 2022-11-11T15:07:23.633+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T15:07:23.633+0530	INFO	Secret scanning is enabled
 2022-11-11T15:07:23.633+0530	INFO	If your scanning is slow, please try '--security-checks vuln' to disable secret scanning
@@ -81,8 +85,9 @@ cert-manager-cainjector-amd64:v1.10.0-41-g6c5189c916dc17 (debian 11.5)
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ```
 
-### _bin/tools/trivy image cert-manager-webhook-amd64:v1.10.0-41-g6c5189c916dc17
+#### cert-manager-webhook-amd64:v1.10.0-41-g6c5189c916dc17
 ```shell
+_bin/tools/trivy image cert-manager-webhook-amd64:v1.10.0-41-g6c5189c916dc17
 2022-11-11T15:08:35.164+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T15:08:35.164+0530	INFO	Secret scanning is enabled
 2022-11-11T15:08:35.164+0530	INFO	If your scanning is slow, please try '--security-checks vuln' to disable secret scanning
@@ -97,8 +102,9 @@ cert-manager-webhook-amd64:v1.10.0-41-g6c5189c916dc17 (debian 11.5)
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
 ```
 
-### _bin/tools/trivy image cert-manager-controller-amd64:v1.10.0-41-g6c5189c916dc17
+#### cert-manager-controller-amd64:v1.10.0-41-g6c5189c916dc17
 ```shell
+_bin/tools/trivy image cert-manager-controller-amd64:v1.10.0-41-g6c5189c916dc17
 2022-11-11T15:09:16.093+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T15:09:16.093+0530	INFO	Secret scanning is enabled
 2022-11-11T15:09:16.093+0530	INFO	If your scanning is slow, please try '--security-checks vuln' to disable secret scanning
