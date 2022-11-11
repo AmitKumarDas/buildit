@@ -1,11 +1,22 @@
-## Date - 11/Nov/2022
-### make trivy-scan-all
+## Notes
+- These tar files were built on my Mac workstation using cert-manager's `make` targets
+- These scans were done on 11-Nov-2022
 
-- make trivy-scan-all
-- ls -ltr _bin/downloaded/tools/
-- ls -ltr _bin/tools/
+### make trivy-scan-all
+```shell
+make trivy-scan-all
+```
+
+```shell
+ls -ltr _bin/downloaded/tools/
+```
+
+```shell
+ls -ltr _bin/tools/
+```
 
 ### Scan cert-manager-controller-linux-amd64.tar
+```shell
 _bin/tools/trivy image --input _bin/containers/cert-manager-controller-linux-amd64.tar
 2022-11-11T14:44:10.527+0530	INFO	Vulnerability scanning is enabled
 2022-11-11T14:44:10.527+0530	INFO	Secret scanning is enabled
@@ -19,6 +30,7 @@ _bin/tools/trivy image --input _bin/containers/cert-manager-controller-linux-amd
 _bin/containers/cert-manager-controller-linux-amd64.tar (debian 11.5)
 
 Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+```
 
 ### Scan cert-manager-acmesolver-linux-amd64.tar
 ```shell
