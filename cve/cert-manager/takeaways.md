@@ -1,4 +1,4 @@
-## Takeaways
+## From cert-manager
 ### KIND & `--unsafe-no-fsync`
 - The `--unsafe-no-fsync` decreases the load on the pod's filesystem
 - Which in turn decreases the end-to-end tests duration
@@ -27,4 +27,3 @@
 - _bin/tools/trivy image --input _bin/containers/cert-manager-webhook-linux-amd64.tar --format json --exit-code 1
 - _bin/tools/trivy image --input _bin/containers/cert-manager-cainjector-linux-amd64.tar --format json --exit-code 1
 - _bin/tools/trivy image --input _bin/containers/cert-manager-ctl-linux-amd64.tar --format json --exit-code 1
-- 
