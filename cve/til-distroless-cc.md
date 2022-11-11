@@ -1,3 +1,4 @@
+### From https://iximiuz.com/en/posts/containers-distroless-images/
 
 - It's a three-layered image (based on distroless/base)
 - The new layer is just ~2MB big

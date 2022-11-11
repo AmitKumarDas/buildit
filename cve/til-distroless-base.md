@@ -1,5 +1,4 @@
-
-## https://iximiuz.com/en/posts/containers-distroless-images/
+### https://iximiuz.com/en/posts/containers-distroless-images/
 
 - It's 10 times bigger than distroless/static (but still just ~20MB)
 - It has two layers (and the first layer is `distroless/static`)

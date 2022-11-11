@@ -1,4 +1,4 @@
-## https://iximiuz.com/en/posts/containers-distroless-images/
+### https://iximiuz.com/en/posts/containers-distroless-images/
 
 - The image is Debian-based 
 - So, there is a distro in the distroless image, but it's stripped down
