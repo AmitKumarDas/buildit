@@ -1,5 +1,6 @@
 ## Notes
 - These tar files were built on my Mac workstation using cert-manager's `make` targets
+  - refer: ./build-on-mac.md
 - These scans were done on 11-Nov-2022
 
 ### make trivy-scan-all
