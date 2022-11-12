@@ -9,3 +9,7 @@
 - Last but not least, the licenses seem to be preserved
 - No packages, no package manager, not even a trace of libc!
 - For Go program with CGO disabled
+
+### Notes
+- Constructing a container image without the Linux distro’s packaging tools is referred to as distroless
+- refer - https://www.redhat.com/en/blog/introduction-ubi-micro
