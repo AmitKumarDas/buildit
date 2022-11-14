@@ -25,17 +25,25 @@
 
 ### Baby Steps -> Ask -> All Seem Quirky
 
-#### if let Ok(some_list) = something
+#### Let's start with `if let Ok(some_list) = something`
 ```rust
 let addr = req.as_str();
 let addr = (addr, 0).to_socket_addrs(); // Is this tuple 😎 // Gives us SocketAddr
 
+// This is very quirky for me 🤨
 if let Ok(addresses) = addr { // Should the LHS & RHS reverse 😎
     for a in addresses {
         if a.ip().eq(&Ipv4Addr::new(127, 0, 0, 1)) { // & and new together 😎 i.e. &Self
             return Box::pin(async { Err(io::Error::from(ErrorKind::Other)) }); // So loong 😎
         }
     }
+}
+```
+
+#### Why should trait be a pub(crate)
+```rust
+pub(crate) trait IsLocalhost {
+    fn is_localhost(&self) -> bool;
 }
 ```
 
@@ -60,7 +68,7 @@ impl IsLocalhost for IpAddr { // Implement trait for the enum
     fn is_localhost(&self) -> bool {
         match self {
             IpAddr::V4(ref a) => a.is_localhost(), // Why => 😎 Is it anonymous function impl
-            IpAddr::V6(ref a) => a.is_localhost(), // ref 🥸 Is it destructuring?
+            IpAddr::V6(ref a) => a.is_localhost(), // Why ref 🥸 Is it destructuring?
         }
     }
 }
@@ -68,11 +76,44 @@ impl IsLocalhost for IpAddr { // Implement trait for the enum
 
 #### Impl at another struct from lib
 ```rust
+// Note that SocketAddr is the result of (addr, 0).to_socket_addrs();
 // Should we implement these everywhere
 // Feels like we are adding syntactic sugar everywhere 🤔
 impl IsLocalhost for SocketAddr {
     fn is_localhost(&self) -> bool {
         self.ip().is_localhost()
     }
+}
+```
+
+#### (addr, 0).to_socket_addrs(); returns `IntoIter<SocketAddr>`
+```rust
+// This is Turtles All The Way Down 😰
+// Need to have another trait
+// All for DevEx
+```
+```rust
+pub(crate) trait HasLocalhost { // Has vs Is :: List vs Single Item 🤔
+    fn has_localhost(&mut self) -> bool;
+}
+```
+```rust
+// In Rust they say IntoIter which is a long form of:
+// - Conversion To Iter type
+impl HasLocalhost for IntoIter<SocketAddr> {
+    fn has_localhost(&mut self) -> bool {
+        // Why self.any 🧐
+        self.any(|el| el.is_localhost()) // .any since self is a List?
+    }
+}
+```
+
+### Welcome to Teens
+```rust
+let addr = req.as_str();
+let addr = (addr, 0).to_socket_addrs();
+
+if let Ok(true) = addr.map(|mut el| el.has_localhost()) {
+    return Box::pin(async { Err(io::Error::from(ErrorKind::Other)) });
 }
 ```
