@@ -2,10 +2,11 @@
 # - INSTALL: https://github.com/rhysd/actionlint/blob/main/docs/install.md
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
 name: "k8s-sidecar-img-scan-custom"
-on:
-  workflow_run:
-    workflows: [k8s-sidecar-img-scan]
-    types: [completed]
+on: workflow_dispatch
+#on:
+#  workflow_run:
+#    workflows: [k8s-sidecar-img-scan]
+#    types: [completed]
 jobs:
   custom:
     runs-on: ubuntu-latest
