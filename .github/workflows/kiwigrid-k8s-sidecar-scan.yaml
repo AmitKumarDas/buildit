@@ -1,0 +1,21 @@
+name: "Build Image With Upstream Dockerfile & Scan"
+#on:
+#  - pull_request
+#  - workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Upstream
+        uses: actions/checkout@v3
+        with:
+          - repository: kiwigrid/k8s-sidecar
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: buildit/kiwigrid-k8s-sidecar:upstream
