@@ -1,7 +1,5 @@
 name: "Build Image With Upstream Dockerfile & Scan"
-#on:
-#  - pull_request
-#  - workflow_dispatch
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
