@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./.github/k8s-sidecar/Dockerfile
+          file: ../.github/k8s-sidecar/Dockerfile
           push: false
           outputs: type=docker,dest=kiwigrid-k8s-sidecar.tar
           tags: kiwigrid-k8s-sidecar:scanning
