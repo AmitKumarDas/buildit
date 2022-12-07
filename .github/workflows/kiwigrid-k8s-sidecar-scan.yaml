@@ -1,22 +1,27 @@
 # Lint:
 # - INSTALL: https://github.com/rhysd/actionlint/blob/main/docs/install.md
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan.yaml
-name: "upstream: kiwigrid/k8s-sidecar img scan"
+name: "kiwigrid/k8s-sidecar img scan"
 on: workflow_dispatch
 jobs:
-  build:
+  upstream:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Upstream
+      - name: Checkout Source Code
         uses: actions/checkout@v3
         with:
           repository: kiwigrid/k8s-sidecar
-      - name: Set up Docker Buildx
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Build
+      - name: Build Image From Dockerfile
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile
           push: false
           tags: buildit/kiwigrid-k8s-sidecar:upstream
+      - name: Run Trivy Vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: buildit/kiwigrid-k8s-sidecar:upstream
+          exit-code: '1'
