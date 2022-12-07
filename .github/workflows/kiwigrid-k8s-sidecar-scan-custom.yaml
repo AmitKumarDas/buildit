@@ -3,34 +3,25 @@
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
 name: "k8s-sidecar-img-scan-custom"
 on: workflow_dispatch
-#on:
-#  workflow_run:
-#    workflows: [k8s-sidecar-img-scan]
-#    types: [completed]
 jobs:
   custom:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source Code
+      - name: Checkout k8s-sidecar Repo
         uses: actions/checkout@v3
         with:
           repository: kiwigrid/k8s-sidecar
+      - name: Nested Checkout of buildit Repo
+        uses: actions/checkout@v3
+        with:
+          path: .buildit-actions
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Check Contents
-        run: |
-          pwd
-          ls -ltra
-          cd ..
-          pwd
-          ls -ltra
-#        working-directory: .github/workflows/k8s-sidecar
-#        run: cp Dockerfile /github/workspace/Dockerfile
       - name: Build Docker Image As Tar File
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: /github/workspace/Dockerfile
+          file: ./.buildit-actions/.github/k8s-sidecar/Dockerfile
           push: false
           outputs: type=docker,dest=kiwigrid-k8s-sidecar.tar
           tags: kiwigrid-k8s-sidecar:scanning
