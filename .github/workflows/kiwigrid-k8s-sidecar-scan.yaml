@@ -1,7 +1,7 @@
 # Lint:
 # - INSTALL: https://github.com/rhysd/actionlint/blob/main/docs/install.md
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan.yaml
-name: "kiwigrid/k8s-sidecar img scan"
+name: "k8s-sidecar img scan"
 on: workflow_dispatch
 jobs:
   upstream:
