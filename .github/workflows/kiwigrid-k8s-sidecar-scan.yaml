@@ -11,18 +11,22 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: kiwigrid/k8s-sidecar
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Build Docker Image As Tar File
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          outputs: type=docker,dest=/tmp/kiwigrid-k8s-sidecar.tar
-          tags: buildit/kiwigrid-k8s-sidecar:scanning
+#      - name: Setup Docker Buildx
+#        uses: docker/setup-buildx-action@v2
+#      - name: Build Docker Image As Tar File
+#        uses: docker/build-push-action@v3
+#        with:
+#          context: .
+#          file: ./Dockerfile
+#          push: false
+#          outputs: type=docker,dest=/tmp/kiwigrid-k8s-sidecar.tar
+#          tags: kiwigrid-k8s-sidecar:scanning
+      - name: Build Image Tar From Dockerfile
+        run: |
+          docker build -t kiwigrid-k8s-sidecar:scanning .
+          docker save kiwigrid-k8s-sidecar:scanning | gzip -c > /tmp/kiwigrid-k8s-sidecar.tar.gz
       - name: Run Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          input: /tmp/kiwigrid-k8s-sidecar.tar
+          input: /tmp/kiwigrid-k8s-sidecar.tar.gz
           exit-code: '1'
