@@ -24,9 +24,9 @@ jobs:
       - name: Build Image Tar From Dockerfile
         run: |
           docker build -t kiwigrid-k8s-sidecar:scanning .
-          docker save kiwigrid-k8s-sidecar:scanning | gzip -c > /tmp/kiwigrid-k8s-sidecar.tar.gz
+          docker save -o kiwigrid-k8s-sidecar.tar kiwigrid-k8s-sidecar:scanning
       - name: Run Trivy Vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          input: /tmp/kiwigrid-k8s-sidecar.tar.gz
+          input: /github/workspace/kiwigrid-k8s-sidecar.tar
           exit-code: '1'
