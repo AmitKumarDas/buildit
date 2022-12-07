@@ -1,3 +1,6 @@
 tkg-*
 TKG*
 TODO.md
+result/
+zig-cache/
+zig-out/
