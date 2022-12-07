@@ -18,7 +18,7 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Fetch Custom Dockerfile
-        working-directory: ./.github/workflows/k8s-sidecar
+        working-directory: .github/workflows/k8s-sidecar
         run: cp Dockerfile /github/workspace/Dockerfile
       - name: Build Docker Image As Tar File
         uses: docker/build-push-action@v3
