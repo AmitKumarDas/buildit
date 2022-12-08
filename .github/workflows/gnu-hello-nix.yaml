@@ -1,0 +1,18 @@
+# Lint:
+# - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
+name: "gnu-hello-nix"
+on: workflow_dispatch
+jobs:
+  nix-build-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout This Repo
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v18
+      - name: Build GNU Hello Flake
+        run: nix build ./.github/gnu-hello-nix
+      - name: Verify GNU Hello Flake
+        run: nix flake check ./.github/gnu-hello-nix
+      - name: Run GNU Hello
+        run: ./result/bin/hello
