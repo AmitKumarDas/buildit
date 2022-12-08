@@ -4,7 +4,7 @@
 name: "k8s-sidecar-img-upstream"
 on: workflow_dispatch
 jobs:
-  upstream:
+  docker-img-upstream:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code

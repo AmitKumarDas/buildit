@@ -4,7 +4,7 @@
 name: "k8s-sidecar-img-custom"
 on: workflow_dispatch
 jobs:
-  custom:
+  docker-img-custom:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout k8s-sidecar Repo
