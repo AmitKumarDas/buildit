@@ -1,7 +1,7 @@
 # Lint:
 # - INSTALL: https://github.com/rhysd/actionlint/blob/main/docs/install.md
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
-name: "k8s-sidecar-img-scan-custom"
+name: "k8s-sidecar-img-custom"
 on: workflow_dispatch
 jobs:
   custom:
@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: kiwigrid/k8s-sidecar
-      - name: Nested Checkout of This Repo
+      - name: Checkout This Repo Within k8s-sidecar
         uses: actions/checkout@v3
         with:
           path: .buildit-actions
