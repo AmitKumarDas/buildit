@@ -1,0 +1,78 @@
+# Lint:
+# - actionlint .github/workflows/<this-file-name>.yaml
+#
+# References:
+# - https://shivjm.blog/perfect-docker-images-for-rust-with-nix/
+# - https://johns.codes/blog/rust-enviorment-and-docker-build-with-nix-flakes#make-a-docker-image
+# - https://nixos.org/guides/nix-pills/automatic-runtime-dependencies.html
+# - https://stackoverflow.com/questions/15350780/how-to-check-which-compiler-was-used-to-build-python
+# - https://serokell.io/blog/practical-nix-flakes
+# - https://blog.oddbit.com/post/2015-02-05-creating-minimal-docker-images/
+#
+# Notes:
+# - The path to the appropriate runtime loader is stored in the ELF binary in the .interp section, which can be inspected using the 'objdump' tool
+
+name: "python-nix-img-basic"
+on: workflow_dispatch # triggered on demand from UI
+jobs:
+  python-nix-img:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout This Repo
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v18
+      - name: Build Python Base Image
+        run: |
+          cd ./.github/python-nix-img-basic
+          nix build .#python-env .#python-img
+      - name: Display Nix Flake Lockfile
+        run: cat ./.github/python-nix-img-basic/flake.lock
+      - name: List All Builds Results
+        run: ls -ltr ./.github/python-nix-img-basic/
+      - name: List Build & Runtime Dependencies Of The Binary Result
+        run: |
+          cd ./.github/python-nix-img-basic/
+          nix-store -q --references result-1
+      - name: List Runtime Dependencies Of The Binary Result
+        run: |
+          cd ./.github/python-nix-img-basic/
+          ldd result-1/bin/python
+      - name: Display Dynamic Runtime Loader Of The Binary Result
+        run: |
+          cd ./.github/python-nix-img-basic/
+          objdump -s -j .interp result-1/bin/python
+      - name: Load Image Result To Docker
+        run: |
+          image=$((docker load < ./.github/python-nix-img-basic/result) | sed -n '$s/^Loaded image: //p')
+          docker image tag "$image" python-nix:testing
+          docker images
+      - name: Display Python Version From Binary Result
+        run: |
+          cd ./.github/python-nix-img-basic/
+          result-1/bin/python -VV
+      - name: Display Python Version From Image Result
+        run: docker run -i --rm python-nix:testing python -VV
+      - name: Run Grype Vulnerability Scanner
+        uses: anchore/scan-action@v3
+        with:
+          image: python-nix:testing
+          severity-cutoff: low
+          output-format: table
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: python-nix:testing
+          exit-code: '1'
+      - name: Run Snyk Vulnerability Scanner
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: python-nix:testing
+      - name: Install Dive
+        run: |
+          wget https://github.com/wagoodman/dive/releases/download/v0.10.0/dive_0.10.0_linux_amd64.deb
+          sudo apt install ./dive_0.10.0_linux_amd64.deb
+      - name: Analyze Image Efficiency
+        run: dive python-nix:testing
