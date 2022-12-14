@@ -1,8 +1,8 @@
 # Lint:
 # - INSTALL: https://github.com/rhysd/actionlint/blob/main/docs/install.md
-# - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
+# - USE: actionlint .github/workflows/<this-file-name>.yaml
 name: "k8s-sidecar-img-custom"
-on: workflow_dispatch
+on: workflow_dispatch # triggered on demand from UI
 jobs:
   docker-img-custom:
     runs-on: ubuntu-latest

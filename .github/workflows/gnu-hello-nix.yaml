@@ -1,7 +1,7 @@
 # Lint:
 # - USE: actionlint .github/workflows/kiwigrid-k8s-sidecar-scan-custom.yaml
 name: "gnu-hello-nix"
-on: workflow_dispatch
+on: workflow_dispatch # triggered on demand from UI
 jobs:
   nix-build-flake:
     runs-on: ubuntu-latest
