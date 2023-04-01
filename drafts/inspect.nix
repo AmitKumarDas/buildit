@@ -1,4 +1,5 @@
 # refer: https://scrive.github.io/nix-workshop/04-derivations/05-standard-derivation.html
+# run: nix-build /nix/store/vdyp9cxs0li87app03vm8zbxmq0lhw5l-inspect.drv
 
 nix-repl> nixpkgs.stdenv.mkDerivation {
             name = "inspect";
