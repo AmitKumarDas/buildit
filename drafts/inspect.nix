@@ -1,3 +1,5 @@
+# refer: https://scrive.github.io/nix-workshop/04-derivations/05-standard-derivation.html
+
 nix-repl> nixpkgs.stdenv.mkDerivation {
             name = "inspect";
             unpackPhase = "true";
