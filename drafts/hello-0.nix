@@ -1,4 +1,9 @@
 # refer: https://elatov.github.io/2022/01/building-a-nix-package/
+# run: nix-build default.nix
+# run: nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
+# run: nix show-derivation /nix/store/03y8h6wim78853illk0ylj5v0sy8r5fc-hello-2.10
+# run: tree -L 2 /nix/store/03y8h6wim78853illk0ylj5v0sy8r5fc-hello-2.10
+# 
 
 { lib
 , stdenv
