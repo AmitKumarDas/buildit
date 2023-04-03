@@ -1,3 +1,6 @@
+# refer: https://marcopolo.io/code/nix-and-small-containers/
+# run: docker build -t nginx:nix-dock --progress=plain --no-cache .
+
 # Use nix as the builder
 FROM nixos/nix:latest AS builder
 
