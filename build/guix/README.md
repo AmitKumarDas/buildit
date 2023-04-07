@@ -1,3 +1,22 @@
+#### Guix
+```yaml
+- https://elephly.net/posts/2015-06-21-getting-started-with-guix.html
+
+- If you are using a 64 bit machine, download the compressed x86_64 archive from the FTP server
+- ftp://alpha.gnu.org/gnu/guix/guix-binary-0.9.0.x86_64-linux.tar.xz
+- Download the matching cryptographic signature file
+- They all have the same name as the archive you downloaded, but end on .sig
+
+- To ensure that the tarballs are signed by release managers
+- Fetch both Ludo's and my own PGP key from PGP key servers
+  - gpg2 --recv-keys 090b11993d9aebb5 197a5888235facac
+
+- With these keys you can now check that the file you downloaded is in fact legit
+- Run following command in the same directory that holds the tarball and the signature file
+  - gpg2 --verify guix-binary-0.9.0.x86_64-linux.tar.xz.sig
+
+```
+
 #### Building Secure Supply Chain with GNU Guix
 ```yaml
 - https://arxiv.org/pdf/2206.14606v1.pdf
