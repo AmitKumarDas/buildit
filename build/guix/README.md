@@ -15,6 +15,11 @@
 - Run following command in the same directory that holds the tarball and the signature file
   - gpg2 --verify guix-binary-0.9.0.x86_64-linux.tar.xz.sig
 
+- unpack the archive as root in the root directory:
+  - cd /
+  - tar xf guix-binary-0.9.0.SYSTEM.tar.xz
+
+
 ```
 
 #### Building Secure Supply Chain with GNU Guix
