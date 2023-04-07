@@ -3,6 +3,7 @@
 - FELLOW: BLOGS: READ: LEARN: EXPERIENCES: RESEARCH:
   - https://jade.fyi/ # Read the Nix parts
   - https://arxiv.org/pdf/2206.14606v1.pdf # Building a Secure Software Supply Chain with GNU Guix
+  - https://github.com/bureado/awesome-software-supply-chain-security
   - 
 ```
 
