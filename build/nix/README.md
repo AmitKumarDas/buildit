@@ -22,6 +22,10 @@
   - It records commit hash of the tip of specified channel at time of niv init execution
   - You can update pinned commit hash to latest tip
   - Even change the channel you are pinning with niv update nixpkgs -b <branch>
+  
+- niv:
+  - sources.json: contains commit hashes and SHA-256 checksums of all Nix sources
+  - sources.nix: Nix expressions used to reference Nix derivations specified in Nix sources
 ```
 
 ```yaml
