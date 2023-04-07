@@ -7,6 +7,24 @@
 ```
 
 ```yaml
+- https://dimitrije.website/posts/2023-03-04-nix-ocaml.html
+
+- Nix packages and all their dependencies are not in your PATH, or LD_LIBRARY_PATH
+- They do not interfere with the rest of your system in any way
+
+- PINNING:
+  - Version of bash in 22.11 is pinned to 5.1-p16
+  - 21.05 had slightly more dated bash-5.1-p4
+  - nixpks-unstable currently has bleeding edge bash-5.2-p15
+
+- niv:
+  - Doesn’t care about channels
+  - It records commit hash of the tip of specified channel at time of niv init execution
+  - You can update pinned commit hash to latest tip
+  - Even change the channel you are pinning with niv update nixpkgs -b <branch>
+```
+
+```yaml
 - CONTENTS vs CONTAINER SIZE: 🔥
 - refer: https://jade.fyi/blog/optimizing-nix-docker/
 
