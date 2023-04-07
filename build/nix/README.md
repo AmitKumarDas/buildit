@@ -136,67 +136,126 @@
 - https://blog.replit.com/nix_dynamic_version # workshop # learn
   - # pname vs name # git clone # src = ./. # runCommand # mkDerivation # nativeBuildInputs
   - # fetchGit # copyPathToStore # .git folder
-  - 
+```
+
+```yaml
 - Introspecting nginx: # shared libraries # runtime dependencies
   - nix-build -A nginx '<nixpkgs>'
   - file /nix/store/6djsv964zpb426dkjz9qmb678bmr9igb-nginx-1.22.1/bin/nginx
   - objdump -p /nix/store/6djsv964zpb426dkjz9qmb678bmr9igb-nginx-1.22.1/bin/nginx | grep /nix/store # Mac
   - otool -L /nix/store/6djsv964zpb426dkjz9qmb678bmr9igb-nginx-1.22.1/bin/nginx # Mac
   - ldd /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1/bin/nginx # Linux
-  - 
+```
+
+```yaml
 - https://github.com/the-nix-way/nix-docker-examples/blob/main/go/flake.nix
   - # buildGoModule # override # super # CGO_ENABLED # GOOS # GOARCH 
   - # overlay # buildEnv # gitignoreSource # subPackages # Entrypoint # ExposedPorts
+```
+
+```yaml
 - https://github.com/the-nix-way/nix-docker-examples/blob/main/script/flake.nix
   - # entrypoint.sh # copyToRoot # buildEnv # writeScriptBin # target architecture i.e. target system
   - # readFile # substituteAll as templating 🔥 # shell # bash # container
-  - 
+```
+
+```yaml
 - CMD:
   - nix-build -A nginx '<nixpkgs>'
     - # /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1
+
   - nix path-info -Sh /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1
     - # /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1	 114.6M
-  - nix path-info -rs /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1 # size # dependencies
+
+  - nix path-info -rs /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1 
+    - # size # dependencies
+
   - nix path-info -rs /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1 | sort -rnk2
+
   - nix-store -qR /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1
-    - # show runtime dependencies # closure of the output path that contains nginx
+    - # show runtime dependencies 
+    - # closure of the output path that contains nginx
+
   - ❌ nix-store -qR $(nix-store -qd /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1)
     - # show build-time  dependencies # closure of the derivation (-qd)
+
   - ❌ nix-store -q --tree $(nix-store -qd /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1) 
     - # show build-time dependencies as a tree
-    - 
+```
+
+```yaml
 - nix why-depends /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1 /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib 
   - # dependencies # debug # troubleshoot
-  - 
-- https://github.com/nikstur/bombon # SBOM # fellow # workshop # CFP
-- https://www.nmattia.com/posts/2019-01-15-easy-peasy-nix-versions/ # folder structure
+```
+
+```yaml
+- https://github.com/nikstur/bombon 
+- # SBOM # fellow # workshop # CFP
+```
+
+```yaml
+- https://www.nmattia.com/posts/2019-01-15-easy-peasy-nix-versions/ 
+  - # folder structure
   - # auto update # version # revision
+```
+
+```yaml
 - https://www.nmattia.com/posts/2022-12-18-lockfile-trick-package-npm-project-with-nix/
-  - # CFP # fellow # build a nix derivation by parsing lockfile # workshop
+  - # CFP # FELLOW # WORKSHOP # DEEP DIVE # EXPERIMENT 🔥
+  - # Build a nix derivation by parsing lockfile
+```
+
+```yaml
 - https://www.nmattia.com/posts/2019-10-08-runtime-dependencies/
   - Give us the store paths of runtime dependencies
   - Give us the derivation attributes of all the buildtime dependencies
+
 - nix-build -A nginx '<nixpkgs>' # size
   - nix path-info -rSh /nix/store/f8w3484r4va451m2jfhw547pldxfwi5j-nginx-1.22.1
+```
+
+```yaml
 - 🔬 https://github.com/google/go-containerregistry/blob/main/cmd/crane/cmd/mutate.go
   - # entrypoint # cmd # user # working dir # crane # programmatic
+
 - 🔬 😍 https://gist.github.com/ahmetb/430baa4e8bb0b0f78abb1c34934cd0b6
-  - # go # layer # programmatic # nginx app 
-- nix-instantiate --eval --expr 'with import <nixpkgs> {}; stdenv.shell' # debug # dependencies
-- nix-instantiate --eval --expr 'with import <nixpkgs> {}; dockerTools.shadowSetup'  | jq -r . # debug # dependencies
-- src = ./.; # is not reproducible
-- import  <nixpkgs>  {} # is not reproducible
+  - # go # layer # programmatic # nginx app
+```
+
+```yaml
+- # DEBUG # DEPENDENCIES
+  - nix-instantiate --eval --expr 'with import <nixpkgs> {}; stdenv.shell'
+  - nix-instantiate --eval --expr 'with import <nixpkgs> {}; dockerTools.shadowSetup'  | jq -r .
+```
+
+```yaml
+- IS NOT REPRODUCIBLE
+  - src = ./.;
+  - import  <nixpkgs>  {}
+```
+
+```yaml
 - https://github.com/mzabani/codd/blob/master/nix/docker/codd-exe.nix 
   - # shadowSetup adds a dependency on `shadow`, which I guess pulls in glibc
   - # shadowSetup # addgroup # adduser
   - # runAsRoot # kvm # overlay # glibc
   - # rm -rf /nix/store/*-glibc-* /nix/store/*-bash-* /nix/store/*-ncurses-* # minimal
-- https://github.com/mzabani/codd/tree/master/nix/docker # kvm # no kvm # overlay # container
-- 🔬 😍 https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/docker/default.nix # workshop
+```
+
+```yaml
+- # KVM # NO KVM # OVERLAY # CONTAINER # WORKSHOP # DEEP DIVE
+- https://github.com/mzabani/codd/tree/master/nix/docker
+- 🔬 😍 https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/docker/default.nix
+```
+
+```yaml
+- # extraCommand # root # fakeRootCommands
 - https://discourse.nixos.org/t/how-to-run-chown-for-docker-image-built-with-streamlayeredimage-or-buildlayeredimage/11977 
-  - # extraCommand # root # fakeRootCommands
-- https://github.com/NixOS/nixpkgs/pull/116749 # fakeRootCommands # chown # nonroot
+- https://github.com/NixOS/nixpkgs/pull/116749
   - # symlinkJoin # postBuild # tar # pkgs.pkgsStatic.busybox # $stdenv/setup
+```
+
+```yaml
 - 🔬🔥 https://github.com/NixOS/nixpkgs/pull/122608 # fellow # research # layers # caching
 - https://github.com/NixOS/nixpkgs/issues/48462 # layers # fellow
 - https://github.com/NixOS/nixpkgs/issues/48462 # passwd # root # group # user # container
