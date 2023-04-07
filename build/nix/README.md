@@ -1,107 +1,138 @@
 #### Nix
 ```yaml
 - FELLOW: BLOGS: READ: LEARN: EXPERIENCES: RESEARCH:
-  - https://jade.fyi/
+  - https://jade.fyi/ # Read the Nix parts
   - https://arxiv.org/pdf/2206.14606v1.pdf # Building a Secure Software Supply Chain with GNU Guix
   - 
 ```
 
 ```yaml
-- contents vs container size: 🔥
-  - refer: https://jade.fyi/blog/optimizing-nix-docker/
-  - 1:
-    - Put ${pkgs.bash}/bin/bash in a build script and it will just work
-    - It will pull in the dependency as expected
-  - 2:
-    - If you put it in buildInputs or nativeBuildInputs, then it will go in the PATH and appear to build tools
-    - If the store paths end up in the outputs of the build, then they will show up as runtime dependencies
-  - TIP:
-    - Just reference things in build scripts or otherwise, they will work
-    - If in contents, they will get rsynced to the root of the output image
-    - If they are also in the closure due to references in build scripts or otherwise, then DUPLICATED
-    - Removing pkg from contents && interpolating in build scripts ~ save 50% on image size 🔥
-  - TIP:
-    - If you know some paths are not needed, they can be removed so the references are no longer there
-      - cmd: nix why-depends
-    - If buildImage the contents of the image is available at passthru.layer on the buildImage derivation
-    - After finding the bad package, it's possible to use nix why-depends to diagnose the exact cause path
-      - cmd: nix why-depends $(nix-build docker.nix -A passthru.layer) /nix/store/xxxxxxx-bad # 🔥
-  - TIP:
-    - look at the dependency tree or graph of a store path that has an unexpected subtree
-    - cmd: nix-store --query --tree ./result
-    - cmd: nix-store --query --tree ./result | dot -Tsvg -o deps.svg # look at deps.svg in an image viewer
-  - FIX: TIP:
-    - Put the offending package in disallowedReferences on your problem derivation
-    - refer : https://nixos.org/manual/nix/stable/#sec-advanced-attributes
-    - Nix throws an error on next build about references that should not be there, and where they are
-    - Remove these in a post-install script using nixpkgs.removeReferencesTo
-      - put it in nativeBuildInputs as usual; it's also in Haskell derivations by default
-- 
+- CONTENTS vs CONTAINER SIZE: 🔥
+- refer: https://jade.fyi/blog/optimizing-nix-docker/
+
+- 1:
+  - Put ${pkgs.bash}/bin/bash in a build script and it will just work
+  - It will pull in the dependency as expected
+- 2:
+  - If present in buildInputs or nativeBuildInputs, it goes in the PATH and gets known to build tools
+  - If store paths end up in the outputs of the build, then they show up as RUNTIME dependencies
+
+- TIP:
+  - Just REFERENCE things in build scripts or otherwise, they will work
+  - If in contents, they get rsynced to the root of the output image
+  - If they are also in the closure due to references in build scripts or otherwise, then DUPLICATED
+  - Removing from contents && let INTERPOLATION in build scripts ~ save 50% on image size 🔥
+- TIP:
+  - How to remove the references if I know some paths are not needed?
+  - cmd: nix why-depends
+  - If buildImage: contents of the image is available at passthru.layer on the buildImage derivation
+  - After finding the bad package, use nix why-depends to get the exact cause path
+  - cmd: nix why-depends $(nix-build docker.nix -A passthru.layer) /nix/store/xxxxxxx-bad # 🔥
+- TIP:
+  - look at the dependency tree or graph of a store path that has an unexpected subtree
+  - cmd: nix-store --query --tree ./result
+  - cmd: nix-store --query --tree ./result | dot -Tsvg -o deps.svg # look at deps.svg in an image viewer
+- FIX: TIP:
+  - Put the offending package in disallowedReferences on your problem derivation
+  - refer : https://nixos.org/manual/nix/stable/#sec-advanced-attributes
+  - Nix throws an error on next build about references that should not be there, and where they are
+  - Remove these in a post-install script using nixpkgs.removeReferencesTo
+    - put it in nativeBuildInputs as usual
+```
+
+```yaml
 - https://jade.fyi/nixcon2022/
   - # theory # thesis # fellow
   - # runtime dependencies in Nix == grep for the hash part of any inputs of a derivation
-  - 
+  
 - CFP: Talk:
   - Other systems: require explicit specification of runtime dependencies # if forget then boom
   - Nix has the opposite problem: it's easy to accidentally create runtime dependencies
   - Since any reference to the build inputs in the outputs can create one
   - Also container image with several passwd, group, timezone, cacerts, config stuff makes image bulky
-  - 
+
 - Size vs. Nix: # i.e. runtime dependencies
-  - https://jade.fyi/nixcon2022/
   - A package is mentioned in the 'buildInputs' of your derivation
   - Or store path i.e. $out is mentioned in 'buildInputs'
+
   - verify: # 1
-    - nix path-info -rsSh nixpkgs#hello
-    - # -recursively, with -sizes, and closure -Sizes, in -human readable form
+  - cmd: nix path-info -rsSh nixpkgs#hello
+  - # -recursively, with -sizes, and closure -Sizes, in -human readable form
+
   - verify: # 2
-    - nix-store --query --graph 
+  - cmd: nix-store --query --graph
+
   - verify: # 3
-    - ls -lah $(readlink result)
-    - 
+  - cmd: ls -lah $(readlink result)
+```
+
+```yaml
 - Nix && Docker:
   - https://jade.fyi/nixcon2022/
-  - ls -lah $(readlink result)
-  - https://github.com/lf-/actual-server/tree/flake # slim # minimal # container # size
-  - https://github.com/lf-/actual-server/blob/flake/flake.nix#L40-L51
-  - Issues:
-    - nixpkgs ships a version of NodeJS that does not include Python or npm, called nodejs-slim
-    - The app is there twice because of a symlink
-      - nix why-depends -a --precise
+
+- cmd: ls -lah $(readlink result)
+
+- https://github.com/lf-/actual-server/tree/flake # SLIM # MINIMAL # CONTAINER # SIZE
+- https://github.com/lf-/actual-server/blob/flake/flake.nix#L40-L51
+  
+- FIX: # NODEJS
+  - nixpkgs ships a version of NodeJS that does not include Python or npm, called nodejs-slim
+  - The app is there twice because of a symlink
+  - nix why-depends -a --precise 🔥
+
+- FIX:
   - Put the package you want to exclude in 
-    - disallowedRequisites or disallowedReferences so that Nix will fail the build if it appears again
-- 
+  - disallowedRequisites or disallowedReferences # Nix failS the build if it appears again
+```
+
+```yaml
 - nix show-derivation nixpkgs#hello # SBOM?
-- 
+```
+
+```yaml
 - https://jade.fyi/blog/nix-evaluation-blocking/
   - # evaluate # build # issues with evaluation # concurrency # parallel
-  - # import from derivation # IFD # 
-- 
+  - # import from derivation # IFD # 🤨
+```
+
+```yaml
 - https://github.com/nix-community/fenix # overlay # library # toolchains
-- 
+
 - https://blogs.vmware.com/opensource/2022/07/14/what-makes-a-build-reproducible-part-2/
   - repeatable build + rebuildable build + binary reproducible build
-- 
+```
+
+```yaml
 - CMD: nix-build -E 'with import <nixpkgs> { }; runCommand "foo" { } "echo bar > $out"'
-  - # Build a Nix Expression given on the command line
-  - # cat ./result # bar
-  - 
+- # Build a Nix Expression given on the command line 🔥
+- # cat ./result # bar
+ 
 - CMD: nix-build https://github.com/NixOS/nixpkgs/archive/master.tar.gz -A hello
-  - # Build the GNU Hello package from the LATEST REVISION of the MASTER branch of Nixpkgs
-  - 
-- https://github.com/3noch/nix-bundle-exe # experiment # container
-  - Nix derivation to bundle Mach-O (macOS) and ELF (Linux) executables into a:
-    - Relocatable Directory Structure 🎯
-  - Given a Nix package containing executables:
-    - This derivation will produce a package with those SAME executables
-    - But with all their SHARED libraries copied into a NEW directory structure 
-    - And RECONFIGURED to work without any dependency on Nix
-  - CMD: nix-build -E 'with import <nixpkgs> {}; callPackage ./. {} nginx'
-    - ls /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1
-    - ls -ltra /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1/lib/ 
-      - # .so libraries # run / shared dependencies # symlinks
-    - du -h /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1 # size
-  - 
+- # Build GNU Hello from LATEST REVISION of the MASTER branch of Nixpkgs 🔥
+```
+
+```yaml
+- https://github.com/3noch/nix-bundle-exe 
+- # EXPERIMENT # CONTAINER # LITERATE # DEEP DIVE # HANDS-ON
+
+- Nix derivation to bundle Mach-O (macOS) and ELF (Linux) executables into a:
+  - Relocatable Directory Structure 🔥
+
+- Given a Nix package containing executables:
+  - This derivation will produce a package with those SAME executables
+  - But with all their SHARED libraries copied into a NEW directory structure 
+  - And RECONFIGURED to work without any dependency on Nix
+
+- CMD: nix-build -E 'with import <nixpkgs> {}; callPackage ./. {} nginx'
+- verify:
+  - ls /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1
+  - ls -ltra /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1/lib/ 
+    - # contains .so libraries # run / shared dependencies 
+    - # contains symlinks
+  - du -h /nix/store/7ghlz954brx6pf9ag2y92cs02jsn1qrp-bundle-nginx-1.22.1 # SIZE
+```
+
+```yaml
 - https://blog.replit.com/nix_dynamic_version # workshop # learn
   - # pname vs name # git clone # src = ./. # runCommand # mkDerivation # nativeBuildInputs
   - # fetchGit # copyPathToStore # .git folder
