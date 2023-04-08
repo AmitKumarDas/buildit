@@ -18,7 +18,13 @@
 - unpack the archive as root in the root directory:
   - cd /
   - tar xf guix-binary-0.9.0.SYSTEM.tar.xz
+  - This creates:
+    - a pre-populated store at /gnu/store
+    - the local state directory /var/guix
+    - a Guix profile for the root user at /root/.guix-profile (contains guix command line tools & the daemon)
 
+- Create restricted user accounts (used by the daemon) to build software in a controlled environment
+- You may not need ten, but it’s a good default
 
 ```
 
