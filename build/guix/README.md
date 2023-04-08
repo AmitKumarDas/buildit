@@ -15,7 +15,7 @@
 - Run following command in the same directory that holds the tarball and the signature file
   - gpg2 --verify guix-binary-0.9.0.x86_64-linux.tar.xz.sig
 
-- unpack the archive as root in the root directory:
+- Unpack the archive as root in the root directory:
   - cd /
   - tar xf guix-binary-0.9.0.SYSTEM.tar.xz
   - This creates:
@@ -24,8 +24,21 @@
     - a Guix profile for the root user at /root/.guix-profile (contains guix command line tools & the daemon)
 
 - Create restricted user accounts (used by the daemon) to build software in a controlled environment
-- You may not need ten, but it’s a good default
 
+- Run the daemon and tell it about the guix-builder group
+  - # /root/.guix-profile/bin/guix-daemon --build-users-group=guix-builder
+
+- Note: Note that this is a server process, so it will never return
+  - Turn this into a system service and keep it running in the background at all times
+  - The archive unpacks a Systemd service file 
+  - e.g. /gnu/store/632msbms2yald...-guix-0.9.0/lib/systemd/system/guix-daemon.service
+  - Just copy to /etc/systemd/system/; run the following commands to start and enable the service
+    - # systemctl daemon-reload
+    - # systemctl enable guix-daemon
+    - # systemctl start guix-daemon
+
+- Guix build farm hydra.gnu.org
+  - Is by default authorised as a source for so-called binary substitutes
 ```
 
 #### Building Secure Supply Chain with GNU Guix
