@@ -3,7 +3,7 @@
 - https://jade.fyi/blog/optimizing-nix-docker/
 ```
 
-- A sample nix file
+- start: A sample nix file
 ```nix
 {
   nixpkgs ? import <nixpkgs> { }
@@ -44,7 +44,9 @@
   }
 ```
 
-- `nix build -f default.nix`
+```sh
+nix build -f default.nix
+```
 
 ```sh
 trace: warning: in docker image literate: The contents parameter is deprecated. 
@@ -53,10 +55,13 @@ trace: warning: in docker image literate: The contents parameter is deprecated.
   Use copyToRoot = buildEnv { ... }; or similar if you intend to add packages to /bin
 ```
 
-- `docker load < result `
-- `docker images`
+```sh
+docker load < result
+docker images
+```
 
 ```sh
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
 literate     0         3ce442e9c9b8   53 years ago   47.1MB
 ```
+
