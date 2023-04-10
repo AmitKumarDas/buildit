@@ -1,10 +1,32 @@
-#### Nix
+#### Nix Research
 ```yaml
 - FELLOW: BLOGS: READ: LEARN: EXPERIENCES: RESEARCH:
   - https://jade.fyi/ # Read the Nix parts
   - https://arxiv.org/pdf/2206.14606v1.pdf # Building a Secure Software Supply Chain with GNU Guix
   - https://github.com/bureado/awesome-software-supply-chain-security
   - 
+```
+
+#### Getting Started
+```yaml
+- :l <nixpkgs> 
+  - # load nixpkgs # run this after nix repl # do it everytime you nix repl
+
+- <nixpkgs> 
+  - # its a path # ls <PATH> to view what's inside # same as the github contents of NixOS/nixpkgs
+  - # alternativey: 1/ git checkout NixOS/nixpkgs 2/ nix-repl 3/ :l .
+
+- diskutil apfs list # check Nix volumes
+
+- /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # Nix Daemon? # Nix AWARE
+  - To get started using Nix, 
+  - run `. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
+
+- /etc/nix/nix.conf # Nix Configuration
+- Create APFS volume `Nix Store` for Nix on `disk3` # add it to `/etc/fstab` mounting on `/nix`
+
+- ls -lah /nix/store # check your nix store # GBs of data?
+- nix-collect-garbage
 ```
 
 ```yaml
@@ -453,16 +475,7 @@
   - # nix spawns QEMU in user mode; runs the binary; gets the result in stdout # binary format registration
   - # binfmt.emulatedSystems
   - # you dont have to configure QEMU or WINE
-- :l <nixpkgs> # load nixpkgs # run this after nix repl # do it everytime you nix repl
-- <nixpkgs> # its a path # ls <PATH> to view what's inside # same as the github contents of NixOS/nixpkgs
-  - alternativey: 1/ git checkout NixOS/nixpkgs 2/ nix-repl 3/ :l .
-- diskutil apfs list # check Nix volumes
-- /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # Nix Daemon? # Nix AWARE
-- To get started using Nix, open a new shell or run `. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
-- /etc/nix/nix.conf # Nix Configuration
-- Create APFS volume `Nix Store` for Nix on `disk3` # add it to `/etc/fstab` mounting on `/nix`
-- ls -lah /nix/store # check your nix store # GBs of data?
-- nix-collect-garbage # instead of gc / garbage collect its reverse # is not within the nix repl
+
 - https://github.com/nix-community/naersk # build rust crates in Nix
 - https://scvalex.net/posts/68/ # build containers with Nix & Gitlab CI
 - https://www.youtube.com/watch?app=desktop&v=6Le0IbPRzOE # What Nix Can Do # Docker Can't
