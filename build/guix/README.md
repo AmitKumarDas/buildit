@@ -8,6 +8,7 @@
 ```yaml
 - https://www.youtube.com/watch?v=LnU8SYakZQQ 
   - # FOSDEM 2020: Guix: Unifying provisioning, deployment, and package management in the age of containers
+  - # Why # Basic Commands # Good CLI / UX # Familiar git like commands # 
 ```
 
 #### Guix - Getting Started
