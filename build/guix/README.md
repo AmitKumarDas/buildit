@@ -1,20 +1,25 @@
-#### References
+#### Researches
 ```yaml
 - https://indico.in2p3.fr/event/18626/contributions/69197/attachments/52369/67591/Courtes_20190305.pdf
   - # guix & containers
-- https://www.youtube.com/watch?v=LnU8SYakZQQ 
-  - # Guix: Unifying provisioning, deployment, and package management in the age of containers
 ```
 
-#### Guix
+#### Videos
+```yaml
+- https://www.youtube.com/watch?v=LnU8SYakZQQ 
+  - # FOSDEM 2020: Guix: Unifying provisioning, deployment, and package management in the age of containers
+```
+
+#### Guix - Getting Started
 ```yaml
 - https://elephly.net/posts/2015-06-21-getting-started-with-guix.html
 
 - If you are using a 64 bit machine, download the compressed x86_64 archive from the FTP server
 - ftp://alpha.gnu.org/gnu/guix/guix-binary-0.9.0.x86_64-linux.tar.xz
 - Download the matching cryptographic signature file
-- They all have the same name as the archive you downloaded, but end on .sig
+```
 
+```yaml
 - To ensure that the tarballs are signed by release managers
 - Fetch both Ludo's and my own PGP key from PGP key servers
   - gpg2 --recv-keys 090b11993d9aebb5 197a5888235facac
@@ -22,19 +27,24 @@
 - With these keys you can now check that the file you downloaded is in fact legit
 - Run following command in the same directory that holds the tarball and the signature file
   - gpg2 --verify guix-binary-0.9.0.x86_64-linux.tar.xz.sig
+```
 
+```yaml
 - Unpack the archive as root in the root directory:
   - cd /
   - tar xf guix-binary-0.9.0.SYSTEM.tar.xz
   - This creates:
-    - a pre-populated store at /gnu/store
-    - the local state directory /var/guix
-    - a Guix profile for the root user at /root/.guix-profile (contains guix command line tools & the daemon)
+    - a pre-populated store at /gnu/store 🤨
+    - the local state directory /var/guix 🤨
+    - a Guix profile for the root user at /root/.guix-profile 🧐
+      - (contains guix command line tools & the daemon)
+```
 
+```yaml
 - Create restricted user accounts (used by the daemon) to build software in a controlled environment
 
-- Run the daemon and tell it about the guix-builder group
-  - # /root/.guix-profile/bin/guix-daemon --build-users-group=guix-builder
+- RUN the DAEMON and tell it about the guix-builder group 🔥
+  - /root/.guix-profile/bin/guix-daemon --build-users-group=guix-builder
 
 - Note: Note that this is a server process, so it will never return
   - Turn this into a system service and keep it running in the background at all times
