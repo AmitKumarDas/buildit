@@ -1,6 +1,9 @@
-#### Refer
+#### References
 ```yaml
 - https://indico.in2p3.fr/event/18626/contributions/69197/attachments/52369/67591/Courtes_20190305.pdf
+  - # guix & containers
+- https://www.youtube.com/watch?v=LnU8SYakZQQ 
+  - # Guix: Unifying provisioning, deployment, and package management in the age of containers
 ```
 
 #### Guix
