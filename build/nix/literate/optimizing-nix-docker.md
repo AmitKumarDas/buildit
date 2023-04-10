@@ -66,7 +66,7 @@ REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
 literate     0         3ce442e9c9b8   53 years ago   47.1MB
 ```
 
-#### Detour: Learn nix build that does not output a container image
+#### Detour: How to nix build minus container image
 ```yaml
 - refer: https://github.com/teamniteo/nix-docker-base
 ```
