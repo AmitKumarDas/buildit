@@ -1,9 +1,10 @@
-- Refer
+### Motivation
 ```yaml
-- https://jade.fyi/blog/optimizing-nix-docker/
+- why: Use above link to build minimal container image
+- refer: https://jade.fyi/blog/optimizing-nix-docker/
 ```
 
-- start: A sample nix file
+#### A sample nix file & building an image of it
 ```nix
 {
   nixpkgs ? import <nixpkgs> { }
@@ -64,4 +65,10 @@ docker images
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
 literate     0         3ce442e9c9b8   53 years ago   47.1MB
 ```
+
+#### Detour: Learn nix build that does not output a container image
+```yaml
+- refer: https://github.com/teamniteo/nix-docker-base
+```
+
 
