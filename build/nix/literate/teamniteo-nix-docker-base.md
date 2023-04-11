@@ -121,3 +121,31 @@ docker build . -t tryme
 ------
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
+
+```json
+https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
+```
+
+```Dockerfile
+FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
+
+# Import the project source
+COPY default.nix default.nix
+
+RUN \
+  # Install the program to propagate to the final image
+  nix-env -f default.nix -iA myEnv --option filter-syscalls false \
+  # Exports a root directory structure containing all dependencies
+  # installed with nix-env under /run/profile
+  && export-profile /dist
+
+# Second Docker stage, we start with a completely empty image
+FROM scratch
+
+# Copy the /dist root folder from the previous stage into this one
+COPY --from=build /dist /
+
+# Set PATH so Nix binaries can be found
+ENV PATH=/run/profile/bin
+ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+```
