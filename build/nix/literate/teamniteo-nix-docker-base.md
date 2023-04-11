@@ -283,4 +283,5 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```yaml
 - https://github.com/teamniteo/nix-docker-base
 - 🔥 🧨 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
+- 💎 https://github.com/teamniteo/nix-docker-base/tree/master/static-root-files/etc
 ```
