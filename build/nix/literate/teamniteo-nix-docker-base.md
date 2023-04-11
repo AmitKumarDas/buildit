@@ -68,6 +68,23 @@ nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/cpp4
 └───/nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
 ```
 
+```sh
+du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+192K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin/curl
+196K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin
+60K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl.1.gz
+4.0K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl-config.1.gz
+68K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1
+72K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man
+76K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share
+476K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs/ca-bundle.crt
+480K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs
+484K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl
+488K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc
+764K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+764K	total
+```
+
 #### Step: Multi Stage Dockerfile to create the image
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
