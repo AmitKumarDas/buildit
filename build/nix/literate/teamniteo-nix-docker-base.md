@@ -278,6 +278,8 @@ drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
+#### TODO
+- https://nixos.wiki/wiki/Nix_package_manager
 
 ##### Thank You
 ```yaml
