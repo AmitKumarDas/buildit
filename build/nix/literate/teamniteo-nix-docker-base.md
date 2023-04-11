@@ -122,10 +122,12 @@ docker build . -t tryme
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
+#### Fix
 ```json
 https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
 ```
 
+#### Updated Dockerfile
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
