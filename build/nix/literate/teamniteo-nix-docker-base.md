@@ -1,10 +1,10 @@
 
-#### Motivation
+#### 🍭 Motivation
 - Building Container Images Should Be Simple
 - Looks Similar to the Packaging Work of Distros
 - Nix / Guix 🆚 Dockerfile & Traditional Distros
 
-#### Start with a Nix file (default.nix)
+#### 🏎️ Start with a Nix file (default.nix)
 ```nix
 let
   pkgs = import <nixpkgs> {};
@@ -23,7 +23,7 @@ in {
 nix build -f default.nix
 ```
 
-#### Learn Nix By Introspecting
+#### 🥸 Learn Nix By Introspecting
 ```json
 nix build -f default.nix --print-out-paths
 ```
@@ -88,7 +88,7 @@ du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
 764K	total
 ```
 
-#### Marrying Nix with Dockerfile
+#### 💃 🕺 Marrying Nix with Dockerfile
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
@@ -158,12 +158,12 @@ docker build . -t tryme
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
-#### Search for the Fix
+#### 🚗 Search for the Fix
 ```json
 https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
 ```
 
-#### Apply the Fix
+#### ✅ Apply the Fix
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -189,12 +189,21 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
 ```sh
+...
+Linking /dist/run/profile to /nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment
+Linking from /dist/etc to /nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment/etc
+Copying all the profiles Nix dependencies to /dist
+Finished Nix profile export to /dist
+...
+```
+
+```sh
 docker images
 REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
 
-#### Whats in the Image?
+#### 📦 Whats in the Image?
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -224,7 +233,7 @@ ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
-#### Whats inside /dist (which is inside image)?
+#### 🧰 Whats inside /dist (which is inside image)?
 ```sh
 Step 4/8 : RUN   ls -ltra /dist
  ---> Running in e4def598a0d6
