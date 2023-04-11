@@ -191,4 +191,44 @@ REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
 
+#### Instropect Image Contents
+```Dockerfile
+FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
+# Import the project source
+COPY default.nix default.nix
+
+RUN \
+  # Install the program to propagate to the final image
+  nix-env -f default.nix -iA myEnv \
+  # Exports a root directory structure containing all dependencies
+  # installed with nix-env under /run/profile
+  && export-profile /dist
+
+
+RUN \
+  # 🔥 This will provide us the size wrt each file & folder inside /dist
+  du -hacL /dist
+
+# Second Docker stage, we start with a completely empty image
+FROM scratch
+
+# Copy the /dist root folder from the previous stage into this one
+COPY --from=build /dist /
+
+# Set PATH so Nix binaries can be found
+ENV PATH=/run/profile/bin
+ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+```
+
+#### Inside dist
+```sh
+Step 4/8 : RUN   ls -ltra /dist
+ ---> Running in e4def598a0d6
+total 20
+drwxr-xr-x 3 root root 4096 Apr 11 11:55 run
+drwxr-xr-x 3 root root 4096 Apr 11 11:55 nix
+dr-xr-xr-x 3 root root 4096 Apr 11 11:55 etc
+drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
+drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
+```
