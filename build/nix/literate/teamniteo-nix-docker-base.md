@@ -233,6 +233,39 @@ ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
+```sh
+Step 4/8 : RUN   du -hacL /dist
+ ---> Running in 3540bdeccf00
+192K	/dist/run/profile/bin/curl
+196K	/dist/run/profile/bin
+56K	/dist/run/profile/share/man/man1/curl.1.gz
+4.0K	/dist/run/profile/share/man/man1/curl-config.1.gz
+64K	/dist/run/profile/share/man/man1
+68K	/dist/run/profile/share/man
+72K	/dist/run/profile/share
+4.0K	/dist/run/profile/manifest.nix
+476K	/dist/run/profile/etc/ssl/certs/ca-bundle.crt
+480K	/dist/run/profile/etc/ssl/certs
+484K	/dist/run/profile/etc/ssl
+488K	/dist/run/profile/etc
+764K	/dist/run/profile
+768K	/dist/run
+
+...
+# lots of /dist/nix/store/
+4.0K	/dist/nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment
+# lots of /dist/nix/store/
+...
+
+56M	/dist/nix/store
+56M	/dist/nix
+4.0K	/dist/etc/ssl/certs
+8.0K	/dist/etc/ssl
+12K	/dist/etc
+57M	/dist
+57M	total
+```
+
 #### 🧰 Whats inside /dist (which is inside image)?
 ```sh
 Step 4/8 : RUN   ls -ltra /dist
