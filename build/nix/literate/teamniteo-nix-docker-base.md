@@ -1,9 +1,10 @@
-#### Reference
-```yaml
-- https://github.com/teamniteo/nix-docker-base
-```
 
-#### Step: Create default.nix file
+#### Motivation
+- Building Container Images Should Be Simple
+- Looks Similar to the Packaging Work of Distros
+- Nix / Guix vs. Dockerfile & Traditional Distros
+
+#### Start with a Nix file (default.nix)
 ```nix
 let
   pkgs = import <nixpkgs> {};
@@ -22,9 +23,11 @@ in {
 nix build -f default.nix
 ```
 
+#### Learn Nix By Introspecting
 ```json
 nix build -f default.nix --print-out-paths
 ```
+
 ```
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 ```
@@ -85,7 +88,7 @@ du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
 764K	total
 ```
 
-#### Step: Multi Stage Dockerfile to create the image
+#### Marrying Nix with Dockerfile
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
@@ -155,12 +158,12 @@ docker build . -t tryme
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
-#### Fix
+#### Search for the Fix
 ```json
 https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
 ```
 
-#### Updated Dockerfile
+#### Apply the Fix
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -191,7 +194,7 @@ REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
 
-#### Instropect Image Contents
+#### Whats in the Image?
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -207,7 +210,7 @@ RUN \
 
 
 RUN \
-  # 🔥 This will provide us the size wrt each file & folder inside /dist
+  # 🔥 This will provide us the SIZE wrt each FILE & FOLDER inside /dist
   du -hacL /dist
 
 # Second Docker stage, we start with a completely empty image
@@ -221,7 +224,7 @@ ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
-#### Inside dist
+#### Whats inside /dist (which is inside image)?
 ```sh
 Step 4/8 : RUN   ls -ltra /dist
  ---> Running in e4def598a0d6
@@ -231,4 +234,10 @@ drwxr-xr-x 3 root root 4096 Apr 11 11:55 nix
 dr-xr-xr-x 3 root root 4096 Apr 11 11:55 etc
 drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
+```
+
+
+##### Thank You
+```yaml
+- https://github.com/teamniteo/nix-docker-base
 ```
