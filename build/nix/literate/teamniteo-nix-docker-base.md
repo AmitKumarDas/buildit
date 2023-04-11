@@ -2,7 +2,7 @@
 #### Motivation
 - Building Container Images Should Be Simple
 - Looks Similar to the Packaging Work of Distros
-- Nix / Guix vs. Dockerfile & Traditional Distros
+- Nix / Guix 🆚 Dockerfile & Traditional Distros
 
 #### Start with a Nix file (default.nix)
 ```nix
