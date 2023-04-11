@@ -53,6 +53,21 @@ nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env               	  53.2M
 ```
 
+```sh
+nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
+/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
+└───/nix/store/22jzbbwy648x7r9hil77j478fkq9jggs-curl-7.87.0-bin
+    └───/nix/store/24aw9ykmz7hgkwvwf3fq2bv2ilivsm8c-curl-7.87.0
+        └───/nix/store/q22rqwl4z3dl06nb8rrki7j6zmpq0040-zstd-1.5.2
+            └───/nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
+```
+
+```sh
+nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
+/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
+└───/nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
+```
+
 #### Step: Multi Stage Dockerfile to create the image
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
@@ -82,6 +97,7 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```json
 docker build . -t tryme
 ```
+
 ```sh
  => ERROR [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist                          13.1s
 ------                                                                                                                             
@@ -151,3 +167,11 @@ COPY --from=build /dist /
 ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
+
+```sh
+docker images
+REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
+tryme                      latest     574751459789   16 minutes ago   55.5MB
+```
+
+
