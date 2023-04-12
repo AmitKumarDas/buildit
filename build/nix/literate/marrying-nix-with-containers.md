@@ -117,6 +117,12 @@ in {
 @@ Nix & Dockerfile for the greater good @@
 ```
 
+```diff
+! Hi.. I am from future
+
+@@ Remember below is using Nix 22.11 @@
+```
+
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
@@ -344,9 +350,9 @@ drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
-### 🕵️‍♀️ SBOM & CVEs 😍
+### 🕵️‍♀️ Scan Nix Builds for CVEs via SBOM 😍
 ```diff
-@@ CVEs due to runtime dependencies @@
+@@ CVEs due to RUNTIME dependencies @@
 ```
 
 ```diff
@@ -379,6 +385,12 @@ openssl  3.0.7                UnknownPackage  CVE-2023-0401  High
 openssl  3.0.7                UnknownPackage  CVE-2023-0464  High      
 openssl  3.0.7                UnknownPackage  CVE-2023-0465  Medium    
 openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
+```
+
+```diff
+@@ CVE Automation in Practice @@
+! Generate SBOM & feed to scanners
+! vulnix understand CVE patches
 ```
 
 ```diff
@@ -420,7 +432,10 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ CVEs due to buildtime dependencies @@
+@@ CVEs due to BUILDTIME dependencies @@
+
+! Above is possible in Nix (/ Guix)
+! Nix knows all the dependencies ahead of time (before build)
 ```
 
 ```diff
