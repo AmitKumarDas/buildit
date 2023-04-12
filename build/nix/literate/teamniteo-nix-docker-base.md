@@ -279,6 +279,7 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
 #### 🕵️‍♀️ SBOM & CVEs 😍
+##### 🏃‍♀️ Runtime
 ```json
 nix run github:tiiuae/sbomnix#sbomnix -- result
 ```
@@ -348,6 +349,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 INFO     Wrote: vulns.csv
 ```
 
+##### 🛠️ Buildtime
 ```json
 nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
 ```
