@@ -391,8 +391,11 @@ openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
 @@ CVE Automation in Practice @@
 
 ! Generate SBOM & feed to scanners
-! Multiple scanners
-! vulnix recognizes CVE patches
+! Get reports from multiple scanners
+! None of these scanners need to be installed
+! Note that sbomnix is not needed to be installed
+! Each of these tools are management on the fly (by Nix)
+! vulnix recognizes CVE patches if applied to Nix distribution
 ```
 
 ```diff
@@ -436,12 +439,12 @@ INFO     Wrote: vulns.csv
 ```diff
 @@ CVEs due to BUILDTIME dependencies @@
 
-! Above is possible in Nix (/ Guix)
-! Nix knows all the dependencies ahead of time (before build)
+! This is easy in Nix (/ Guix)
+! Since Nix knows the dependencies ahead of time (before build)
 ```
 
 ```diff
-+ nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
+! nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
 ```
 ```sh
 INFO     Generating SBOM for target '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
