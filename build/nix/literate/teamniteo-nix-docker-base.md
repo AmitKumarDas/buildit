@@ -288,3 +288,16 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 - 🔥 🧨 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
 - 💎 https://github.com/teamniteo/nix-docker-base/tree/master/static-root-files/etc
 ```
+
+##### Extras
+```yaml
+- In order to construct a coherent user or system environment
+- Nix symlinks entries of the Nix store into profiles
+- These are the front-end by which Nix allows rollbacks
+  - Since the store is immutable and previous versions of profiles are kept
+  - Reverting to an earlier state is simply a matter of change the symlink to a previous profile
+- To be more precise, Nix symlinks binaries into entries of the Nix store representing the user environments
+- These user environments are then symlinked 
+  - Into labeled profiles stored in /nix/var/nix/profiles 🔥
+  - Which are in turn symlinked to the user's ~/.nix-profile 🔥
+```
