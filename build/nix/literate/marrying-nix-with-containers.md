@@ -389,8 +389,10 @@ openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
 
 ```diff
 @@ CVE Automation in Practice @@
+
 ! Generate SBOM & feed to scanners
-! vulnix understand CVE patches
+! Multiple scanners
+! vulnix recognizes CVE patches
 ```
 
 ```diff
