@@ -323,7 +323,7 @@ Step 4/8 : RUN   du -hacL /dist
 8.0K	/dist/etc/ssl
 12K	/dist/etc
 57M	/dist
-57M	total
+57M	total 👈 🧐
 ```
 
 ### 🧰 Whats inside /dist?
