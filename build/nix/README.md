@@ -7,6 +7,27 @@
   - 
 ```
 
+#### Quotes
+```yaml
+- refer: https://nixos.wiki/wiki/Nix_package_manager
+```
+
+```yaml
+- Nix expressions are pure function
+- Take dependencies as arguments
+- Produce derivation specifying a reproducible build environment for the package
+```
+
+```yaml
+- Nix stores the results of the build in unique addresses 
+- These are specified by a hash of the complete dependency tree
+- Thus creating an immutable package store that allows for:
+  - atomic upgrades
+  - rollbacks and 
+  - concurrent installation of different versions of a package
+  - essentially eliminating dependency hell
+```
+
 #### Getting Started
 ```yaml
 - :l <nixpkgs> 
