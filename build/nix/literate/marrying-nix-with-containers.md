@@ -1,40 +1,46 @@
 
-#### 🍭 Motivation
+### 🍭 Motivation
 - Building Container Images Should Be Simple
 - Nix (/ Guix) for Dependency Management
-- Leverage Nix Community to Fix CVEs
+- Leverage Nix Community to Fix CVEs .. Fast
 
-#### 🏎️ Start with a Nix file (default.nix)
+### 🏎️ Build an Evironment
+```diff
+@@ with curl & ca certificates @@
+```
+
 ```nix
+# This is a Nix file named default.nix
 let
   pkgs = import <nixpkgs> {};
 in {
   myEnv = pkgs.buildEnv {
     name = "env";
     paths = with pkgs; [
-      curl
-      cacert
+      curl # 👈 either built from source or its prebuilt binary is fetched
+      cacert # 👈 either built from source or its prebuilt binary is fetched
     ];
   };
 }
 ```
 
-```json
-nix build -f default.nix
+```diff
++ nix build -f default.nix
 ```
 
-#### 🥸 Learn Nix By Introspecting
-```json
-nix build -f default.nix --print-out-paths
+### 🧐 What just happened?
+```diff
+! nix build -f default.nix --print-out-paths
 ```
 ```
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 ```
 
-##### 🏋️‍♀️ Size of the Built Environment
+### 🏋️‍♀️ Size of environment?
+```diff
++ du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+```
 ```sh
-du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
-
 192K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin/curl
 196K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin
 60K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl.1.gz
@@ -47,13 +53,18 @@ du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
 484K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl
 488K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc
 764K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
-764K	total
+764K	total 👈
 ```
 
-##### 🏋️‍♀️ Size of the Dependencies
-```json
-nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
+### 🏋️‍♀️ Size of runtime dependencies?
+```diff
++ nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
+
+@@ r -> recursive @@
+@@ S -> Size of closure @@
+@@ h -> Size in hunman readable format @@
 ```
+
 ```
 /nix/store/y78s8i569g5w04pnili1z7bkg73gqgbl-libunistring-1.0  	   1.7M
 /nix/store/s99my0m4dcxi75m03m4qdr0hvlip3590-libidn2-2.3.2     	   2.0M
@@ -75,9 +86,11 @@ nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env               	  53.2M 👈 🧐
 ```
 
-##### 😍 Tracing the Dependency
+### 🧨 Can we trace each dependency?
+```diff
++ nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
+```
 ```sh
-nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 └───/nix/store/22jzbbwy648x7r9hil77j478fkq9jggs-curl-7.87.0-bin
     └───/nix/store/24aw9ykmz7hgkwvwf3fq2bv2ilivsm8c-curl-7.87.0
@@ -85,13 +98,19 @@ nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78
             └───/nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
 ```
 
+```diff
++ nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
+```
 ```sh
-nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 └───/nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
 ```
 
-#### 💃 🕺 Marrying Nix with Dockerfile
+### 💃 🕺 Nix and Dockerfile
+```diff
+@@ Nix & Dockerfile for the greater good @@
+```
+
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
@@ -104,6 +123,9 @@ RUN \
   nix-env -f default.nix -iA myEnv --show-trace \
   # Exports a root directory structure containing all dependencies
   # installed with nix-env under /run/profile
+  # Refer: https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
+  # Refer: Read extras section on this page
+  # Note: Nix profile does the job of ldd & more
   && export-profile /dist
 
 # Second Docker stage, we start with a completely empty image
@@ -117,12 +139,14 @@ ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
-```json
-docker build . -t tryme
+```diff
++ docker build . -t tryme
 ```
 
+```diff
+- => ERROR [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist                          13.1s
+```
 ```sh
- => ERROR [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist                          13.1s
 ------                                                                                                                             
  > [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist:                                      
 #7 0.804 installing 'env'                                                                                                          
@@ -154,19 +178,28 @@ docker build . -t tryme
 #7 7.335 copying path '/nix/store/qbbh33w8jwr1pb6vxp2aplcsdlj6hvvk-patchelf-0.15.0' from 'https://cache.nixos.org'...
 #7 7.487 copying path '/nix/store/yxd2rlvzh1n01j1f86zcxlj8xr20kwh5-perl-5.36.0' from 'https://cache.nixos.org'...
 #7 12.83 copying path '/nix/store/8dj94g330sk2q5kvji3jy0fpcj5m0kii-stdenv-linux' from 'https://cache.nixos.org'...
-#7 12.99 error: unable to load seccomp BPF program: Invalid argument
+#7 12.99 error: unable to load seccomp BPF program: Invalid argument ❌
 #7 12.99 
 #7 12.99        … while setting up the build environment
 ------
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
-#### 🚗 Search for the Fix / Strength of Community
-```json
-https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
+### 🚗 Search for the Fix
+```diff
+@@  Strength of Nix Community @@
+```
+```diff
+! https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
 ```
 
-#### ✅ Apply the Fix 🙌
+### ✅ Apply the Fix
+```diff
+@@ Fix is as simple as an additional option @@
+
+! --option filter-syscalls false
+```
+
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -175,6 +208,7 @@ COPY default.nix default.nix
 
 RUN \
   # Install the program to propagate to the final image
+  # Fix is 👇
   nix-env -f default.nix -iA myEnv --option filter-syscalls false \
   # Exports a root directory structure containing all dependencies
   # installed with nix-env under /run/profile
@@ -191,6 +225,10 @@ ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
+```diff
++ docker build . -t tryme
+```
+
 ```sh
 ...
 Linking /dist/run/profile to /nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment
@@ -200,13 +238,22 @@ Finished Nix profile export to /dist
 ...
 ```
 
+```diff
++ docker images
+```
+
 ```sh
-docker images
 REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
 
-#### 📦 Whats in the Image?
+### ✂️ Deconstruct Image Size
+```diff
+@@ Same as size of /dist @@
+
+! du -hacL /dist
+```
+
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -269,7 +316,13 @@ Step 4/8 : RUN   du -hacL /dist
 57M	total
 ```
 
-#### 🧰 Whats inside /dist (which is inside image)?
+### 🧰 Whats inside /dist?
+```diff
+@@  What is inside /dist thats formed in the image? @@
+
+! ls -ltra /dist
+```
+
 ```sh
 Step 4/8 : RUN   ls -ltra /dist
  ---> Running in e4def598a0d6
@@ -281,18 +334,24 @@ drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
-#### 🕵️‍♀️ SBOM & CVEs 😍
-##### 🏃‍♀️ Runtime
-```json
-nix run github:tiiuae/sbomnix#sbomnix -- result
+### 🕵️‍♀️ SBOM & CVEs 😍
+```diff
+@@ CVEs due to runtime dependencies @@
 ```
 
-```json
-curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
+```diff
++ nix run github:tiiuae/sbomnix#sbomnix -- result
 ```
 
+```diff
+# install grype at current location
+! curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
+```
+
+```diff
++ ./grype sbom.cdx.json
+```
 ```sh
-./grype sbom.cdx.json
  ✔ Vulnerability DB        [updated]
  ✔ Scanning image...       [12 vulnerabilities]
    ├── 0 critical, 8 high, 4 medium, 0 low, 0 negligible
@@ -312,12 +371,10 @@ openssl  3.0.7                UnknownPackage  CVE-2023-0465  Medium
 openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
 ```
 
-```json
-nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```diff
++ nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 ```
-
 ```sh
-nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 INFO     Generating SBOM for target '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
 INFO     Loading runtime dependencies referenced by '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
 INFO     Using SBOM '/tmp/vulnxscan_7_zyoxrx.json'
@@ -352,11 +409,13 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 INFO     Wrote: vulns.csv
 ```
 
-##### 🛠️ Buildtime
-```json
-nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
+```diff
+@@ CVEs due to buildtime dependencies @@
 ```
 
+```diff
++ nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
+```
 ```sh
 INFO     Generating SBOM for target '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
 INFO     Loading runtime dependencies referenced by '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
@@ -424,9 +483,9 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
-#### [WIP] Fix the CVEs by Bumping The Distribution 🥤
-```json
-nix-env -qP --available openssl
+### 🥤 Fix the CVEs by Bumping The Distribution
+```diff
++ nix-env -qP --available openssl
 ```
 ```sh
 nixpkgs.openssl_1_1     openssl-1.1.1s
@@ -435,36 +494,47 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-##### 😻 OpenSSL Fix is Available 
-```json
-https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
+### 😻 OpenSSL Fix is Available
+```diff
+! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
+```
+```diff
+! https://github.com/NixOS/nix/tags
 ```
 
-```json
-https://github.com/NixOS/nix/tags
-```
-
-##### Thank You
+#### Thank You
 ```yaml
 - https://github.com/teamniteo/nix-docker-base
 - 🔥 🧨 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
 - 💎 https://github.com/teamniteo/nix-docker-base/tree/master/static-root-files/etc
 ```
 
-##### Extras
+#### Extras
 
 ```yaml
 - . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
 ```
 
 ```yaml
-- In order to construct a coherent user or system environment
-- Nix symlinks entries of the Nix store into profiles
-- These are the front-end by which Nix allows rollbacks
-  - Since the store is immutable and previous versions of profiles are kept
-  - Reverting to an earlier state is simply a matter of change the symlink to a previous profile
-- To be more precise, Nix symlinks binaries into entries of the Nix store representing the user environments
-- These user environments are then symlinked 
-  - Into labeled profiles stored in /nix/var/nix/profiles 🔥
-  - Which are in turn symlinked to the user's ~/.nix-profile 🔥
+- Nix Profile Long Story:
+  - To construct a coherent user or system environment
+  - Nix symlinks entries of the Nix store into profiles
+  -
+  - These are the front-end by which Nix allows rollbacks
+    - Since the store is immutable and previous versions of profiles are kept
+    - Reverting to an earlier state is simply a matter of change the symlink to a previous profile
+  -
+- Nix Profile Gist:
+  - Nix symlinks binaries into entries of the Nix store representing the user environments
+  - These user environments are then symlinked 
+    - 🔥 Into labeled profiles stored in /nix/var/nix/profiles
+    - 🔥 Which are in turn symlinked to the user's ~/.nix-profile
+```
+
+```diff
+- display errors
++ type commands
+! links or commands with more focus
+# your comments
+@@ your statement in purple (and bold)@@
 ```
