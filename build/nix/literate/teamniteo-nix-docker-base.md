@@ -419,11 +419,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 | CVE-2016-2781       | https://nvd.nist.gov/vuln/detail/CVE-2016-2781    | coreutils  | 9.1              |    1    |   0   |    0     |   1   |
 
 INFO     Wrote: vulns.csv
-
 ```
-
-#### To Add From Following References
-- https://github.com/tiiuae/sbomnix
 
 ##### Thank You
 ```yaml
