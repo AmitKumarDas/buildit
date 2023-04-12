@@ -1,8 +1,8 @@
 
 #### 🍭 Motivation
 - Building Container Images Should Be Simple
-- Looks Similar to the Packaging Work of Distros
-- Nix / Guix 🆚 Dockerfile & Traditional Distros
+- Nix (/ Guix) for Dependency Management
+- Leverage Nix Community to Fix CVEs
 
 #### 🏎️ Start with a Nix file (default.nix)
 ```nix
@@ -27,11 +27,30 @@ nix build -f default.nix
 ```json
 nix build -f default.nix --print-out-paths
 ```
-
 ```
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 ```
 
+##### 🏋️‍♀️ Size of the Built Environment
+```sh
+du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+
+192K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin/curl
+196K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin
+60K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl.1.gz
+4.0K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl-config.1.gz
+68K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1
+72K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man
+76K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share
+476K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs/ca-bundle.crt
+480K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs
+484K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl
+488K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc
+764K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+764K	total
+```
+
+##### 🏋️‍♀️ Size of the Dependencies
 ```json
 nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
 ```
@@ -53,9 +72,10 @@ nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -rSh
 /nix/store/22jzbbwy648x7r9hil77j478fkq9jggs-curl-7.87.0-bin   	  52.7M
 /nix/store/ciyjhvyfmn6djqkmhiclj258wlffz55y-nss-cacert-3.86   	 475.7K
 /nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man   	  59.6K
-/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env               	  53.2M
+/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env               	  53.2M 👈 🧐
 ```
 
+##### 😍 Tracing the Dependency
 ```sh
 nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
@@ -69,23 +89,6 @@ nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78
 nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 └───/nix/store/cpp401nyj579zd7cpp5l5fs0c25r134g-curl-7.87.0-man
-```
-
-```sh
-du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
-192K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin/curl
-196K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin
-60K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl.1.gz
-4.0K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1/curl-config.1.gz
-68K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man/man1
-72K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share/man
-76K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/share
-476K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs/ca-bundle.crt
-480K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl/certs
-484K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc/ssl
-488K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/etc
-764K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
-764K	total
 ```
 
 #### 💃 🕺 Marrying Nix with Dockerfile
@@ -158,12 +161,12 @@ docker build . -t tryme
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
-#### 🚗 Search for the Fix
+#### 🚗 Search for the Fix / Strength of Community
 ```json
 https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
 ```
 
-#### ✅ Apply the Fix
+#### ✅ Apply the Fix 🙌
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -421,7 +424,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
-#### Fix the CVEs by Bumping
+#### Fix the CVEs by Bumping The Distribution 🙏
 ```json
 nix-env -qP --available openssl
 ```
@@ -432,6 +435,7 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
+##### 😻 OpenSSL Fix is Available 
 ```json
 https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
 ```
@@ -439,7 +443,6 @@ https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
 ```json
 https://github.com/NixOS/nix/tags
 ```
-
 
 ##### Thank You
 ```yaml
@@ -451,7 +454,7 @@ https://github.com/NixOS/nix/tags
 ##### Extras
 
 ```yaml
-- . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+- . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
 ```
 
 ```yaml
