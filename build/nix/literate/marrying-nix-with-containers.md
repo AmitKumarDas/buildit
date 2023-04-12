@@ -86,6 +86,12 @@ in {
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env               	  53.2M 👈 🧐
 ```
 
+```diff
+! Hi.. I am from the future
+
+@@ Remember the total size of runtime dependencies i.e. 53.2M @@
+```
+
 ### 🧨 Can we trace each dependency?
 ```diff
 + nix why-depends /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/ /nix/store/sq78g74zs4sj7n1j5709g9c2pmffx1y8-gcc-11.3.0-lib
@@ -245,6 +251,10 @@ Finished Nix profile export to /dist
 ```sh
 REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
+```
+
+```diff
+@@ ^^ We knew the size ahead of time ^^ @@
 ```
 
 ### ✂️ Deconstruct Image Size
