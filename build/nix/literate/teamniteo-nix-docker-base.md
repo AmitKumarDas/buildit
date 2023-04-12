@@ -278,8 +278,149 @@ drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
+#### 🕵️‍♀️ SBOM & CVEs 😍
+```json
+nix run github:tiiuae/sbomnix#sbomnix -- result
+```
+
+```json
+curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
+```
+
+```sh
+./grype sbom.cdx.json
+ ✔ Vulnerability DB        [updated]
+ ✔ Scanning image...       [12 vulnerabilities]
+   ├── 0 critical, 8 high, 4 medium, 0 low, 0 negligible
+   └── 0 fixed
+NAME     INSTALLED  FIXED-IN  TYPE            VULNERABILITY  SEVERITY 
+openssl  3.0.7                UnknownPackage  CVE-2022-3996  High      
+openssl  3.0.7                UnknownPackage  CVE-2022-4203  Medium    
+openssl  3.0.7                UnknownPackage  CVE-2022-4304  Medium    
+openssl  3.0.7                UnknownPackage  CVE-2022-4450  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0215  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0216  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0217  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0286  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0401  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0464  High      
+openssl  3.0.7                UnknownPackage  CVE-2023-0465  Medium    
+openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
+```
+
+```json
+nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```
+
+```sh
+nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+INFO     Generating SBOM for target '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
+INFO     Loading runtime dependencies referenced by '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
+INFO     Using SBOM '/tmp/vulnxscan_7_zyoxrx.json'
+INFO     Running vulnix scan
+INFO     Running grype scan
+INFO     Running OSV scan
+INFO     Querying vulnerabilities
+INFO     Console report
+
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id        | url                                             | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|----------------+-------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-27534 | https://nvd.nist.gov/vuln/detail/CVE-2023-27534 | curl      | 7.87.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-27533 | https://nvd.nist.gov/vuln/detail/CVE-2023-27533 | curl      | 7.87.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-23916 | https://nvd.nist.gov/vuln/detail/CVE-2023-23916 | curl      | 7.87.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-23915 | https://nvd.nist.gov/vuln/detail/CVE-2023-23915 | curl      | 7.87.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-23914 | https://nvd.nist.gov/vuln/detail/CVE-2023-23914 | curl      | 7.87.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-0466  | https://nvd.nist.gov/vuln/detail/CVE-2023-0466  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0465  | https://nvd.nist.gov/vuln/detail/CVE-2023-0465  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0464  | https://nvd.nist.gov/vuln/detail/CVE-2023-0464  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0401  | https://nvd.nist.gov/vuln/detail/CVE-2023-0401  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0286  | https://nvd.nist.gov/vuln/detail/CVE-2023-0286  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0217  | https://nvd.nist.gov/vuln/detail/CVE-2023-0217  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0216  | https://nvd.nist.gov/vuln/detail/CVE-2023-0216  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2023-0215  | https://nvd.nist.gov/vuln/detail/CVE-2023-0215  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2022-4450  | https://nvd.nist.gov/vuln/detail/CVE-2022-4450  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2022-4304  | https://nvd.nist.gov/vuln/detail/CVE-2022-4304  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2022-4203  | https://nvd.nist.gov/vuln/detail/CVE-2022-4203  | openssl   | 3.0.7     |    1    |   0   |    1     |   2   |
+| CVE-2022-3996  | https://nvd.nist.gov/vuln/detail/CVE-2022-3996  | openssl   | 3.0.7     |    1    |   0   |    0     |   1   |
+
+INFO     Wrote: vulns.csv
+```
+
+```json
+nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
+```
+
+```sh
+INFO     Generating SBOM for target '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
+INFO     Loading runtime dependencies referenced by '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
+INFO     Loading buildtime dependencies referenced by '/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env'
+INFO     Using SBOM '/tmp/vulnxscan_6h43te5t.json'
+INFO     Running vulnix scan
+INFO     Running grype scan
+INFO     Running OSV scan
+INFO     Querying vulnerabilities
+INFO     Console report
+
+Potential vulnerabilities impacting 'result' or some of its runtime or buildtime dependencies:
+
+| vuln_id             | url                                               | package    | version          |  grype  |  osv  |  vulnix  |  sum  |
+|---------------------+---------------------------------------------------+------------+------------------+---------+-------+----------+-------|
+| GHSA-w596-4wvx-j9j6 | https://osv.dev/GHSA-w596-4wvx-j9j6               | py         | 1.11.0           |    0    |   1   |    0     |   1   |
+| CVE-2023-27534      | https://nvd.nist.gov/vuln/detail/CVE-2023-27534   | curl       | 7.87.0           |    0    |   0   |    1     |   1   |
+| CVE-2023-27533      | https://nvd.nist.gov/vuln/detail/CVE-2023-27533   | curl       | 7.87.0           |    0    |   0   |    1     |   1   |
+| CVE-2023-23916      | https://nvd.nist.gov/vuln/detail/CVE-2023-23916   | curl       | 7.87.0           |    0    |   0   |    1     |   1   |
+| CVE-2023-23915      | https://nvd.nist.gov/vuln/detail/CVE-2023-23915   | curl       | 7.87.0           |    0    |   0   |    1     |   1   |
+| CVE-2023-23914      | https://nvd.nist.gov/vuln/detail/CVE-2023-23914   | curl       | 7.87.0           |    0    |   0   |    1     |   1   |
+| CVE-2023-0466       | https://nvd.nist.gov/vuln/detail/CVE-2023-0466    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0465       | https://nvd.nist.gov/vuln/detail/CVE-2023-0465    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0464       | https://nvd.nist.gov/vuln/detail/CVE-2023-0464    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0401       | https://nvd.nist.gov/vuln/detail/CVE-2023-0401    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0286       | https://nvd.nist.gov/vuln/detail/CVE-2023-0286    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0217       | https://nvd.nist.gov/vuln/detail/CVE-2023-0217    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0216       | https://nvd.nist.gov/vuln/detail/CVE-2023-0216    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2023-0215       | https://nvd.nist.gov/vuln/detail/CVE-2023-0215    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2022-42969      | https://nvd.nist.gov/vuln/detail/CVE-2022-42969   | py         | 1.11.0           |    1    |   0   |    0     |   1   |
+| PYSEC-2022-42969    | https://osv.dev/PYSEC-2022-42969                  | py         | 1.11.0           |    0    |   1   |    0     |   1   |
+| CVE-2022-40898      | https://nvd.nist.gov/vuln/detail/CVE-2022-40898   | wheel      | 0.37.1-source    |    0    |   0   |    1     |   1   |
+| CVE-2022-38533      | https://nvd.nist.gov/vuln/detail/CVE-2022-38533   | binutils   | 2.39             |    1    |   1   |    1     |   3   |
+| CVE-2022-28321      | https://nvd.nist.gov/vuln/detail/CVE-2022-28321   | linux-pam  | 1.5.2            |    0    |   0   |    1     |   1   |
+| CVE-2022-4904       | https://nvd.nist.gov/vuln/detail/CVE-2022-4904    | c-ares     | 1.18.1           |    1    |   0   |    0     |   1   |
+| CVE-2022-4450       | https://nvd.nist.gov/vuln/detail/CVE-2022-4450    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2022-4304       | https://nvd.nist.gov/vuln/detail/CVE-2022-4304    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2022-4285       | https://nvd.nist.gov/vuln/detail/CVE-2022-4285    | binutils   | 2.39             |    0    |   0   |    1     |   1   |
+| CVE-2022-4203       | https://nvd.nist.gov/vuln/detail/CVE-2022-4203    | openssl    | 3.0.7            |    1    |   0   |    1     |   2   |
+| CVE-2022-3996       | https://nvd.nist.gov/vuln/detail/CVE-2022-3996    | openssl    | 3.0.7            |    1    |   0   |    0     |   1   |
+| CVE-2022-1304       | https://nvd.nist.gov/vuln/detail/CVE-2022-1304    | e2fsprogs  | 1.46.5           |    1    |   0   |    0     |   1   |
+| OSV-2022-1193       | https://osv.dev/OSV-2022-1193                     | libarchive | 3.6.2            |    0    |   1   |    0     |   1   |
+| CVE-2022-0530       | https://nvd.nist.gov/vuln/detail/CVE-2022-0530    | unzip      | 6.0              |    0    |   1   |    1     |   2   |
+| CVE-2022-0529       | https://nvd.nist.gov/vuln/detail/CVE-2022-0529    | unzip      | 6.0              |    0    |   1   |    1     |   2   |
+| CVE-2021-35331      | https://nvd.nist.gov/vuln/detail/CVE-2021-35331   | tcl        | 8.6.11           |    1    |   0   |    1     |   2   |
+| CVE-2021-4217       | https://nvd.nist.gov/vuln/detail/CVE-2021-4217    | unzip      | 6.0              |    0    |   1   |    1     |   2   |
+| OSV-2021-777        | https://osv.dev/OSV-2021-777                      | libxml2    | 2.10.3           |    0    |   1   |    0     |   1   |
+| CVE-2019-20633      | https://nvd.nist.gov/vuln/detail/CVE-2019-20633   | patch      | 2.7.6            |    1    |   0   |    1     |   2   |
+| CVE-2019-14900      | https://nvd.nist.gov/vuln/detail/CVE-2019-14900   | fuse       | 3.11.0           |    0    |   0   |    1     |   1   |
+| CVE-2019-14900      | https://nvd.nist.gov/vuln/detail/CVE-2019-14900   | fuse       | 2.9.9-closefrom- |    0    |   0   |    1     |   1   |
+| CVE-2019-14900      | https://nvd.nist.gov/vuln/detail/CVE-2019-14900   | fuse       | 2.9.9            |    0    |   0   |    1     |   1   |
+| CVE-2019-14860      | https://nvd.nist.gov/vuln/detail/CVE-2019-14860   | fuse       | 3.11.0           |    0    |   0   |    1     |   1   |
+| CVE-2019-14860      | https://nvd.nist.gov/vuln/detail/CVE-2019-14860   | fuse       | 2.9.9-closefrom- |    0    |   0   |    1     |   1   |
+| CVE-2019-14860      | https://nvd.nist.gov/vuln/detail/CVE-2019-14860   | fuse       | 2.9.9            |    0    |   0   |    1     |   1   |
+| CVE-2019-13638      | https://nvd.nist.gov/vuln/detail/CVE-2019-13638   | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2019-13636      | https://nvd.nist.gov/vuln/detail/CVE-2019-13636   | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2019-6293       | https://nvd.nist.gov/vuln/detail/CVE-2019-6293    | flex       | 2.6.4            |    0    |   0   |    1     |   1   |
+| CVE-2018-1000156    | https://nvd.nist.gov/vuln/detail/CVE-2018-1000156 | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2018-1000097    | https://nvd.nist.gov/vuln/detail/CVE-2018-1000097 | sharutils  | 4.15.2           |    1    |   0   |    0     |   1   |
+| CVE-2018-20969      | https://nvd.nist.gov/vuln/detail/CVE-2018-20969   | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2018-6952       | https://nvd.nist.gov/vuln/detail/CVE-2018-6952    | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2018-6951       | https://nvd.nist.gov/vuln/detail/CVE-2018-6951    | patch      | 2.7.6            |    1    |   0   |    0     |   1   |
+| CVE-2016-2781       | https://nvd.nist.gov/vuln/detail/CVE-2016-2781    | coreutils  | 9.1              |    1    |   0   |    0     |   1   |
+
+INFO     Wrote: vulns.csv
+
+```
+
 #### To Add From Following References
-- https://nixos.wiki/wiki/Nix_package_manager
 - https://github.com/tiiuae/sbomnix
 
 ##### Thank You
@@ -290,6 +431,11 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
 ##### Extras
+
+```yaml
+- . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+```
+
 ```yaml
 - In order to construct a coherent user or system environment
 - Nix symlinks entries of the Nix store into profiles
