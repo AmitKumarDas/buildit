@@ -421,6 +421,26 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
+#### Fix the CVEs by Bumping
+```json
+nix-env -qP --available openssl
+```
+```sh
+nixpkgs.openssl_1_1     openssl-1.1.1s
+nixpkgs.openssl         openssl-3.0.7
+nixpkgs.openssl_3_0     openssl-3.0.7
+nixpkgs.openssl_legacy  openssl-3.0.7
+```
+
+```json
+https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
+```
+
+```json
+https://github.com/NixOS/nix/tags
+```
+
+
 ##### Thank You
 ```yaml
 - https://github.com/teamniteo/nix-docker-base
