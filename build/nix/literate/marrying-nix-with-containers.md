@@ -424,7 +424,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
-#### Fix the CVEs by Bumping The Distribution 🙏
+#### [WIP] Fix the CVEs by Bumping The Distribution 🥤
 ```json
 nix-env -qP --available openssl
 ```
