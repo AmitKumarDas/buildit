@@ -493,7 +493,15 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
-### 🥤 Fix the CVEs by Bumping The Distribution
+### 🥤 How to fix the CVEs?
+```diff
+@@ Is it possible to fix CVEs by bumping Nix distribution? @@
+```
+
+```diff
+@@ Available openssl packages in Nix 22.11 @@
+```
+
 ```diff
 + nix-env -qP --available openssl
 ```
@@ -504,12 +512,16 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-### 😻 OpenSSL Fix is Available
+### 😻 OpenSSL Fix Available in Latest Nix
 ```diff
 ! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
 ```
 ```diff
 ! https://github.com/NixOS/nix/tags
+```
+
+```diff
+@@ More Work In Progress @@
 ```
 
 #### Thank You
