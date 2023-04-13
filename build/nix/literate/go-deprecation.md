@@ -8,4 +8,5 @@
 - https://nichi.co/articles/go-module-in-nix.html
 - https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/go-migrate/default.nix
 - https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
+- https://github.com/coredns/coredns/issues/5997
 - 
