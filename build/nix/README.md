@@ -28,6 +28,16 @@
   - essentially eliminating dependency hell
 ```
 
+```yaml
+- Because you will need to INVENTORY and LEGALLY CLEAR everything inside your container
+- It is imperative that you understand the components and their specific SOURCES that make up your chosen base OS
+```
+
+```yaml
+- If you use distroless/static but you build static binaries on alpine that are linked against musl libc
+- You're actually distributing alpine bits. (And there are numerous issues with statically linking glibc.)
+```
+
 #### Getting Started
 ```yaml
 - :l <nixpkgs> 
