@@ -1,4 +1,4 @@
-#### Nix Research
+### Nix Research
 ```yaml
 - FELLOW: BLOGS: READ: LEARN: EXPERIENCES: RESEARCH:
   - https://jade.fyi/ # Read the Nix parts
@@ -7,7 +7,7 @@
   - 
 ```
 
-#### Quotes
+### Quote / Unquote
 ```yaml
 - refer: https://nixos.wiki/wiki/Nix_package_manager
 ```
@@ -28,15 +28,26 @@
   - essentially eliminating dependency hell
 ```
 
+```diff
+@@ Inventory & Legally Clear @@
+```
 ```yaml
 - Because you will need to INVENTORY and LEGALLY CLEAR everything inside your container
-- It is imperative that you understand the components and their specific SOURCES that make up your chosen base OS
+- It is imperative to understand the components and their specific SOURCES that make up the base OS
 ```
 
 ```yaml
 - If you use distroless/static but you build static binaries on alpine that are linked against musl libc
 - You're actually distributing alpine bits. (And there are numerous issues with statically linking glibc.)
 ```
+
+```diff
+@@ Are your package repositories constantly moving targets? @@
+```
+```yaml
+- Do your package releases disappear as soon as newer ones are available
+```
+
 
 #### Getting Started
 ```yaml
