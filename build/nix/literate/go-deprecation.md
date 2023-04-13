@@ -3,6 +3,8 @@
 - https://github.com/kubernetes/enhancements/tree/master/keps/sig-release/3744-stay-on-supported-go-versions
 - https://kubernetes.io/blog/2023/04/06/keeping-kubernetes-secure-with-updated-go-versions/
 - https://github.com/aws/eks-distro-build-tooling/tree/main/projects/golang/go
+- https://github.com/aws/eks-distro
+- https://github.com/aws/eks-distro-build-tooling
 - https://ryantm.github.io/nixpkgs/languages-frameworks/go/
 - https://www.tweag.io/blog/2021-03-04-gomod2nix/
 - https://nichi.co/articles/go-module-in-nix.html
