@@ -545,6 +545,9 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 
 ! Steps to fix CVEs: 1/ update Nix distribution 2/ overlay openssl
 ! Steps to target different architectures
+! Reduce image size by removing the man pages
+! Reduce image size by removing the localization info
+! Reduce image size by stripping the binaries
 ```
 
 #### Thank You
