@@ -542,6 +542,9 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 
 ```diff
 @@ More Work In Progress @@
+
+! Steps to fix CVEs: 1/ update Nix distribution 2/ overlay openssl
+! Steps to target different architectures
 ```
 
 #### Thank You
