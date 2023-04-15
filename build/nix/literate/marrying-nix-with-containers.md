@@ -533,17 +533,213 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
 ### 😻 OpenSSL Fix Available in Latest Nix
+
 ```diff
-! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
-```
-```diff
-! https://github.com/NixOS/nix/tags
+@@ Approach 1: Update Nix packages to unstable @@
 ```
 
 ```diff
-@@ More Work In Progress @@
+@@ References @@
 
-! Steps to fix CVEs: 1/ update Nix distribution 2/ overlay openssl
+# https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a # 👈 openssl: 3.0.7 -> 3.0.8
+# https://github.com/nixos/nixpkgs/tree/nixos-unstable # 👈 unstable branch
+# https://nix.dev/tutorials/towards-reproducibility-pinning-nixpkgs # 👍
+# https://nixos.wiki/wiki/FAQ/Pinning_Nixpkgs
+
+# This helps picking up a specific commit
+! https://status.nixos.org/
+```
+
+```diff
+@@ Step 1 @@
+
+# sudo nix-channel --list
+# Password:
+# warning: $HOME ('/Users/amitd2') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+# nixpkgs https://nixos.org/channels/nixpkgs-unstable
+```
+
+```diff
+@@ Step 2: We shall use niv for dependency management @@
+@@ Docs couldn't assure me on the exact steps to do pinning manually @@
+@@ Remember I am a nix rookie @@
+
+# nix-shell -p niv --run "niv init"
+# nix-shell -p niv
+# niv show
+```
+```sh
+nixpkgs
+  branch: release-21.05
+  description: Nix Packages collection
+  homepage: 
+  owner: NixOS
+  repo: nixpkgs
+  rev: 5f244caea76105b63d826911b2a1563d33ff1cdc
+  sha256: 1xlgynfw9svy7nvh9nkxsxdzncv9hg99gbvbwv3gmrhmzc3sar75
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/5f244caea76105b63d826911b2a1563d33ff1cdc.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Step 3 @@
+
+# niv update nixpkgs
+# niv show
+```
+```sh
+nixpkgs
+  branch: release-21.05
+  description: Nix Packages collection
+  homepage: 
+  owner: NixOS
+  repo: nixpkgs
+  rev: 022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf
+  sha256: 12q00nbd7fb812zchbcnmdg3pw45qhxm74hgpjmshc2dfmgkjh4n
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Step 4 @@
+
+# niv modify nixpkgs -a branch=nixpkgs-unstable
+# niv show
+
+# Following output shows that git details has not changed
+# However, branch name has changed
+```
+```sh
+nixpkgs
+  branch: nixpkgs-unstable
+  description: Nix Packages collection
+  homepage: 
+  owner: NixOS
+  repo: nixpkgs
+  rev: 022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf
+  sha256: 12q00nbd7fb812zchbcnmdg3pw45qhxm74hgpjmshc2dfmgkjh4n
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Step 5: Do not forget to run update command for changes to take effect @@
+
+! niv update nixpkgs
+# niv show
+
+@@ Hi.. I am from future @@
+@@ [Future]: Have you verified the updated revision
+- We are not sure if this nixpkgs revision from unstable branch has passed in its CI
+```
+```sh
+nixpkgs
+  branch: nixpkgs-unstable
+  description: Nix Packages collection
+  homepage: 
+  owner: NixOS
+  repo: nixpkgs
+  rev: 639d4f17218568afd6494dbd807bebb2beb9d6b3
+  sha256: 04lvyqiv58g6w65r8b4jyfja3qsh2ckkv54a21zlmi0k34qnhrm6
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/639d4f17218568afd6494dbd807bebb2beb9d6b3.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Step 6: Back to our original nix file & Dockerfile @@
+
+# Refer: https://github.com/teamniteo/nix-docker-base
+
+# nix-shell -p niv
+# niv update nixpkgs
+# channel=$(jq -r .nixpkgs.branch nix/sources.json)
+# rev=$(jq -r .nixpkgs.rev nix/sources.json)
+# sed -i "s#FROM.*AS build#FROM niteo/nixpkgs-$channel:$rev AS build#g" Dockerfile
+```
+
+```sh
+tree
+.
+├── Dockerfile
+├── default.nix
+└── nix
+    ├── sources.json
+    └── sources.nix
+
+2 directories, 4 files
+```
+
+```nix
+# This is a Nix file named default.nix
+let
+  # pkgs = import <nixpkgs> {}; # 👈 Original
+  pkgs = (import nix/sources.nix).nixpkgs;
+in {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = with pkgs; [
+      curl # 👈 either built from source or its prebuilt binary is fetched
+      cacert # 👈 either built from source or its prebuilt binary is fetched
+    ];
+  };
+}
+```
+
+```Dockerfile
+# FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build # 👈 Original
+FROM niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3 AS build
+
+# Import the project source
+COPY . src
+
+RUN \
+  # Install the program to propagate to the final image
+  nix-env -f src -iA myEnv --option filter-syscalls false \
+  # Exports a root directory structure containing all dependencies
+  # installed with nix-env under /run/profile
+  && export-profile /dist
+
+# Second Docker stage, we start with a completely empty image
+FROM scratch
+
+# Copy the /dist root folder from the previous stage into this one
+COPY --from=build /dist /
+
+# Set PATH so Nix binaries can be found
+ENV PATH=/run/profile/bin
+ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+```
+
+```diff
+! docker build . -t tryme:latest-1
+```
+```sh
+=> ERROR [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3      2.2s
+------
+ > [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3:
+------
+failed to solve with frontend dockerfile.v0: 
+  failed to create LLB definition: pull access denied, repository does not exist or may require authorization: 
+  server message: insufficient_scope: authorization failed
+```
+
+```diff
+@@ Step 7: Most likely niteo does not have a base image with above combination @@
+
++ We shall create a base image with above combination
+```
+
+```diff
+@@ Work In Progress @@
+
+! Steps to fix CVEs: 
+! 1/ Update Nix distribution to unstable
+! 2/ Keep Nix distribution at stable. Update OpenSSL to latest source revision
+
 ! Steps to target different architectures
 ! Reduce image size by removing the man pages
 ! Reduce image size by removing the localization info
@@ -560,6 +756,7 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 #### Extras
 
 ```yaml
+- Nix Forgotten by Your Terminal
 - . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
 ```
 
