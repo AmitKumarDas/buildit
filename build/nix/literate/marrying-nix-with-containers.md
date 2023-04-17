@@ -1,10 +1,10 @@
 
 ### 🍭 Motivation
 - Building Container Images Should Be Simple
-- Nix (/ Guix) for Dependency Management
+- Nix for Automated Dependency Management
 - Leverage Nix Community to Fix CVEs .. Fast
 
-### 🏎️ Build an Evironment
+### 🏎️ We start by building a Nix Evironment
 ```diff
 @@ with curl & ca certificates @@
 ```
@@ -31,6 +31,8 @@ in {
 ### 🧐 What just happened?
 ```diff
 ! nix build -f default.nix --print-out-paths
+
+# It oputputs the path of the environment that just got built
 ```
 ```
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
@@ -91,7 +93,7 @@ in {
 ```diff
 ! Hi.. I am from the future
 
-@@ Remember the total size of runtime dependencies i.e. 53.2M @@
+@@ [Future]: Remember total size of runtime dependencies is 53.2M (look above) @@
 ```
 
 ### 🧨 Can we trace each dependency?
@@ -122,7 +124,7 @@ in {
 ```diff
 ! Hi.. I am from future
 
-@@ Remember below is using Nix 22.11 @@
+@@ [Future]: Remember below uses Nix 22.11 @@
 ```
 
 ```Dockerfile
@@ -168,31 +170,8 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 #7 4.656   /nix/store/imf2qzrzs0qggbabsn3f5mr3wa5jxhkh-builder.pl.drv                                                              
 #7 4.656   /nix/store/k1rhrji3ha5zfhb15q21ki5fds9gr58h-env.drv                                                                     
 #7 4.660 these 12 paths will be fetched (10.44 MiB download, 68.78 MiB unpacked):
-#7 4.660   /nix/store/526xlkd8f2q5vbdy68rnv4x5d0wzml8w-diffutils-3.8
-#7 4.660   /nix/store/576iqyz893c8zg0qy92is04cgcjanqky-file-5.43
-#7 4.660   /nix/store/6s9h7vcjxhh76kaa6plickgik9c7rpqj-curl-7.86.0-man
-#7 4.660   /nix/store/8dj94g330sk2q5kvji3jy0fpcj5m0kii-stdenv-linux
-#7 4.660   /nix/store/8p49h8m12hx1qjxgw98vrx17a6hxcn2z-findutils-4.9.0
-#7 4.660   /nix/store/gjyskq701gwzpin34r3rqlcaqif7v3l6-patch-2.7.6
-#7 4.660   /nix/store/hnwgz78qripqnnnprar3lzmp7ymkv90x-gnumake-4.3
-#7 4.660   /nix/store/hybxi0dm46sd8cf2xw6nhsdy858qlvyf-ed-1.18
-#7 4.660   /nix/store/qbbh33w8jwr1pb6vxp2aplcsdlj6hvvk-patchelf-0.15.0
-#7 4.661   /nix/store/qs14qs0x86ibndw0j5mwf1v46jxn56ld-gawk-5.1.1
-#7 4.661   /nix/store/xdd67g9ps5aripg044v6y4j1qsli76fh-curl-7.86.0-bin
-#7 4.661   /nix/store/yxd2rlvzh1n01j1f86zcxlj8xr20kwh5-perl-5.36.0
-#7 4.728 copying path '/nix/store/6s9h7vcjxhh76kaa6plickgik9c7rpqj-curl-7.86.0-man' from 'https://cache.nixos.org'...
-#7 4.899 copying path '/nix/store/xdd67g9ps5aripg044v6y4j1qsli76fh-curl-7.86.0-bin' from 'https://cache.nixos.org'...
-#7 5.017 copying path '/nix/store/526xlkd8f2q5vbdy68rnv4x5d0wzml8w-diffutils-3.8' from 'https://cache.nixos.org'...
-#7 5.283 copying path '/nix/store/hybxi0dm46sd8cf2xw6nhsdy858qlvyf-ed-1.18' from 'https://cache.nixos.org'...
-#7 5.660 copying path '/nix/store/576iqyz893c8zg0qy92is04cgcjanqky-file-5.43' from 'https://cache.nixos.org'...
-#7 6.300 copying path '/nix/store/8p49h8m12hx1qjxgw98vrx17a6hxcn2z-findutils-4.9.0' from 'https://cache.nixos.org'...
-#7 6.567 copying path '/nix/store/qs14qs0x86ibndw0j5mwf1v46jxn56ld-gawk-5.1.1' from 'https://cache.nixos.org'...
-#7 6.983 copying path '/nix/store/hnwgz78qripqnnnprar3lzmp7ymkv90x-gnumake-4.3' from 'https://cache.nixos.org'...
-#7 7.213 copying path '/nix/store/gjyskq701gwzpin34r3rqlcaqif7v3l6-patch-2.7.6' from 'https://cache.nixos.org'...
-#7 7.335 copying path '/nix/store/qbbh33w8jwr1pb6vxp2aplcsdlj6hvvk-patchelf-0.15.0' from 'https://cache.nixos.org'...
-#7 7.487 copying path '/nix/store/yxd2rlvzh1n01j1f86zcxlj8xr20kwh5-perl-5.36.0' from 'https://cache.nixos.org'...
-#7 12.83 copying path '/nix/store/8dj94g330sk2q5kvji3jy0fpcj5m0kii-stdenv-linux' from 'https://cache.nixos.org'...
-#7 12.99 error: unable to load seccomp BPF program: Invalid argument ❌
+...
+❌ #7 12.99 error: unable to load seccomp BPF program: Invalid argument ❌
 #7 12.99 
 #7 12.99        … while setting up the build environment
 ------
@@ -222,7 +201,7 @@ COPY default.nix default.nix
 
 RUN \
   # Install the program to propagate to the final image
-  # Fix is 👇
+  # Fix is additional option as seen in 👇 line
   nix-env -f default.nix -iA myEnv --option filter-syscalls false \
   # Exports a root directory structure containing all dependencies
   # installed with nix-env under /run/profile
@@ -262,7 +241,7 @@ tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
 
 ```diff
-@@ ^^ We knew the size ahead of time ^^ @@
+@@ Nix knew above size ahead of time @@
 ```
 
 ### ✂️ Deconstruct Image Size
@@ -275,16 +254,7 @@ tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
-# Import the project source
-COPY default.nix default.nix
-
-RUN \
-  # Install the program to propagate to the final image
-  nix-env -f default.nix -iA myEnv \
-  # Exports a root directory structure containing all dependencies
-  # installed with nix-env under /run/profile
-  && export-profile /dist
-
+# same as original
 
 RUN \
   # 🔥 This will provide us the SIZE wrt each FILE & FOLDER inside /dist
@@ -293,12 +263,7 @@ RUN \
 # Second Docker stage, we start with a completely empty image
 FROM scratch
 
-# Copy the /dist root folder from the previous stage into this one
-COPY --from=build /dist /
-
-# Set PATH so Nix binaries can be found
-ENV PATH=/run/profile/bin
-ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+# same as original
 ```
 
 ```sh
@@ -331,7 +296,7 @@ Step 4/8 : RUN   du -hacL /dist
 8.0K	/dist/etc/ssl
 12K	/dist/etc
 57M	/dist
-57M	total 👈 🧐
+57M	total 👈 🔥
 ```
 
 ### 🧰 Whats inside /dist?
@@ -354,19 +319,24 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 
 ### 🕵️‍♀️ Scan Nix Builds for CVEs via SBOM 😍
 ```diff
-@@ CVEs due to RUNTIME dependencies @@
+@@ Lets find CVEs due to RUNTIME dependencies @@
+
+# Note: result is a symlink produced by Nix
+# Note: nix build -f default.nix # produces result
 ```
 
 ```diff
+# This gives us the SBOM
 + nix run github:tiiuae/sbomnix#sbomnix -- result
 ```
 
 ```diff
-# install grype at current location
+# This installs grype at current location
 ! curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
 ```
 
 ```diff
+# This fetches CVEs from SBOM
 + ./grype sbom.cdx.json
 ```
 ```sh
@@ -522,9 +492,7 @@ INFO     Wrote: vulns.csv
 
 ```diff
 @@ Available openssl packages in Nix 22.11 @@
-```
 
-```diff
 + nix-env -qP --available openssl
 ```
 ```sh
@@ -537,7 +505,9 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 ### 😻 However, OpenSSL Fix is Available in Latest Nixpkgs
 
 ```diff
-@@ Approach 1: Update Nix packages to unstable release & get OpenSSL fix @@
+@@ Approach 1: Update Nix packages to unstable release @@
+
+! This should hopefully include the OpenSSL fix
 ```
 
 ```diff
@@ -553,18 +523,14 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
 ```diff
-@@ Step 1 @@
+@@ Step 1: Inspect the nixpkgs channel @@
 
 # sudo nix-channel --list
-# Password:
-# warning: $HOME ('/Users/amitd2') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
-# nixpkgs https://nixos.org/channels/nixpkgs-unstable
+! nixpkgs https://nixos.org/channels/nixpkgs-unstable
 ```
 
 ```diff
-@@ Step 2: We shall use niv for dependency management @@
-@@ Docs couldn't assure me on the exact steps to do pinning manually @@
-@@ Remember I am a nix rookie @@
+@@ Step 2: use niv for dependency management @@
 
 # nix-shell -p niv --run "niv init"
 # nix-shell -p niv
@@ -616,15 +582,7 @@ nixpkgs
 ```sh
 nixpkgs
   branch: nixpkgs-unstable
-  description: Nix Packages collection
-  homepage: 
-  owner: NixOS
-  repo: nixpkgs
-  rev: 022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf
-  sha256: 12q00nbd7fb812zchbcnmdg3pw45qhxm74hgpjmshc2dfmgkjh4n
-  type: tarball
-  url: https://github.com/NixOS/nixpkgs/archive/022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf.tar.gz
-  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+  .. same as earlier ..
 ```
 
 ```diff
@@ -679,7 +637,7 @@ tree
 # This is a Nix file named default.nix
 let
   # pkgs = import <nixpkgs> {}; # 👈 Original
-  pkgs = (import nix/sources.nix).nixpkgs;
+  pkgs = (import nix/sources.nix).nixpkgs; # 🎉
 in {
   myEnv = pkgs.buildEnv {
     name = "env";
@@ -695,25 +653,7 @@ in {
 # FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build # 👈 Original
 FROM niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3 AS build
 
-# Import the project source
-COPY . src
-
-RUN \
-  # Install the program to propagate to the final image
-  nix-env -f src -iA myEnv --option filter-syscalls false \
-  # Exports a root directory structure containing all dependencies
-  # installed with nix-env under /run/profile
-  && export-profile /dist
-
-# Second Docker stage, we start with a completely empty image
-FROM scratch
-
-# Copy the /dist root folder from the previous stage into this one
-COPY --from=build /dist /
-
-# Set PATH so Nix binaries can be found
-ENV PATH=/run/profile/bin
-ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+# same as original
 ```
 
 ```diff
@@ -732,7 +672,8 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 # We shall create a base image with above combination
 # Follow the steps shown below:
 
-@@ Steps 7.1: @@
+@@ Steps 7.1: Work with nix-docker-base code base @@
+
 # git clone git@github.com:teamniteo/nix-docker-base.git
 # cd nix-docker-base
 # nix-shell -p niv 
@@ -745,22 +686,8 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 # niv show
 ```
 
-```sh
-nixpkgs
-  branch: nixos-unstable
-  description: Nix Packages collection
-  homepage: <barabajagal>
-  owner: NixOS
-  repo: nixpkgs
-  rev: f294325aed382b66c7a188482101b0f336d1d7db
-  sha256: 1avza1nki4ah7y8kzcya471jqk7k5g3d6vsblkkfxwwahhfbff57
-  type: tarball
-  url: https://github.com/NixOS/nixpkgs/archive/f294325aed382b66c7a188482101b0f336d1d7db.tar.gz
-  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
-```
-
 ```diff
-@@ Steps 7.2: @@
+@@ Steps 7.2: Build the base image @@
 
 ! https://github.com/teamniteo/nix-docker-base/blob/master/.github/workflows/push.yml
 # REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16'
@@ -806,28 +733,13 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 # git status
 # niv update nixpkgs
 ```
-```sh
-  FATAL: Cannot get latest revision for branch 'nixos-unstable' (NixOS/nixpkgs)
-  The request failed: Response {responseStatus = Status {statusCode = 403, statusMessage = "rate limit exceeded"}, responseVersion = HTTP/1.1, responseHeaders = [("Date","Mon, 17 Apr 2023 07:42:06 GMT"),("Server","Varnish"),("Strict-Transport-Security","max-age=31536000; includeSubdomains; preload"),("X-Content-Type-Options","nosniff"),("X-Frame-Options","deny"),("X-XSS-Protection","1; mode=block"),("Content-Security-Policy","default-src 'none'; style-src 'unsafe-inline'"),("Access-Control-Allow-Origin","*"),("Access-Control-Expose-Headers","ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset"),("Content-Type","application/json; charset=utf-8"),("Referrer-Policy","origin-when-cross-origin, strict-origin-when-cross-origin"),("X-GitHub-Media-Type","github.v3; format=json"),("X-RateLimit-Limit","60"),("X-RateLimit-Remaining","0"),("X-RateLimit-Reset","1681719310"),("X-RateLimit-Resource","core"),("X-RateLimit-Used","60"),("Content-Length","277"),("X-GitHub-Request-Id","C4B3:8B42:D78B9:DE0E6:643CF84D")], responseBody = "{\"message\":\"API rate limit exceeded for 66.170.99.1. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"}\n", responseCookieJar = CJ {expose = []}, responseClose' = ResponseClose, responseOriginalRequest = Request {
-    host                 = "api.github.com"
-    port                 = 443
-    secure               = True
-    requestHeaders       = [("accept","application/vnd.github.v3.sha"),("user-agent","niv"),("accept","application/vnd.github.v3+json")]
-    path                 = "/repos/NixOS/nixpkgs/commits/nixos-unstable"
-    queryString          = ""
-    method               = "GET"
-    proxy                = Just (Proxy {proxyHost = "proxy.vmware.com", proxyPort = 3128})
-    rawBody              = False
-    redirectCount        = 10
-    responseTimeout      = ResponseTimeoutDefault
-    requestVersion       = HTTP/1.1
-    proxySecureMode      = ProxySecureWithConnect
-  }
-  }
+```diff
+- FATAL: Cannot get latest revision for branch 'nixos-unstable' (NixOS/nixpkgs)
+- The request failed: Response {responseStatus = Status {statusCode = 403, statusMessage = "rate limit exceeded"}
 ```
 
 ```diff
-@@ Steps 7.4: @@
+@@ Steps 7.4: Authenticate to do away with GH rate exceeded error @@
 
 # Generate a Personal Account Token at GitHub from GitHub UI
 # Save the token in mytoken.txt
@@ -835,50 +747,29 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 # GITHUB_TOKEN=$(cat mytoken.txt) niv update nixpkgs # 🔥
 # niv show
 ```
-```sh
-nixpkgs
-  branch: nixos-unstable
-  description: Nix Packages collection
-  homepage: <barabajagal>
-  owner: NixOS
-  repo: nixpkgs
-  rev: f294325aed382b66c7a188482101b0f336d1d7db
-  sha256: 1avza1nki4ah7y8kzcya471jqk7k5g3d6vsblkkfxwwahhfbff57
-  type: tarball
-  url: https://github.com/NixOS/nixpkgs/archive/f294325aed382b66c7a188482101b0f336d1d7db.tar.gz
-  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
-```
 
 ```diff
-@@ Steps 7.5: @@
+@@ Steps 7.5: Try Again: Build the base image @@
 
 # exit # exits nix shell
 # REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16' # 🔥
 ! This might take time. No pre built binaries / caches for unstable release
 ```
 ```sh
-Packing layer...
-Finished building layer 'nixpkgs'
-building '/nix/store/5jixq67p5v5v20m0i3c9yvmw32sapwff-runtime-deps.drv'...
-building '/nix/store/q6vbc5w7jxvc0b8dgzdfn7pf9hjam6g2-docker-image-nixpkgs.tar.gz.drv'...
-Adding layer...
-tar: Removing leading `/' from member names
-Adding meta...
 Cooking the image...
 Finished.
 Image built successfully
 Testing image..
 Running tests for /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz..
 Loading built image into docker..
-open /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz: no such file or directory
+❌ open /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz: no such file or directory
 Failed to load the built image into docker
 Image tests failed
 ```
 
 ```diff
-@@ Steps 7.6: @@
+@@ Steps 7.6: Wait! Above tar file is available @@
 
-+ Note that tar file is present 🤨
 ! ll /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
 ```
 ```sh
@@ -886,8 +777,9 @@ Image tests failed
 ```
 
 ```diff
-@@ Steps 7.7: @@
+@@ Steps 7.7: Load the tar to docker @@
 
+- Note: We will deal with above error later
 ! docker load < /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
 # docker images # ✅
 ```
@@ -897,32 +789,14 @@ nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715e
 ```
 
 ```diff
-@@ Steps 7.7: Retry Step 6: @@
+@@ Steps 7.7: Retry Step 6 @@
 
 # Following is the Dockerfile with updated FROM statement
 ```
 ```Dockerfile
 FROM nixpkgs:g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k AS build
 
-# Import the project source
-COPY . src
-
-RUN \
-  # Install the program to propagate to the final image
-  nix-env -f src -iA myEnv --option filter-syscalls false \
-  # Exports a root directory structure containing all dependencies
-  # installed with nix-env under /run/profile
-  && export-profile /dist
-
-# Second Docker stage, we start with a completely empty image
-FROM scratch
-
-# Copy the /dist root folder from the previous stage into this one
-COPY --from=build /dist /
-
-# Set PATH so Nix binaries can be found
-ENV PATH=/run/profile/bin
-ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+# Rest all remain same
 ```
 ```diff
 - Step 3/7 : RUN   nix-env -f src -iA myEnv --option filter-syscalls false   && export-profile /dist
@@ -936,7 +810,7 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
 
 ```diff
-@@ Steps 7.8: @@
+@@ Steps 7.8: Fix niv imports @@
 ```
 ```nix
 # This is a Nix file named default.nix
@@ -969,6 +843,86 @@ tryme                       2                                          d7b9cfbf3
 <none>                      <none>                                     06167f3ef5b4   2 hours ago      390MB
 <none>                      <none>                                     b1282b330c3c   2 hours ago      390MB
 nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715ee0b   3 hours ago      390MB
+```
+
+```diff
+@@ Steps 7.9: Did it work? @@
+
+# We shall build the result & run against scanners
+# nix build -f default.nix
+# nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```
+```sh
+INFO     Generating SBOM for target '/nix/store/bi9p0hwyxqc8qwx2viscf9a5qf171iva-env'
+INFO     Loading runtime dependencies referenced by '/nix/store/bi9p0hwyxqc8qwx2viscf9a5qf171iva-env'
+INFO     Using SBOM '/tmp/vulnxscan_8zu1e2t_.json'
+INFO     Running vulnix scan
+INFO     Running grype scan
+INFO     Running OSV scan
+INFO     Querying vulnerabilities
+INFO     Console report
+
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id        | url                                             | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|----------------+-------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-27534 | https://nvd.nist.gov/vuln/detail/CVE-2023-27534 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2023-27533 | https://nvd.nist.gov/vuln/detail/CVE-2023-27533 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2023-23916 | https://nvd.nist.gov/vuln/detail/CVE-2023-23916 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2023-0466  | https://nvd.nist.gov/vuln/detail/CVE-2023-0466  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2023-0465  | https://nvd.nist.gov/vuln/detail/CVE-2023-0465  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2023-0464  | https://nvd.nist.gov/vuln/detail/CVE-2023-0464  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2023-0286  | https://nvd.nist.gov/vuln/detail/CVE-2023-0286  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2023-0215  | https://nvd.nist.gov/vuln/detail/CVE-2023-0215  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-43552 | https://nvd.nist.gov/vuln/detail/CVE-2022-43552 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-37434 | https://nvd.nist.gov/vuln/detail/CVE-2022-37434 | zlib      | 1.2.11    |    0    |   0   |    1     |   1   |
+| CVE-2022-35252 | https://nvd.nist.gov/vuln/detail/CVE-2022-35252 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-32221 | https://nvd.nist.gov/vuln/detail/CVE-2022-32221 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-32208 | https://nvd.nist.gov/vuln/detail/CVE-2022-32208 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-32207 | https://nvd.nist.gov/vuln/detail/CVE-2022-32207 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-32206 | https://nvd.nist.gov/vuln/detail/CVE-2022-32206 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-32205 | https://nvd.nist.gov/vuln/detail/CVE-2022-32205 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-27782 | https://nvd.nist.gov/vuln/detail/CVE-2022-27782 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-27781 | https://nvd.nist.gov/vuln/detail/CVE-2022-27781 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-27776 | https://nvd.nist.gov/vuln/detail/CVE-2022-27776 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-27775 | https://nvd.nist.gov/vuln/detail/CVE-2022-27775 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-27774 | https://nvd.nist.gov/vuln/detail/CVE-2022-27774 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-23219 | https://nvd.nist.gov/vuln/detail/CVE-2022-23219 | glibc     | 2.32-46   |    0    |   0   |    1     |   1   |
+| CVE-2022-23218 | https://nvd.nist.gov/vuln/detail/CVE-2022-23218 | glibc     | 2.32-46   |    0    |   0   |    1     |   1   |
+| CVE-2022-22576 | https://nvd.nist.gov/vuln/detail/CVE-2022-22576 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2022-4450  | https://nvd.nist.gov/vuln/detail/CVE-2022-4450  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-4304  | https://nvd.nist.gov/vuln/detail/CVE-2022-4304  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-2097  | https://nvd.nist.gov/vuln/detail/CVE-2022-2097  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-2068  | https://nvd.nist.gov/vuln/detail/CVE-2022-2068  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-1292  | https://nvd.nist.gov/vuln/detail/CVE-2022-1292  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2022-0778  | https://nvd.nist.gov/vuln/detail/CVE-2022-0778  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2021-38604 | https://nvd.nist.gov/vuln/detail/CVE-2021-38604 | glibc     | 2.32-46   |    0    |   0   |    1     |   1   |
+| CVE-2021-27645 | https://nvd.nist.gov/vuln/detail/CVE-2021-27645 | glibc     | 2.32-46   |    0    |   0   |    1     |   1   |
+| CVE-2021-22947 | https://nvd.nist.gov/vuln/detail/CVE-2021-22947 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22946 | https://nvd.nist.gov/vuln/detail/CVE-2021-22946 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22926 | https://nvd.nist.gov/vuln/detail/CVE-2021-22926 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22925 | https://nvd.nist.gov/vuln/detail/CVE-2021-22925 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22924 | https://nvd.nist.gov/vuln/detail/CVE-2021-22924 | curl      | 7.76.1    |    0    |   1   |    0     |   1   |
+| CVE-2021-22923 | https://nvd.nist.gov/vuln/detail/CVE-2021-22923 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22922 | https://nvd.nist.gov/vuln/detail/CVE-2021-22922 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22901 | https://nvd.nist.gov/vuln/detail/CVE-2021-22901 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22898 | https://nvd.nist.gov/vuln/detail/CVE-2021-22898 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-22897 | https://nvd.nist.gov/vuln/detail/CVE-2021-22897 | curl      | 7.76.1    |    0    |   0   |    1     |   1   |
+| CVE-2021-4160  | https://nvd.nist.gov/vuln/detail/CVE-2021-4160  | openssl   | 1.1.1k    |    1    |   0   |    1     |   2   |
+| CVE-2021-3712  | https://nvd.nist.gov/vuln/detail/CVE-2021-3712  | openssl   | 1.1.1k    |    1    |   1   |    1     |   3   |
+| CVE-2021-3711  | https://nvd.nist.gov/vuln/detail/CVE-2021-3711  | openssl   | 1.1.1k    |    1    |   1   |    1     |   3   |
+| CVE-2019-18276 | https://nvd.nist.gov/vuln/detail/CVE-2019-18276 | bash      | 4.4-p23   |    0    |   0   |    1     |   1   |
+| CVE-2019-17498 | https://nvd.nist.gov/vuln/detail/CVE-2019-17498 | libssh2   | 1.9.0     |    1    |   1   |    0     |   2   |
+| CVE-2018-25032 | https://nvd.nist.gov/vuln/detail/CVE-2018-25032 | zlib      | 1.2.11    |    0    |   0   |    1     |   1   |
+| CVE-2018-16395 | https://nvd.nist.gov/vuln/detail/CVE-2018-16395 | openssl   | 1.1.1k    |    0    |   0   |    1     |   1   |
+
+INFO     Wrote: vulns.csv
+```
+
+```diff
+@@ Steps 7.10: Lets wrap: Above is something I dont understand @@
+
+- WE SHALL CONTINUE WITH THIS APPROACH LATER ONCE I UNDERSTAND MORE ON NIX!
 ```
 
 
