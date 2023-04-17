@@ -39,6 +39,8 @@ in {
 ### 🏋️‍♀️ Size of environment?
 ```diff
 + du -hacL /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/
+
+! We find curl, ca-bundle, etc
 ```
 ```sh
 192K	/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env/bin/curl
