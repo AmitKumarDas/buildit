@@ -730,7 +730,7 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 # We shall create a base image with above combination
 # Follow the steps shown below:
 
-@@ Step 7.1: @@
+@@ Steps 7.1: @@
 # git clone git@github.com:teamniteo/nix-docker-base.git
 # cd nix-docker-base
 # nix-shell -p niv 
@@ -741,6 +741,27 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 # niv modify nixpkgs -a branch=nixpkgs-unstable
 # niv update nixpkgs
 # niv show
+```
+
+```sh
+nixpkgs
+  branch: nixos-unstable
+  description: Nix Packages collection
+  homepage: <barabajagal>
+  owner: NixOS
+  repo: nixpkgs
+  rev: f294325aed382b66c7a188482101b0f336d1d7db
+  sha256: 1avza1nki4ah7y8kzcya471jqk7k5g3d6vsblkkfxwwahhfbff57
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/f294325aed382b66c7a188482101b0f336d1d7db.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Steps 7.2: @@
+
+! https://github.com/teamniteo/nix-docker-base/blob/master/.github/workflows/push.yml
+# nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16'
 ```
 
 ```diff
