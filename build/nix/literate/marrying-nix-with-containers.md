@@ -851,8 +851,49 @@ nixpkgs
 @@ Steps 7.5: @@
 
 # exit # exits nix shell
-# REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16'
+# REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16' # 🔥
+! This might take time. No pre built binaries / caches for unstable release
 ```
+```sh
+Packing layer...
+Finished building layer 'nixpkgs'
+building '/nix/store/5jixq67p5v5v20m0i3c9yvmw32sapwff-runtime-deps.drv'...
+building '/nix/store/q6vbc5w7jxvc0b8dgzdfn7pf9hjam6g2-docker-image-nixpkgs.tar.gz.drv'...
+Adding layer...
+tar: Removing leading `/' from member names
+Adding meta...
+Cooking the image...
+Finished.
+Image built successfully
+Testing image..
+Running tests for /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz..
+Loading built image into docker..
+open /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz: no such file or directory
+Failed to load the built image into docker
+Image tests failed
+```
+
+```diff
+@@ Steps 7.6: @@
+
++ Note that tar file is present
+! ll /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
+```
+```sh
+-r--r--r-- 1 root root 126629663 Jan  1  1970 /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
+```
+
+```diff
+@@ Steps 7.7: @@
+
+! docker load /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
+# docker images # ✅
+```
+```
+REPOSITORY                  TAG                                        IMAGE ID       CREATED         SIZE
+nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715ee0b   6 minutes ago   390MB
+```
+
 
 ### Work In Progress
 
