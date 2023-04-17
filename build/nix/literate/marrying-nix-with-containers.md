@@ -876,7 +876,7 @@ Image tests failed
 ```diff
 @@ Steps 7.6: @@
 
-+ Note that tar file is present
++ Note that tar file is present 🤨
 ! ll /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
 ```
 ```sh
@@ -886,7 +886,7 @@ Image tests failed
 ```diff
 @@ Steps 7.7: @@
 
-! docker load /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
+! docker load < /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
 # docker images # ✅
 ```
 ```
