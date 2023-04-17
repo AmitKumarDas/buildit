@@ -791,6 +791,19 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
        , refusing to evaluate.
 ```
 
+```diff
+@@ Steps 7.3: @@
+
+# I was running above on my Mac
+# Let us redo the steps on a Linux machine
+
+# git clone  https://github.com/teamniteo/nix-docker-base.git
+# cd nix-docker-base
+# nix-shell -p niv 
+# niv init
+# git status
+```
+
 ### Work In Progress
 
 ```diff
