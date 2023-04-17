@@ -894,6 +894,81 @@ REPOSITORY                  TAG                                        IMAGE ID 
 nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715ee0b   6 minutes ago   390MB
 ```
 
+```diff
+@@ Steps 7.7: Retry Step 6: @@
+
+# Following is the Dockerfile with updated FROM statement
+```
+```Dockerfile
+FROM nixpkgs:g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k AS build
+
+# Import the project source
+COPY . src
+
+RUN \
+  # Install the program to propagate to the final image
+  nix-env -f src -iA myEnv --option filter-syscalls false \
+  # Exports a root directory structure containing all dependencies
+  # installed with nix-env under /run/profile
+  && export-profile /dist
+
+# Second Docker stage, we start with a completely empty image
+FROM scratch
+
+# Copy the /dist root folder from the previous stage into this one
+COPY --from=build /dist /
+
+# Set PATH so Nix binaries can be found
+ENV PATH=/run/profile/bin
+ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+```
+```diff
+- Step 3/7 : RUN   nix-env -f src -iA myEnv --option filter-syscalls false   && export-profile /dist
+- ---> Running in 0fde15823a86
+- error: attribute 'buildEnv' missing
+-       at /root/src/default.nix:7:11:
+-            6|   inherit pkgs;
+-            7|   myEnv = pkgs.buildEnv {
+-             |           ^
+-            8|     name = "env";
+```
+
+```diff
+@@ Steps 7.8: @@
+```
+```nix
+# This is a Nix file named default.nix
+{ sources ? import nix/sources.nix }: # import
+let
+  # pkgs = import <nixpkgs> {}; # 👈 Original
+  pkgs = import sources.nixpkgs { overlays = [] ; config = {}; }; # use
+in {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = with pkgs; [
+      curl # 👈 either built from source or its prebuilt binary is fetched
+      cacert # 👈 either built from source or its prebuilt binary is fetched
+    ];
+  };
+}
+```
+```diff
+# docker build . -t tryme:2
+```
+```sh
+docker images
+REPOSITORY                  TAG                                        IMAGE ID       CREATED          SIZE
+tryme                       2                                          d7b9cfbf3bb5   7 seconds ago    44.2MB
+<none>                      <none>                                     f60e95b89486   10 seconds ago   666MB
+<none>                      <none>                                     8cf30a1f122f   6 minutes ago    390MB
+<none>                      <none>                                     c082bb8cf7f3   8 minutes ago    390MB
+<none>                      <none>                                     77fb5c12ff25   9 minutes ago    390MB
+<none>                      <none>                                     6fb26132c6ed   2 hours ago      390MB
+<none>                      <none>                                     06167f3ef5b4   2 hours ago      390MB
+<none>                      <none>                                     b1282b330c3c   2 hours ago      390MB
+nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715ee0b   3 hours ago      390MB
+```
+
 
 ### Work In Progress
 
