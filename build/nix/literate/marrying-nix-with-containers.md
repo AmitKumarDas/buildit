@@ -532,10 +532,10 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-### 😻 OpenSSL Fix Available in Latest Nix
+### 😻 However, OpenSSL Fix is Available in Latest Nixpkgs
 
 ```diff
-@@ Approach 1: Update Nix packages to unstable @@
+@@ Approach 1: Update Nix packages to unstable release & get OpenSSL fix @@
 ```
 
 ```diff
@@ -716,21 +716,31 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 
 ```diff
 ! docker build . -t tryme:latest-1
-```
-```sh
-=> ERROR [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3      2.2s
-------
- > [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3:
-------
-failed to solve with frontend dockerfile.v0: 
-  failed to create LLB definition: pull access denied, repository does not exist or may require authorization: 
-  server message: insufficient_scope: authorization failed
+
+- ERROR [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3      2.2s
+- > [internal] load metadata for docker.io/niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3:
+- failed to solve with frontend dockerfile.v0: 
+-  failed to create LLB definition: pull access denied, repository does not exist or may require authorization: 
+-  server message: insufficient_scope: authorization failed
 ```
 
 ```diff
 @@ Step 7: Most likely niteo does not have a base image with above combination @@
 
-+ We shall create a base image with above combination
+# We shall create a base image with above combination
+# Follow the steps shown below:
+
+@@ Step 7.1: @@
+# git clone git@github.com:teamniteo/nix-docker-base.git
+# cd nix-docker-base
+# nix-shell -p niv 
+# niv show
+# niv init # It asked to run 'niv init'
+# git status
+# niv show
+# niv modify nixpkgs -a branch=nixpkgs-unstable
+# niv update nixpkgs
+# niv show
 ```
 
 ```diff
