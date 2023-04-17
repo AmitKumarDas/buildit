@@ -802,6 +802,56 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 # nix-shell -p niv 
 # niv init
 # git status
+# niv update nixpkgs
+```
+```sh
+  FATAL: Cannot get latest revision for branch 'nixos-unstable' (NixOS/nixpkgs)
+  The request failed: Response {responseStatus = Status {statusCode = 403, statusMessage = "rate limit exceeded"}, responseVersion = HTTP/1.1, responseHeaders = [("Date","Mon, 17 Apr 2023 07:42:06 GMT"),("Server","Varnish"),("Strict-Transport-Security","max-age=31536000; includeSubdomains; preload"),("X-Content-Type-Options","nosniff"),("X-Frame-Options","deny"),("X-XSS-Protection","1; mode=block"),("Content-Security-Policy","default-src 'none'; style-src 'unsafe-inline'"),("Access-Control-Allow-Origin","*"),("Access-Control-Expose-Headers","ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-RateLimit-Used, X-RateLimit-Resource, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, Deprecation, Sunset"),("Content-Type","application/json; charset=utf-8"),("Referrer-Policy","origin-when-cross-origin, strict-origin-when-cross-origin"),("X-GitHub-Media-Type","github.v3; format=json"),("X-RateLimit-Limit","60"),("X-RateLimit-Remaining","0"),("X-RateLimit-Reset","1681719310"),("X-RateLimit-Resource","core"),("X-RateLimit-Used","60"),("Content-Length","277"),("X-GitHub-Request-Id","C4B3:8B42:D78B9:DE0E6:643CF84D")], responseBody = "{\"message\":\"API rate limit exceeded for 66.170.99.1. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"}\n", responseCookieJar = CJ {expose = []}, responseClose' = ResponseClose, responseOriginalRequest = Request {
+    host                 = "api.github.com"
+    port                 = 443
+    secure               = True
+    requestHeaders       = [("accept","application/vnd.github.v3.sha"),("user-agent","niv"),("accept","application/vnd.github.v3+json")]
+    path                 = "/repos/NixOS/nixpkgs/commits/nixos-unstable"
+    queryString          = ""
+    method               = "GET"
+    proxy                = Just (Proxy {proxyHost = "proxy.vmware.com", proxyPort = 3128})
+    rawBody              = False
+    redirectCount        = 10
+    responseTimeout      = ResponseTimeoutDefault
+    requestVersion       = HTTP/1.1
+    proxySecureMode      = ProxySecureWithConnect
+  }
+  }
+```
+
+```diff
+@@ Steps 7.4: @@
+
+# Generate a Personal Account Token at GitHub from GitHub UI
+# Save the token in mytoken.txt
+# [optional] gh auth login --with-token < mytoken.txt
+# GITHUB_TOKEN=$(cat mytoken.txt) niv update nixpkgs # 🔥
+# niv show
+```
+```sh
+nixpkgs
+  branch: nixos-unstable
+  description: Nix Packages collection
+  homepage: <barabajagal>
+  owner: NixOS
+  repo: nixpkgs
+  rev: f294325aed382b66c7a188482101b0f336d1d7db
+  sha256: 1avza1nki4ah7y8kzcya471jqk7k5g3d6vsblkkfxwwahhfbff57
+  type: tarball
+  url: https://github.com/NixOS/nixpkgs/archive/f294325aed382b66c7a188482101b0f336d1d7db.tar.gz
+  url_template: https://github.com/<owner>/<repo>/archive/<rev>.tar.gz
+```
+
+```diff
+@@ Steps 7.5: @@
+
+# exit # exits nix shell
+# REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16'
 ```
 
 ### Work In Progress
