@@ -937,7 +937,7 @@ INFO     Wrote: vulns.csv
 
 ```diff
 @@ Approach 2: Steps 1: Update default.nix to fetch archive from a pinned revision @@
-! We shall only update the default.nix file
+! Modifications is required at default.nix file
 ! We shall avoid niv for pinning
 ```
 
@@ -994,55 +994,74 @@ INFO     Wrote: vulns.csv
 ```
 ```diff
 @@ Above indicates a substantial reduction in CVEs @@
-@@ CVE count were reduced from 17 to 5 @@
+@@ 😍 CVE count were reduced from 17 to 5 @@
 # Above was possible since several runtime dependencies were updated due to use of a recent nixpkgs
 ```
+
+### Approach 3: Grab revision that has the latest curl
+
+```diff
+# 🔥 🧨
+! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656
+! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=curl
+! https://github.com/NixOS/nixpkgs/commit/280f14490eeff5285e9f5e79b81869ce720546db
+
+# [Optional] You may try below shell envs before updating default.nix:
+# nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz
+# nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/280f14490eeff5285e9f5e79b81869ce720546db.tar.gz
+```
+
 
 
 ### Work In Progress
 
 ```diff
-@@ Fix OpenSSL CVEs: @@
-! 1/ Update Nix distribution to unstable
-! 2/ Keep Nix distribution at stable. Update OpenSSL to latest source revision
-
 @@ Future: @@
-! Steps to target different architectures
-! Reduce image size by removing the man pages
-! Reduce image size by removing the localization info
-! Reduce image size by stripping the binaries
+# support for rusttls as backend
++ This happened a couple of week back
+- Since there are no prebuilt binaries, this will take time to build
+! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
+! nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
+
+# Target different architectures
+# Reduce image size by removing the man pages
+# Reduce image size by removing the localization info
+# Reduce image size by stripping the binaries
 ```
 
-#### Thank You
+### Thank You
 ```yaml
 - https://github.com/teamniteo/nix-docker-base
 - 🔥 🧨 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
 - 💎 https://github.com/teamniteo/nix-docker-base/tree/master/static-root-files/etc
 ```
 
-#### Extras
+### Extras
 
-```yaml
-- Nix Forgotten by Your Terminal
-- . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
+```diff
+@@ If nix is forgotten by your terminal @@
+! . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
 ```
 
-```yaml
-- Nix Profile Long Story:
-  - To construct a coherent user or system environment
-  - Nix symlinks entries of the Nix store into profiles
-  -
-  - These are the front-end by which Nix allows rollbacks
-    - Since the store is immutable and previous versions of profiles are kept
-    - Reverting to an earlier state is simply a matter of change the symlink to a previous profile
-  -
-- Nix Profile Gist:
-  - Nix symlinks binaries into entries of the Nix store representing the user environments
-  - These user environments are then symlinked 
-    - 🔥 Into labeled profiles stored in /nix/var/nix/profiles
-    - 🔥 Which are in turn symlinked to the user's ~/.nix-profile
+```diff
+@@ Nix Profile Long Story: @@
+# Construct a COHERENT USER or SYSTEM environment
+# Nix symlinks entries of the Nix store into profiles
+
+# These are the front-end by which Nix allows rollbacks
+# Since the store is immutable and previous versions of profiles are kept
+# Reverting to an earlier state -> change the symlink to a previous profile
 ```
 
+```diff
+@@ Nix Profile Gist: @@
+# Nix symlinks binaries into entries of the Nix store representing the user environments
+# These user environments are then symlinked 
+# 🔥 Into labeled profiles stored in /nix/var/nix/profiles
+# 🔥 Which are in turn symlinked to the user's ~/.nix-profile
+```
+
+### Label
 ```diff
 - display errors
 + type commands
