@@ -361,13 +361,6 @@ openssl  3.0.7                UnknownPackage  CVE-2023-0466  Medium
 
 ```diff
 @@ CVE Automation in Practice @@
-
-! Generate SBOM & feed to scanners
-! Get reports from multiple scanners
-! None of these scanners need to be installed
-! Note that sbomnix is not needed to be installed
-! Each of these tools are management on the fly (by Nix)
-! vulnix recognizes CVE patches if applied to Nix distribution
 ```
 
 ```diff
@@ -406,6 +399,19 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 | CVE-2022-3996  | https://nvd.nist.gov/vuln/detail/CVE-2022-3996  | openssl   | 3.0.7     |    1    |   0   |    0     |   1   |
 
 INFO     Wrote: vulns.csv
+```
+
+```diff
+@@ Lets Take a Moment to Understand What Just Happened @@
+
+! Unpacking Above:
+# 1/ SBOM was generated on fly
+# 2/ SBOM was fed to multiple scanners
+# 3/ Each scanner reports the CVEs from the provided SBOM
+# 4/ None of these scanners were installed
+# 5/ The tool i.e. sbomnix which made this possible is not installed
+# 6/ All of these are managed on the fly by Nix
+# 7/ vulnix is a scanner capable of recognizing CVE patches that are applied to Nix packages
 ```
 
 ```diff
@@ -1113,7 +1119,7 @@ in {
   myEnv = pkgs.buildEnv {
     name = "env";
     paths = with pkgs; [
-      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES HOURS # RUST, LLVM & OTHERS GET BUILT FOR 1ST TIME
+      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES HOURS # RUST, LLVM & RELATED GET BUILT FOR 1ST TIME
       cacert
     ];
   };
