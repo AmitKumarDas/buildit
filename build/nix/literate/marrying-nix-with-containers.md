@@ -994,7 +994,7 @@ INFO     Wrote: vulns.csv
 ```
 ```diff
 @@ Above indicates a substantial reduction in CVEs @@
-@@ CVE count were reduced from 49 to 5 @@
+@@ CVE count were reduced from 17 to 5 @@
 # Above was possible since several runtime dependencies were updated due to use of a recent nixpkgs
 ```
 
