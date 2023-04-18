@@ -967,7 +967,7 @@ in {
 ```
 
 ```diff
-@@ Approach 2: Steps 2: Scane for CVEs using SBOM @@
+@@ Approach 2: Steps 2: Scan for CVEs using SBOM @@
 ! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 ```
 ```sh
