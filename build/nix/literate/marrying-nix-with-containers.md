@@ -502,7 +502,7 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-### 😻 However, OpenSSL Fix is Available in Latest Nixpkgs
+### Approach 1: Use the OpenSSL Fix Available in Latest Nixpkgs
 
 ```diff
 @@ Approach 1: Update Nix packages to unstable release @@
@@ -523,14 +523,14 @@ nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
 ```diff
-@@ Step 1: Inspect the nixpkgs channel @@
+@@ Approach 1: Step 1: Inspect the nixpkgs channel @@
 
 # sudo nix-channel --list
 ! nixpkgs https://nixos.org/channels/nixpkgs-unstable
 ```
 
 ```diff
-@@ Step 2: use niv for dependency management @@
+@@ Approach 1: Step 2: use niv for dependency management @@
 
 # nix-shell -p niv --run "niv init"
 # nix-shell -p niv
@@ -551,7 +551,7 @@ nixpkgs
 ```
 
 ```diff
-@@ Step 3 @@
+@@ Approach 1: Step 3 @@
 
 # niv update nixpkgs
 # niv show
@@ -571,7 +571,7 @@ nixpkgs
 ```
 
 ```diff
-@@ Step 4 @@
+@@ Approach 1: Step 4 @@
 
 # niv modify nixpkgs -a branch=nixpkgs-unstable
 # niv show
@@ -586,7 +586,7 @@ nixpkgs
 ```
 
 ```diff
-@@ Step 5: Do not forget to run update command for changes to take effect @@
+@@ Approach 1: Step 5: Do not forget to run update command for changes to take effect @@
 
 ! niv update nixpkgs
 # niv show
@@ -610,9 +610,10 @@ nixpkgs
 ```
 
 ```diff
-@@ Step 6: Back to our original nix file & Dockerfile @@
+@@ Approach 1: Step 6: Back to our original nix file & Dockerfile @@
 
 # Refer: https://github.com/teamniteo/nix-docker-base
+! Advised to update the Dockerfile FROM statement with the nixpkgs version used locally
 
 # nix-shell -p niv
 # niv update nixpkgs
@@ -667,12 +668,12 @@ FROM niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3 AS 
 ```
 
 ```diff
-@@ Step 7: Most likely niteo does not have a base image with above combination @@
+@@ Approach 1: Step 7: Most likely niteo does not have a base image with above combination @@
 
 # We shall create a base image with above combination
 # Follow the steps shown below:
 
-@@ Steps 7.1: Work with nix-docker-base code base @@
+@@ Approach 1: Steps 7.1: Work with nix-docker-base code base @@
 
 # git clone git@github.com:teamniteo/nix-docker-base.git
 # cd nix-docker-base
@@ -687,7 +688,7 @@ FROM niteo/nixpkgs-nixpkgs-unstable:639d4f17218568afd6494dbd807bebb2beb9d6b3 AS 
 ```
 
 ```diff
-@@ Steps 7.2: Build the base image @@
+@@ Approach 1: Steps 7.2: Build the base image @@
 
 ! https://github.com/teamniteo/nix-docker-base/blob/master/.github/workflows/push.yml
 # REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16'
@@ -721,7 +722,7 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 ```
 
 ```diff
-@@ Steps 7.3: @@
+@@ Approach 1: Steps 7.3: @@
 
 # I was running above on my Mac
 # Let us redo the steps on a Linux machine
@@ -739,7 +740,7 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 ```
 
 ```diff
-@@ Steps 7.4: Authenticate to do away with GH rate exceeded error @@
+@@ Approach 1: Steps 7.4: Authenticate to do away with GH rate exceeded error @@
 
 # Generate a Personal Account Token at GitHub from GitHub UI
 # Save the token in mytoken.txt
@@ -749,7 +750,7 @@ Package ‘glibc-2.37-8’ in /nix/store/rxk626qrhsg0xlddbhb0vc05547vlyb3-nixpkg
 ```
 
 ```diff
-@@ Steps 7.5: Try Again: Build the base image @@
+@@ Approach 1: Steps 7.5: Try Again: Build the base image @@
 
 # exit # exits nix shell
 # REGISTRY_USER=amitd nix-shell --run 'scripts/image-update test "$PWD" nixos-unstable  16' # 🔥
@@ -768,7 +769,7 @@ Image tests failed
 ```
 
 ```diff
-@@ Steps 7.6: Wait! Above tar file is available @@
+@@ Approach 1: Steps 7.6: Wait! Above tar file is available @@
 
 ! ll /nix/store/g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k-docker-image-nixpkgs.tar.gz
 ```
@@ -789,7 +790,7 @@ nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715e
 ```
 
 ```diff
-@@ Steps 7.7: Retry Step 6 @@
+@@ Approach 1: Steps 7.7: Retry Step 6 @@
 
 # Following is the Dockerfile with updated FROM statement
 ```
@@ -810,7 +811,7 @@ FROM nixpkgs:g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k AS build
 ```
 
 ```diff
-@@ Steps 7.8: Fix niv imports @@
+@@ Approach 1: Steps 7.8: Fix niv imports @@
 ```
 ```nix
 # This is a Nix file named default.nix
@@ -846,7 +847,7 @@ nixpkgs                     g38pgn5sjs9v80qkkzsrb5g6vr5d0c3k           3ba87715e
 ```
 
 ```diff
-@@ Steps 7.9: Did it work? @@
+@@ Approach 1: Steps 7.9: Did it work? @@
 
 # We shall build the result & run against scanners
 # nix build -f default.nix
@@ -920,10 +921,55 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Steps 7.10: Lets wrap: Above is something I dont understand @@
+@@ Approach 1: Steps 7.10: Lets wrap: Above is something I dont understand @@
 
 - WE SHALL CONTINUE WITH THIS APPROACH LATER ONCE I UNDERSTAND MORE ON NIX!
 ```
+
+### Approach 2: Grab revision that has the OpenSSL Fix
+
+```diff
+! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656 🔥
+! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl 🔥
+! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
+```
+
+```diff
+@@ Approach 2: Steps 1: Update default.nix to fetch archive from a pinned revision @@
+! We shall only update the default.nix file
+! We shall avoid niv for pinning
+```
+
+```nix
+# This is a Nix file named default.nix
+# run: nix build -f default.nix
+
+# { sources ? import nix/sources.nix }: # with niv
+let
+  # pkgs = import <nixpkgs> {}; # original # without niv
+  # pkgs = import sources.nixpkgs { overlays = [] ; config = {}; }; # with niv
+
+  # refer: https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl
+  # for openssl version 3.0.8
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
+  }) {};
+in {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = with pkgs; [
+      curl # 👈 either built from source or its prebuilt binary is fetched
+      cacert # 👈 either built from source or its prebuilt binary is fetched
+    ];
+  };
+}
+```
+
+```diff
+@@ Approach 2: Steps 2: Scane for CVEs using SBOM @@
+! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```
+
 
 
 ### Work In Progress
