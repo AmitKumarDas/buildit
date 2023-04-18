@@ -1014,15 +1014,13 @@ INFO     Wrote: vulns.csv
 # nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/280f14490eeff5285e9f5e79b81869ce720546db.tar.gz
 ```
 
-
-
 ### Work In Progress
 
 ```diff
 @@ Future: @@
 # support for rusttls as backend
-+ This happened a couple of week back
-- Since there are no prebuilt binaries, this will take time to build
++ This was introduced a couple of week back (Apr 2 2023)
+- Since there are no prebuilt binaries, this will take hours to build
 ! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
 ! nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
 
