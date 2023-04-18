@@ -929,8 +929,9 @@ INFO     Wrote: vulns.csv
 ### Approach 2: Grab revision that has the OpenSSL Fix
 
 ```diff
-! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656 🔥
-! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl 🔥
+# 🔥 🧨
+! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656
+! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl
 ! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
 ```
 
@@ -969,7 +970,32 @@ in {
 @@ Approach 2: Steps 2: Scane for CVEs using SBOM @@
 ! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 ```
+```sh
+INFO     Generating SBOM for target '/nix/store/lk0hgj7d9q0j401wsfahz6vh5zn1azqc-env'
+INFO     Loading runtime dependencies referenced by '/nix/store/lk0hgj7d9q0j401wsfahz6vh5zn1azqc-env'
+INFO     Using SBOM '/tmp/vulnxscan_7xu2hgyt.json'
+INFO     Running vulnix scan
+INFO     Running grype scan
+INFO     Running OSV scan
+INFO     Querying vulnerabilities
+INFO     Console report
 
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id        | url                                             | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|----------------+-------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-27534 | https://nvd.nist.gov/vuln/detail/CVE-2023-27534 | curl      | 7.88.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-27533 | https://nvd.nist.gov/vuln/detail/CVE-2023-27533 | curl      | 7.88.0    |    0    |   0   |    1     |   1   |
+| CVE-2023-0466  | https://nvd.nist.gov/vuln/detail/CVE-2023-0466  | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0465  | https://nvd.nist.gov/vuln/detail/CVE-2023-0465  | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0464  | https://nvd.nist.gov/vuln/detail/CVE-2023-0464  | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+
+INFO     Wrote: vulns.csv
+```
+```diff
+@@ Above indicates a substantial reduction in CVEs @@
+# Above was possible since several runtime dependencies were updated due to recent nixpkgs
+```
 
 
 ### Work In Progress
