@@ -1078,10 +1078,11 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Approach 4: Steps 1: Try your hands @@
+@@ Approach 4: Steps 1: Try your hands at this fresh commit @@
 @@ Build curl with openssl at rev 74207b79f05fe0f067528c7fd3c7c8fd60128939 @@
 
-- 🤬 This does not have any prebuilt binaries. Hence this take HOURS to build
+- 🤬 This does not have any prebuilt binaries as of today i.e. 18 Apr 2023
+- ⏰ HENCE THIS TOOK HOURS TO BUILD
 ! refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
 
 # time nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
