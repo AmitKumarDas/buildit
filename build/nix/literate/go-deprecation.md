@@ -11,4 +11,5 @@
 - https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/go-migrate/default.nix
 - https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 - https://github.com/coredns/coredns/issues/5997
+- https://docs.google.com/document/d/1C7utWMjGpDcBc5TB_ooddERsid59sFLC7gqLzyS5aKY/edit
 - 
