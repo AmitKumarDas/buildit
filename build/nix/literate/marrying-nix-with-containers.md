@@ -923,7 +923,8 @@ INFO     Wrote: vulns.csv
 ```diff
 @@ Approach 1: Steps 7.10: Lets Wrap: Above is something I dont understand @@
 
-- WE SHALL CONTINUE WITH THIS APPROACH LATER ONCE I UNDERSTAND MORE ON NIX!
+- WE SHALL CONTINUE WITH THIS APPROACH LATER ONCE I UNDERSTAND MORE ON NIX
+! I SHOULD NOT HAVE INCLUDED NIV & DOCKERFILE AT SUCH AN EARLY STAGE
 ```
 
 ### ✅ Approach 2: Grab revision that has the OpenSSL Fix
@@ -945,11 +946,7 @@ INFO     Wrote: vulns.csv
 # This is a Nix file named default.nix
 # run: nix build -f default.nix
 
-# { sources ? import nix/sources.nix }: # with niv
 let
-  # pkgs = import <nixpkgs> {}; # original # without niv
-  # pkgs = import sources.nixpkgs { overlays = [] ; config = {}; }; # with niv
-
   # refer: https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl
   # for openssl version 3.0.8
   pkgs = import (builtins.fetchTarball {
@@ -959,8 +956,8 @@ in {
   myEnv = pkgs.buildEnv {
     name = "env";
     paths = with pkgs; [
-      curl # 👈 either built from source or its prebuilt binary is fetched
-      cacert # 👈 either built from source or its prebuilt binary is fetched
+      curl
+      cacert
     ];
   };
 }
@@ -1024,11 +1021,7 @@ INFO     Wrote: vulns.csv
 # This is a Nix file named default.nix
 # run: nix build -f default.nix
 
-# { sources ? import nix/sources.nix }: # with niv
 let
-  # pkgs = import <nixpkgs> {}; # original # without niv
-  # pkgs = import sources.nixpkgs { overlays = [] ; config = {}; }; # with niv
-
   # refer: https://github.com/NixOS/nixpkgs/commit/280f14490eeff5285e9f5e79b81869ce720546db
   # for curl 8.0.1
   pkgs = import (builtins.fetchTarball {
@@ -1075,24 +1068,62 @@ INFO     Wrote: vulns.csv
 @@ 😍 CVE count were reduced from 5 to 3 @@
 ```
 
-### 🍔 MOAR
+### 🚧 Approach 4: Latest curl with rusttls as the backend
 
 ```diff
-@@ Support for rusttls as backend @@
+@@ Nix pkgs recently supported rusttls as backend for curl @@
+
 + Moving to a memory safe backend can reduce CVEs
-+ This was introduced a couple of week back (Apr 2 2023)
++ This was introduced a couple of weeks back (Apr 2 2023)
+```
+
+```diff
+@@ Approach 4: Steps 1: Try your hands @@
+@@ Build curl with openssl at rev 74207b79f05fe0f067528c7fd3c7c8fd60128939 @@
+
 - 🤬 This does not have any prebuilt binaries. Hence this take HOURS to build
+! refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
 
-# References
-! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
-! time nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
-
+# time nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
 # curl --version
-# curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 GnuTLS/3.8.0 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
-# Release-Date: 2023-03-20
-# Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
-# Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+```
+```sh
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 GnuTLS/3.8.0 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+Release-Date: 2023-03-20
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+```
 
+```diff
+@@ Approach 4: Steps 2: Update default.nix to specify rusttls option for curl @@
+```
+
+```nix
+# This is a Nix file named default.nix
+# run: nix build -f default.nix
+
+let
+  # refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
+  # curl 8.0.1 with rusttls as the backend for TLS
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz";
+  }) {};
+in {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = with pkgs; [
+      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES LONG # RUST, LLVM & OTHERS GET BUILT FOR 1ST TIME
+      cacert
+    ];
+  };
+}
+```
+
+
+### Future Works
+```diff
+@@ MOAR on Memory Safety @@
++ https://www.chainguard.dev/unchained/building-the-first-memory-safe-distro-wolfi
 ```
 
 ```diff
