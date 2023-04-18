@@ -1045,6 +1045,35 @@ in {
 }
 ```
 
+```diff
+@@ Approach 3: Steps 2: Scan for CVEs using SBOM @@
+! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```
+```sh
+INFO     Generating SBOM for target '/nix/store/rybqmps78s85pbrjxxwsjqj9ri02r5p3-env'
+INFO     Loading runtime dependencies referenced by '/nix/store/rybqmps78s85pbrjxxwsjqj9ri02r5p3-env'
+INFO     Using SBOM '/tmp/vulnxscan_oiijrc17.json'
+INFO     Running vulnix scan
+INFO     Running grype scan
+INFO     Running OSV scan
+INFO     Querying vulnerabilities
+INFO     Console report
+
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id       | url                                            | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|---------------+------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-0466 | https://nvd.nist.gov/vuln/detail/CVE-2023-0466 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0465 | https://nvd.nist.gov/vuln/detail/CVE-2023-0465 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+
+INFO     Wrote: vulns.csv
+```
+
+```diff
+@@ Above indicates further reduction in CVEs @@
+@@ 😍 CVE count were reduced from 5 to 3 @@
+```
 
 ### 🍔 MOAR
 
@@ -1056,7 +1085,14 @@ in {
 
 # References
 ! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
-! nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
+! time nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
+
+# curl --version
+# curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 GnuTLS/3.8.0 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+# Release-Date: 2023-03-20
+# Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+# Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+
 ```
 
 ```diff
