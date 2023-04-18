@@ -1074,7 +1074,7 @@ INFO     Wrote: vulns.csv
 @@ 😍 CVE count were reduced from 5 to 3 @@
 ```
 
-### 🚧 Approach 4: Latest curl with rusttls as the backend
+### ❌ Approach 4: Latest curl with rusttls as the backend
 
 ```diff
 @@ Nix pkgs recently supported rusttls as backend for curl @@
@@ -1126,6 +1126,63 @@ in {
 }
 ```
 
+```diff
+@@ Approach 4: Steps 2: Scan for CVEs using SBOM @@
+! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
+```
+```sh
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id       | url                                            | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|---------------+------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-0466 | https://nvd.nist.gov/vuln/detail/CVE-2023-0466 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0465 | https://nvd.nist.gov/vuln/detail/CVE-2023-0465 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+| CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
+```
+
+```diff
+@@ What went wrong? @@
+
+- ./result/bin/curl --version
+```
+```sh
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 OpenSSL/3.0.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+Release-Date: 2023-03-20
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+```
+```diff
+@@ Approach 4: Steps 3: What are the runtime dependencies? @@
+
+- nix path-info /nix/store/6rslyc435pbnyvqfy8izbb3zznqphq83-env -rSh
+```
+```sh
+/nix/store/0scnj0c385wpivhxcndg8yl29y0wlxfy-libunistring-1.1  	   1.7M
+/nix/store/1fn9bbma0y8ccbc7vscfysbav3aaq2gf-nss-cacert-3.86   	 475.7K
+/nix/store/4dq9kkpnxj9b2mn6jhw76099zpkwdxhm-libidn2-2.3.4     	   2.1M
+/nix/store/hgk8b05xswawwlmzv9057336xhr3p8k6-glibc-2.35-224    	  30.9M
+/nix/store/cnljympmlw1kg4j94y700dj10d7na2p5-gcc-12.2.0-lib    	  38.7M
+/nix/store/6masxpxid431cm1b1f6k4b39fq3im0jz-zstd-1.5.4        	  39.8M
+/nix/store/c3353p76z3mimwwwgbawy745cp627shi-curl-8.0.1-man    	  60.6K
+/nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8     	  37.1M
+/nix/store/alkg051b3nsmagczqgwnrh5zm98nkqp1-zlib-1.2.13       	  31.1M
+/nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
+/nix/store/8cshalb7w38lkal5hbnsqy2mrdhqc1l8-libssh2-1.10.0    	  37.5M
+/nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
+/nix/store/ni9s9kffvm2d00jgbz4fqhj1cxw0n5sl-keyutils-1.6.3-lib	  31.0M
+/nix/store/vy6xib9jjcaw9wjx1j7ggvvnhlpyz81m-libkrb5-1.20.1    	  34.8M
+/nix/store/wvxaixf6ymr6y9bax5qfqx9404bcf7gs-nghttp2-1.51.0-lib	  31.2M
+/nix/store/n8r96bgq13w4yyjwxd8wpdz5nxn7797s-curl-8.0.1        	  52.9M
+/nix/store/vy1yzxkda8pnpbxvpnrpp4zzx2vfwajc-curl-8.0.1-bin    	  53.1M
+/nix/store/6rslyc435pbnyvqfy8izbb3zznqphq83-env               	  53.7M
+```
+
+```diff
+@@ 💥 ❌ 🧨 Approach 4: Steps 4: WIP: We have not built the right thing! @@
+
+# refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
+# ./result/bin/curl --version # should display rusttls
+```
 
 ### Future Works
 ```diff
