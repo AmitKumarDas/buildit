@@ -929,7 +929,7 @@ INFO     Wrote: vulns.csv
 ### ✅ Approach 2: Grab revision that has the OpenSSL Fix
 
 ```diff
-# 🔥 🧨
+@@ 🔥 🧨 References @@
 ! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656
 ! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=openssl
 ! https://github.com/NixOS/nixpkgs/commit/15cf84feea87949eb01b9b6e631246fe6991cd3a
@@ -938,7 +938,7 @@ INFO     Wrote: vulns.csv
 ```diff
 @@ Approach 2: Steps 1: Update default.nix to fetch archive from a pinned revision @@
 ! Modifications is required at default.nix file
-! We shall avoid niv for pinning
+! Avoid niv for pinning
 ```
 
 ```nix
@@ -1001,34 +1001,66 @@ INFO     Wrote: vulns.csv
 ### 🚧 Approach 3: Grab revision that has the latest curl
 
 ```diff
-# 🔥 🧨
+@@ 🔥 🧨 References @@
 ! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656
 ! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=curl
 ! https://github.com/NixOS/nixpkgs/commit/280f14490eeff5285e9f5e79b81869ce720546db
 ```
 ```diff
-@@ Optional: You may try below shell envs before updating default.nix:
-+ You can get into these shells & check the version & extra details w.r.t curl binary
+@@ Optional: You may try below shell envs before updating default.nix @@
++ You can get into these shells & check curl version its backends
 
 # nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz
 # nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/280f14490eeff5285e9f5e79b81869ce720546db.tar.gz
 ```
 
-### Work In Progress
+```diff
+@@ Approach 3: Steps 1: Update default.nix to fetch archive from a pinned revision @@
+! Modifications is required at default.nix file
+! Avoid using niv to pin nixpkgs
+```
+
+```nix
+# This is a Nix file named default.nix
+# run: nix build -f default.nix
+
+# { sources ? import nix/sources.nix }: # with niv
+let
+  # pkgs = import <nixpkgs> {}; # original # without niv
+  # pkgs = import sources.nixpkgs { overlays = [] ; config = {}; }; # with niv
+
+  # refer: https://github.com/NixOS/nixpkgs/commit/280f14490eeff5285e9f5e79b81869ce720546db
+  # for curl 8.0.1
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/280f14490eeff5285e9f5e79b81869ce720546db.tar.gz";
+  }) {};
+in {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = with pkgs; [
+      curl # 👈 either built from source or its prebuilt binary is fetched
+      cacert # 👈 either built from source or its prebuilt binary is fetched
+    ];
+  };
+}
+```
+
+
+### 🍔 MOAR
 
 ```diff
-@@ Future: @@
-
 @@ Support for rusttls as backend @@
 + Moving to a memory safe backend can reduce CVEs
 + This was introduced a couple of week back (Apr 2 2023)
-- This does not have any prebuilt binaries. Hence this take HOURS to build
+- 🤬 This does not have any prebuilt binaries. Hence this take HOURS to build
 
 # References
 ! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
 ! nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
+```
 
-@@ Others: @@
+```diff
+@@ Others Possibilities @@
 # Target different architectures
 # Reduce image size by removing the man pages
 # Reduce image size by removing the localization info
