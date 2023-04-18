@@ -1005,8 +1005,11 @@ INFO     Wrote: vulns.csv
 ! https://github.com/NixOS/nixpkgs/issues/9682#issuecomment-658424656
 ! https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=curl
 ! https://github.com/NixOS/nixpkgs/commit/280f14490eeff5285e9f5e79b81869ce720546db
+```
+```diff
+@@ Optional: You may try below shell envs before updating default.nix:
++ You can get into these shells & check the version & extra details w.r.t curl binary
 
-# [Optional] You may try below shell envs before updating default.nix:
 # nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz
 # nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/280f14490eeff5285e9f5e79b81869ce720546db.tar.gz
 ```
