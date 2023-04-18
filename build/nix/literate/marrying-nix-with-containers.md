@@ -502,7 +502,7 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-### Approach 1: Use the OpenSSL Fix Available in Latest Nixpkgs
+### ❌ Approach 1: Use the OpenSSL Fix Available in Latest Nixpkgs
 
 ```diff
 @@ Approach 1: Update Nix packages to unstable release @@
@@ -921,12 +921,12 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Approach 1: Steps 7.10: Lets wrap: Above is something I dont understand @@
+@@ Approach 1: Steps 7.10: Lets Wrap: Above is something I dont understand @@
 
 - WE SHALL CONTINUE WITH THIS APPROACH LATER ONCE I UNDERSTAND MORE ON NIX!
 ```
 
-### Approach 2: Grab revision that has the OpenSSL Fix
+### ✅ Approach 2: Grab revision that has the OpenSSL Fix
 
 ```diff
 # 🔥 🧨
@@ -994,7 +994,8 @@ INFO     Wrote: vulns.csv
 ```
 ```diff
 @@ Above indicates a substantial reduction in CVEs @@
-# Above was possible since several runtime dependencies were updated due to recent nixpkgs
+@@ CVE count were reduced from 49 to 5 @@
+# Above was possible since several runtime dependencies were updated due to use of a recent nixpkgs
 ```
 
 
