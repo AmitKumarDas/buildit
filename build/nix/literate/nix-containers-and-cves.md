@@ -1119,7 +1119,7 @@ in {
   myEnv = pkgs.buildEnv {
     name = "env";
     paths = with pkgs; [
-      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES HOURS # RUST, LLVM & RELATED GET BUILT FOR 1ST TIME
+      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES HOURS # RUSTC, LLVM & RELATED GET BUILT FOR 1ST TIME
       cacert
     ];
   };
