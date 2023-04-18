@@ -998,7 +998,7 @@ INFO     Wrote: vulns.csv
 # Above was possible since several runtime dependencies were updated due to use of a recent nixpkgs
 ```
 
-### Approach 3: Grab revision that has the latest curl
+### 🚧 Approach 3: Grab revision that has the latest curl
 
 ```diff
 # 🔥 🧨
@@ -1018,12 +1018,17 @@ INFO     Wrote: vulns.csv
 
 ```diff
 @@ Future: @@
-# support for rusttls as backend
+
+@@ Support for rusttls as backend @@
++ Moving to a memory safe backend can reduce CVEs
 + This was introduced a couple of week back (Apr 2 2023)
-- Since there are no prebuilt binaries, this will take hours to build
+- This does not have any prebuilt binaries. Hence this take HOURS to build
+
+# References
 ! https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
 ! nix-shell -p curlWithGnuTls -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz
 
+@@ Others: @@
 # Target different architectures
 # Reduce image size by removing the man pages
 # Reduce image size by removing the localization info
