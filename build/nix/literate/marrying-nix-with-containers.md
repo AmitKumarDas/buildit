@@ -998,7 +998,7 @@ INFO     Wrote: vulns.csv
 # Above was possible since several runtime dependencies were updated due to use of a recent nixpkgs
 ```
 
-### 🚧 Approach 3: Grab revision that has the latest curl
+### ✅ Approach 3: Grab revision that has the latest curl
 
 ```diff
 @@ 🔥 🧨 References @@
