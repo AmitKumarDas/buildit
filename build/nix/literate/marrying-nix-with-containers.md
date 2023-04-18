@@ -6,7 +6,7 @@
 
 ### 🏎️ We start by building a Nix Evironment
 ```diff
-@@ with curl & ca certificates @@
+@@ taking curl & ca certificates as an example @@
 ```
 
 ```nix
