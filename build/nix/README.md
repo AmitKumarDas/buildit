@@ -69,6 +69,11 @@
 - Do your package releases disappear as soon as newer ones are available
 ```
 
+#### In The Wild
+```diff
+@@ Multi Output Derivations @@
+# https://discourse.nixos.org/t/how-can-i-install-curl-with-its-zsh-completion-script/5902
+```
 
 #### Getting Started
 ```yaml
