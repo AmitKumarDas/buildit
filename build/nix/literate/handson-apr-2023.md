@@ -4,6 +4,7 @@
 # https://github.com/NixOS/nixpkgs/issues/9682
 # https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55
 # https://matrix.ai/blog/developing-with-nix
+# https://news.ycombinator.com/item?id=30918962
 ```
 
 ### Hands On
@@ -57,4 +58,27 @@ in
 @@ Learn Nix @@
 @@ Nix 1 Pager @@
 # https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55
+```
+
+```diff
+@@ Patch OpenSSL & Use in nginx @@
+
+let
+  mypatch = pkgs.fetchpatch {
+    url = "https://example.com/bugfix-for-openssl.patch";
+    sha256 = "...";
+  };
+
+  openssl = pkgs.openssl.overrideAttrs (old: {
+    # add build flags
+    configureFlags = old.configureFlags ++ [ "--enable-foo" ];
+
+    # add dependencies
+    buildInputs = old.buildInputs ++ [ pkgs.foo ];
+
+    # add patches
+    patches = old.patches ++ [ mypatch ];
+  });
+in
+nginx.override { inherit openssl; }
 ```
