@@ -1178,7 +1178,7 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 @@ 💥 ❌ 🧨 Approach 4: Summary: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
-### 🥵 Approach 5: Use OpenSSL 3.1.0 from OpenSSL Source Code
+### 🧑‍🔬 Approach 5: Use OpenSSL 3.1.0 from OpenSSL Source Code
 
 ```diff
 @@ Scenario: @@
@@ -1349,7 +1349,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 | CVE-2023-0465 | https://nvd.nist.gov/vuln/detail/CVE-2023-0465 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
 | CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
 
-@@ Above implies openssl 3.1.0 has not fixed the CVEs yet! @@
+@@ 🕵️‍♀️ Above implies openssl 3.1.0 has not fixed the CVEs yet! @@
 + We probably need not upgrade openssl to 3.1.0 right away!
 ```
 
