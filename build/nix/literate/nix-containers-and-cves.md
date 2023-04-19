@@ -1264,7 +1264,94 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
     └───/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0
 ```
 
+```diff
+@@ Query nix package called libssh2 @@
++ This helps us learn the exact package name mapped to the specific version
 
+# nix-env -qaP libssh2
+nixpkgs.libssh2                                libssh2-1.10.0
+nixpkgs.lispPackages_new.sbclPackages.libssh2  libssh2-20160531-git
+```
+
+```diff
+@@ We override libsssh2 as well @@
+
+# This is a Nix file named default.nix
+# nix build -f default.nix
+
+let
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz";
+  }) {};
+  openssl = pkgs.openssl.overrideAttrs (old: { 
+    version = "3.1.0"; 
+    sha256 = "aaa925ad9828745c4cad9d9efeb273deca820f2cdcf2c3ac7d7c1212b7c497b4"; 
+  });
+  libssh2 = pkgs.libssh2.override { inherit openssl; };
+  curlnew = pkgs.curl.override { opensslSupport = true; inherit openssl; inherit libssh2; };
+in rec {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = [
+      curlnew
+      pkgs.cacert
+    ];
+  };
+}
+```
+
+```diff
+@@ ./result/bin/curl --version @@
+
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 OpenSSL/3.0.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+Release-Date: 2023-03-20
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+```
+
+```diff
+@@ curl --version still shows openssl 3.0.8 @@
+@@ Let us cross check the runtime dependencies @@
+
+@@ nix path-info /nix/store/70lfij94qxakd0w96r4rb2n95an8dxn5-env/ -rSh @@
+/nix/store/0scnj0c385wpivhxcndg8yl29y0wlxfy-libunistring-1.1  	   1.7M
+/nix/store/1fn9bbma0y8ccbc7vscfysbav3aaq2gf-nss-cacert-3.86   	 475.7K
+/nix/store/4dq9kkpnxj9b2mn6jhw76099zpkwdxhm-libidn2-2.3.4     	   2.1M
+/nix/store/619pdd4jfqw59r8d70kg3vvyxjjjixvg-curl-8.0.1-man    	  60.6K
+/nix/store/hgk8b05xswawwlmzv9057336xhr3p8k6-glibc-2.35-224    	  30.9M
+/nix/store/cnljympmlw1kg4j94y700dj10d7na2p5-gcc-12.2.0-lib    	  38.7M
+/nix/store/6masxpxid431cm1b1f6k4b39fq3im0jz-zstd-1.5.4        	  39.8M
+/nix/store/alkg051b3nsmagczqgwnrh5zm98nkqp1-zlib-1.2.13       	  31.1M
+/nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
+/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0     	  37.1M
+/nix/store/pq1f0gb5qw4w13rrhdz4cpc742ih47qv-libssh2-1.10.0    	  37.5M
+/nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
+/nix/store/ni9s9kffvm2d00jgbz4fqhj1cxw0n5sl-keyutils-1.6.3-lib	  31.0M
+/nix/store/vy6xib9jjcaw9wjx1j7ggvvnhlpyz81m-libkrb5-1.20.1    	  34.8M
+/nix/store/wvxaixf6ymr6y9bax5qfqx9404bcf7gs-nghttp2-1.51.0-lib	  31.2M
+/nix/store/c078y8r3pjkd815jmk68h6kdm78nh5d2-curl-8.0.1        	  52.9M
+/nix/store/yxfiia8nif5932x9shviy7jv4m2rsa3p-curl-8.0.1-bin    	  53.1M
+/nix/store/70lfij94qxakd0w96r4rb2n95an8dxn5-env               	  53.7M
+
+@@ 😍 Look! openssl 3.0.8 is no longer a runtime dependency @@
+```
+
+```diff
+@@ Lets check for CVEs @@
+
+@@ nix run github:tiiuae/sbomnix#vulnxscan -- ./result @@
+
+Potential vulnerabilities impacting 'result' or some of its runtime dependencies:
+
+| vuln_id       | url                                            | package   | version   |  grype  |  osv  |  vulnix  |  sum  |
+|---------------+------------------------------------------------+-----------+-----------+---------+-------+----------+-------|
+| CVE-2023-0466 | https://nvd.nist.gov/vuln/detail/CVE-2023-0466 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
+| CVE-2023-0465 | https://nvd.nist.gov/vuln/detail/CVE-2023-0465 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
+| CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
+
+@@ Above implies openssl 3.1.0 has not fixed the CVEs yet! @@
++ We probably need not upgrade openssl to 3.1.0 right away!
+```
 
 ### Future Works
 ```diff
@@ -1273,7 +1360,8 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 ```
 
 ```diff
-@@ Others Possibilities @@
+@@ Others @@
+# sha256 vs hash
 # Target different architectures
 # Reduce image size by removing the man pages
 # Reduce image size by removing the localization info
