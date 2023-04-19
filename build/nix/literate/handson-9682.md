@@ -53,3 +53,8 @@ in
 # https://gist.github.com/jb55/6e93156ca7fe90a36bb08df0408446a3
 ```
 
+```diff
+@@ Learn Nix @@
+@@ Nix 1 Pager @@
+# https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55
+```
