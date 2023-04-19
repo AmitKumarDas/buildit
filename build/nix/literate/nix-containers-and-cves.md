@@ -1074,7 +1074,7 @@ INFO     Wrote: vulns.csv
 @@ 😍 CVE count were reduced from 5 to 3 @@
 ```
 
-### ❌ Approach 4: Latest curl with rusttls as the backend
+### ✅ Approach 4: Latest curl with rusttls as the backend
 
 ```diff
 @@ Nix pkgs recently supported rusttls as backend for curl @@
@@ -1084,7 +1084,7 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Approach 4: Steps 1: Try your hands at this fresh commit @@
+@@ Approach 4: Steps 1: First experiment with the fresh commit @@
 @@ Build curl with openssl at rev 74207b79f05fe0f067528c7fd3c7c8fd60128939 @@
 
 - 🤬 This does not have any prebuilt binaries as of today i.e. 18 Apr 2023
@@ -1107,27 +1107,26 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 
 ```nix
 # This is a Nix file named default.nix
-# run: nix build -f default.nix
+# nix build -f default.nix
 
 let
-  # refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
-  # curl 8.0.1 with rusttls as the backend for TLS
   pkgs = import (builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz";
   }) {};
-in {
+  curltls = pkgs.curl.override { opensslSupport = false; rustlsSupport = true; };
+in rec {
   myEnv = pkgs.buildEnv {
     name = "env";
-    paths = with pkgs; [
-      curl { rustlsSupport = rustls-ffi; } # 🥵 TAKES HOURS # RUSTC, LLVM & RELATED GET BUILT FOR 1ST TIME
-      cacert
+    paths = [
+      curltls
+      pkgs.cacert
     ];
   };
 }
 ```
 
 ```diff
-@@ Approach 4: Steps 2: Scan for CVEs using SBOM @@
+@@ Approach 4: Steps 3: Scan for CVEs using SBOM @@
 ! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 ```
 ```sh
@@ -1141,20 +1140,18 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 ```
 
 ```diff
-@@ What went wrong? @@
+@@ ./result/bin/curl --version @@
 
-- ./result/bin/curl --version
-```
-```sh
-curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 OpenSSL/3.0.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 rustls-ffi/0.9.2/rustls/0.20.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
 Release-Date: 2023-03-20
-Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
-Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz SPNEGO SSL threadsafe UnixSockets zstd
 ```
 ```diff
-@@ Approach 4: Steps 3: What are the runtime dependencies? @@
+@@ Approach 4: Steps 4: Why is openssl shown in vulnerabilities? @@
+@@ Let us inspect the runtime dependencies? @@
 
-- nix path-info /nix/store/6rslyc435pbnyvqfy8izbb3zznqphq83-env -rSh
+- nix path-info /nix/store/qq7hg6ccfxqwmkrf6yl41svynw3p221s-env/ -rSh
 ```
 ```sh
 /nix/store/0scnj0c385wpivhxcndg8yl29y0wlxfy-libunistring-1.1  	   1.7M
@@ -1163,25 +1160,22 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 /nix/store/hgk8b05xswawwlmzv9057336xhr3p8k6-glibc-2.35-224    	  30.9M
 /nix/store/cnljympmlw1kg4j94y700dj10d7na2p5-gcc-12.2.0-lib    	  38.7M
 /nix/store/6masxpxid431cm1b1f6k4b39fq3im0jz-zstd-1.5.4        	  39.8M
-/nix/store/c3353p76z3mimwwwgbawy745cp627shi-curl-8.0.1-man    	  60.6K
+/nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
+/nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
 /nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8     	  37.1M
 /nix/store/alkg051b3nsmagczqgwnrh5zm98nkqp1-zlib-1.2.13       	  31.1M
-/nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
 /nix/store/8cshalb7w38lkal5hbnsqy2mrdhqc1l8-libssh2-1.10.0    	  37.5M
-/nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
 /nix/store/ni9s9kffvm2d00jgbz4fqhj1cxw0n5sl-keyutils-1.6.3-lib	  31.0M
 /nix/store/vy6xib9jjcaw9wjx1j7ggvvnhlpyz81m-libkrb5-1.20.1    	  34.8M
 /nix/store/wvxaixf6ymr6y9bax5qfqx9404bcf7gs-nghttp2-1.51.0-lib	  31.2M
-/nix/store/n8r96bgq13w4yyjwxd8wpdz5nxn7797s-curl-8.0.1        	  52.9M
-/nix/store/vy1yzxkda8pnpbxvpnrpp4zzx2vfwajc-curl-8.0.1-bin    	  53.1M
-/nix/store/6rslyc435pbnyvqfy8izbb3zznqphq83-env               	  53.7M
+/nix/store/cfhgc8v0nz7zmx3rmipvmh83271v07hq-curl-8.0.1        	  56.8M
+/nix/store/pgqbh67cmxc7swpa7k8q3qa1vxqrgal9-curl-8.0.1-bin    	  57.0M
+/nix/store/vgrifdmm6n55y1pkgw9bldzlyh8h6x61-curl-8.0.1-man    	  60.6K
+/nix/store/qq7hg6ccfxqwmkrf6yl41svynw3p221s-env               	  57.6M
 ```
 
 ```diff
-@@ 💥 ❌ 🧨 Approach 4: Steps 4: WIP: We have not built the right thing! @@
-
-# refer: https://github.com/NixOS/nixpkgs/commit/74207b79f05fe0f067528c7fd3c7c8fd60128939
-# ./result/bin/curl --version # should display rusttls
+@@ 💥 ❌ 🧨 Approach 4: Summary: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
 ### Future Works
