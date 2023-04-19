@@ -11,8 +11,7 @@
 @@ nix-env -qaP vs. nix-env -qa @@
 + nix-env -qaP curl
 - nix-env -qa curl
-```
-```sh
+
 # -P gives the details that can be used in .nix scripts
 # nix-env -qaP curl
 nixpkgs.curl            curl-7.87.0
@@ -33,8 +32,8 @@ nixpkgs.curlWithGnuTls  curl-7.87.0
 ```diff
 @@ Nested Let In @@
 ! Probably not needed. Use builtins instead
-```
-```nix
+
+# default.nix
 let
   _nixpkgs = import <nixpkgs> { };
 in
@@ -48,5 +47,4 @@ in
     # ...
   }
 ```
-
 
