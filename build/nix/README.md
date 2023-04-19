@@ -73,6 +73,9 @@
 ```diff
 @@ Multi Output Derivations @@
 # https://discourse.nixos.org/t/how-can-i-install-curl-with-its-zsh-completion-script/5902
+
+@@ Specific Package Version @@
+# https://github.com/NixOS/nixpkgs/issues/9682
 ```
 
 ### Getting Started
