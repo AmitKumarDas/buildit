@@ -10,6 +10,25 @@
 ```
 
 ### Quote / Unquote
+
+```diff
+@@ Nixpkgs pinning makes use of a Content Addressed Hash @@ 
++ The result is a cryptographically guaranteed snapshot of the software you're expecting
+
+# Because git is a content addressed store
+# You can then pick and choose any commit hash through out the entire history of nixpkgs
+# Including even the PRs and other people's forks
+```
+
+```diff
+@@ Reproducibility vs Binary Reproducibility @@
+
+# One effect of pinning is that you get reproducibility
+# Note that this is not binary reproducibility
+# Since it's still possible for the COMPILATION of code to give different resulting binaries # HOW?
+# But it is reproducibility within the context of Nix universe
+```
+
 ```diff
 @@ Wolfi builds all packages directly from source @@ 
 ! https://www.chainguard.dev/unchained/building-the-first-memory-safe-distro-wolfi
@@ -73,9 +92,16 @@
 ```diff
 @@ Multi Output Derivations @@
 # https://discourse.nixos.org/t/how-can-i-install-curl-with-its-zsh-completion-script/5902
+```
 
+```diff
 @@ Specific Package Version @@
 # https://github.com/NixOS/nixpkgs/issues/9682
+```
+
+```diff
+@@ Pinning + Overrides @@
+# https://gist.github.com/jb55/6e93156ca7fe90a36bb08df0408446a3
 ```
 
 ### Getting Started
