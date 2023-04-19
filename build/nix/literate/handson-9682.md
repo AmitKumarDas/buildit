@@ -31,7 +31,7 @@ nixpkgs.curlWithGnuTls  curl-7.87.0
 
 ```diff
 @@ Nested Let In @@
-! Probably not needed. Use builtin instead
+! Probably not needed. Use builtins instead
 ```
 ```nix
 let
