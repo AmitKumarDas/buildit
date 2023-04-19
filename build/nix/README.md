@@ -69,13 +69,13 @@
 - Do your package releases disappear as soon as newer ones are available
 ```
 
-#### In The Wild
+### In The Wild
 ```diff
 @@ Multi Output Derivations @@
 # https://discourse.nixos.org/t/how-can-i-install-curl-with-its-zsh-completion-script/5902
 ```
 
-#### Getting Started
+### Getting Started
 ```yaml
 - :l <nixpkgs> 
   - # load nixpkgs # run this after nix repl # do it everytime you nix repl
@@ -97,7 +97,7 @@
 - nix-collect-garbage
 ```
 
-#### Dive In
+### Dive In
 ```yaml
 - https://dimitrije.website/posts/2023-03-04-nix-ocaml.html
 
