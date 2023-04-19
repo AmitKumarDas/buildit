@@ -26,7 +26,7 @@ nixpkgs.curlWithGnuTls  curl-7.87.0
 + nix-env -f "<nixpkgs>" -qaP -A haskellPackages Cabal
 - nix-env -f "<nixpkgs>" -qaP -A haskellPackages
 
-@@ nix-env -qaP -A haskellPackages Cabal # IS WRONG @@
+! ❌ nix-env -qaP -A haskellPackages Cabal
 ```
 
 ```diff
