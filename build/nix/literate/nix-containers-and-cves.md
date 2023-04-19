@@ -1178,6 +1178,71 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 @@ 💥 ❌ 🧨 Approach 4: Summary: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
+### 🥵 Approach 5: Use OpenSSL 3.1.0 release from its Source Code
+
+```diff
+@@ As on 19 Apr 2023 OpenSSL 3.1.0 is not available in nixpkgs @@
+```
+```nix
+# This is a Nix file named default.nix
+# nix build -f default.nix
+
+let
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/74207b79f05fe0f067528c7fd3c7c8fd60128939.tar.gz";
+  }) {};
+  openssl = pkgs.openssl.overrideAttrs (old: { 
+    version = "3.1.0"; 
+    sha256 = "aaa925ad9828745c4cad9d9efeb273deca820f2cdcf2c3ac7d7c1212b7c497b4"; 
+  });
+  curlnew = pkgs.curl.override { opensslSupport = true; inherit openssl; };
+in rec {
+  myEnv = pkgs.buildEnv {
+    name = "env";
+    paths = [
+      curlnew
+      pkgs.cacert
+    ];
+  };
+}
+```
+
+```diff
+@@ Quirks: Why is openssl version still 8.0.1 @@
+
+# ./result/bin/curl --version
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 OpenSSL/3.0.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+Release-Date: 2023-03-20
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz NTLM NTLM_WB SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd
+```
+
+```diff
+@@ Quirks: Why are there multiple openssl versions as runtime dependencies? @@
+
+# nix path-info /nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env/ -rSh
+/nix/store/0scnj0c385wpivhxcndg8yl29y0wlxfy-libunistring-1.1  	   1.7M
+/nix/store/1fn9bbma0y8ccbc7vscfysbav3aaq2gf-nss-cacert-3.86   	 475.7K
+/nix/store/4dq9kkpnxj9b2mn6jhw76099zpkwdxhm-libidn2-2.3.4     	   2.1M
+/nix/store/hgk8b05xswawwlmzv9057336xhr3p8k6-glibc-2.35-224    	  30.9M
+/nix/store/cnljympmlw1kg4j94y700dj10d7na2p5-gcc-12.2.0-lib    	  38.7M
+/nix/store/6masxpxid431cm1b1f6k4b39fq3im0jz-zstd-1.5.4        	  39.8M
+/nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
+/nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8     	  37.1M
+/nix/store/alkg051b3nsmagczqgwnrh5zm98nkqp1-zlib-1.2.13       	  31.1M
+/nix/store/8cshalb7w38lkal5hbnsqy2mrdhqc1l8-libssh2-1.10.0    	  37.5M
+/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0     	  37.1M
+/nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
+/nix/store/ni9s9kffvm2d00jgbz4fqhj1cxw0n5sl-keyutils-1.6.3-lib	  31.0M
+/nix/store/vy6xib9jjcaw9wjx1j7ggvvnhlpyz81m-libkrb5-1.20.1    	  34.8M
+/nix/store/wvxaixf6ymr6y9bax5qfqx9404bcf7gs-nghttp2-1.51.0-lib	  31.2M
+/nix/store/2k5ngchzvy438x9axbjh2xszi7dd3bg9-curl-8.0.1        	  59.1M
+/nix/store/7ravzjh47cxmvy0nmkhb5hcgdv9f2iyd-curl-8.0.1-man    	  60.6K
+/nix/store/r6xic00v2vm2qjih7xkynaw177wdqcsj-curl-8.0.1-bin    	  59.3M
+/nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env               	  59.8M
+```
+
+
 ### Future Works
 ```diff
 @@ MOAR on Memory Safety @@
