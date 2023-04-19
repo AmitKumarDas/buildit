@@ -8,43 +8,62 @@
 ```
 
 ### Quote / Unquote
-```yaml
-- refer: https://nixos.wiki/wiki/Nix_package_manager
+```diff
+@@ Wolfi builds all packages directly from source @@ 
+! https://www.chainguard.dev/unchained/building-the-first-memory-safe-distro-wolfi
+
+# Allowing us to fix vulnerabilities 
+# Apply customizations that improve the supply chain security posture 
+# From the compilers to the language package managers
+
+@@ Enabling memory safe TLS via Rustls and memory safe HTTP via Hyper in curl @@
++ Wolfi packages Rustls and makes it available as the default backend in libcurl
+```
+```diff
+@@ Wolfi uses @@
++ Fortify source level 3
++ Position independent executables (PIE)
++ Stack-smashing protection (SSP)
++ Immediate symbol binding at runtime (-Wl,-z,now)
++ Read-only relocations (-Wl,-z,relro)
++ Control flow enforcement (CET) [x86_64 only]
 ```
 
-```yaml
-- Nix expressions are pure function
-- Take dependencies as arguments
-- Produce derivation specifying a reproducible build environment for the package
-```
+```diff
+@@ Nix expressions are pure function @@
+! https://nixos.wiki/wiki/Nix_package_manager
 
-```yaml
-- Nix stores the results of the build in unique addresses 
-- These are specified by a hash of the complete dependency tree
-- Thus creating an immutable package store that allows for:
-  - atomic upgrades
-  - rollbacks and 
-  - concurrent installation of different versions of a package
-  - essentially eliminating dependency hell
+# Takes dependencies as arguments
+# Produce derivation specifying a reproducible build environment for the package
+
+@@ Nix stores the results of the build in unique addresses @@
+! These are specified by a HASH of the complete dependency tree
+
+@@ Thus creating an immutable package store that allows for: @@
+# Atomic Upgrades
+# Rollbacks
+# Concurrent installation of different versions of a package
+# Eliminating dependency hell
 ```
 
 ```diff
 @@ Inventory & Legally Clear @@
-```
-```yaml
-- Because you will need to INVENTORY and LEGALLY CLEAR everything inside your container
-- It is imperative to understand the components and their specific SOURCES that make up the base OS
-```
 
-```yaml
-- If you use distroless/static but you build static binaries on alpine that are linked against musl libc
-- You're actually distributing alpine bits. (And there are numerous issues with statically linking glibc.)
+# Because you will need to INVENTORY and LEGALLY CLEAR everything inside your container
+# It is imperative to understand the components and their specific SOURCES that make up the base OS
+```
+```diff
+@@ Scenario @@
+# 1/ If you use distroless/static 
+# 2/ However you build static binaries on alpine that are linked against musl libc
+# 3/ You're actually distributing alpine bits
+
+! There are numerous issues with statically linking glibc
 ```
 
 ```diff
 @@ Are your package repositories constantly moving targets? @@
-```
-```yaml
+
 - Do your package releases disappear as soon as newer ones are available
 ```
 
