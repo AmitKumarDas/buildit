@@ -1178,11 +1178,15 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 @@ 💥 ❌ 🧨 Approach 4: Summary: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
-### 🥵 Approach 5: Use OpenSSL 3.1.0 release from its Source Code
+### 🥵 Approach 5: Use OpenSSL 3.1.0 from OpenSSL Source Code
 
 ```diff
-@@ As on 19 Apr 2023 OpenSSL 3.1.0 is not available in nixpkgs @@
+@@ Scenario: @@
+@@ [19 Apr 2023]: OpenSSL 3.1.0 is not yet available in nixpkgs main branch @@
+
++ We build curl using openssl 3.1.0
 ```
+
 ```nix
 # This is a Nix file named default.nix
 # nix build -f default.nix
@@ -1208,7 +1212,7 @@ in rec {
 ```
 
 ```diff
-@@ Quirks: Why is openssl version still 8.0.1 @@
+@@ Quirks: Why is openssl version still at 3.0.8 ? @@
 
 # ./result/bin/curl --version
 curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 OpenSSL/3.0.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
@@ -1241,6 +1245,25 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 /nix/store/r6xic00v2vm2qjih7xkynaw177wdqcsj-curl-8.0.1-bin    	  59.3M
 /nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env               	  59.8M
 ```
+
+```diff
+@@ Let us get to the root cause of the dependencies @@
+
+@@ nix why-depends /nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env /nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8 @@
+
+/nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env
+└───/nix/store/r6xic00v2vm2qjih7xkynaw177wdqcsj-curl-8.0.1-bin
+    └───/nix/store/2k5ngchzvy438x9axbjh2xszi7dd3bg9-curl-8.0.1
+        └───/nix/store/8cshalb7w38lkal5hbnsqy2mrdhqc1l8-libssh2-1.10.0
+            └───/nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8
+
+@@ nix why-depends /nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env /nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0 @@
+
+/nix/store/nkf3jzdlgylyxhg0920sxkdwg6351dw1-env
+└───/nix/store/r6xic00v2vm2qjih7xkynaw177wdqcsj-curl-8.0.1-bin
+    └───/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0
+```
+
 
 
 ### Future Works
