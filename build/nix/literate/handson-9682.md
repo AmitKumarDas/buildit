@@ -3,6 +3,7 @@
 @@ Hands on run of commands, snippets found at: @@
 # https://github.com/NixOS/nixpkgs/issues/9682
 # https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55
+# https://matrix.ai/blog/developing-with-nix
 ```
 
 ### Hands On
@@ -37,7 +38,6 @@ nixpkgs.curlWithGnuTls  curl-7.87.0
 let
   _nixpkgs = import <nixpkgs> { };
 in
-
 { nixpkgs ? (import _nixpkgs.fetchFromGitHub { owner = "NixOS"; repo = "nixpkgs"; rev = ...; sha256 = ...; })
 }:
 
