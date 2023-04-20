@@ -718,6 +718,7 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 ```
 
 ```diff
+@@ Above shows openssl as a runtime dependency @@
 @@ 💥 ❌ 🧨 WIP: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
