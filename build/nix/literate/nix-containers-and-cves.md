@@ -472,7 +472,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime or buildtime
 INFO     Wrote: vulns.csv
 ```
 
-### 🥤 How to fix the CVEs?
+### 🥤 How to fix the CVEs esp. the ones due to runtime dependencies ?
 ```diff
 @@ Is it possible to fix CVEs by bumping Nix distribution? @@
 ```
