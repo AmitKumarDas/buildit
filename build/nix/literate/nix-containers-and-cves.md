@@ -463,14 +463,12 @@ INFO     Wrote: vulns.csv
 ### 🥤 How to fix the CVEs esp. the ones due to runtime dependencies ?
 ```diff
 @@ Is it possible to fix CVEs by bumping Nix distribution? @@
+@@ Openssl 3.0.7 is the latest in Nix 22.11 i.e. stable release we have been using so far @@
+@@ Can we use latest OpenSSL e.g. 3.0.8 or latest to fix its CVEs? @@
 ```
 
-```diff
-@@ Available openssl packages in Nix 22.11 i.e. stable release we have used so far @@
-
-+ nix-env -qP --available openssl
-```
 ```sh
+# nix-env -qP --available openssl
 nixpkgs.openssl_1_1     openssl-1.1.1s
 nixpkgs.openssl         openssl-3.0.7
 nixpkgs.openssl_3_0     openssl-3.0.7
