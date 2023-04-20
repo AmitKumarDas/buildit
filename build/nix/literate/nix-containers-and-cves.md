@@ -459,7 +459,7 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Available openssl packages in Nix 22.11 @@
+@@ Available openssl packages in Nix 22.11 i.e. stable release we have used so far @@
 
 + nix-env -qP --available openssl
 ```
@@ -470,7 +470,7 @@ nixpkgs.openssl_3_0     openssl-3.0.7
 nixpkgs.openssl_legacy  openssl-3.0.7
 ```
 
-### ❌ Approach 1: Use the OpenSSL Fix Available in Latest Nixpkgs
+### ❌ Approach 1: Use the OpenSSL Fix Available in Latest Nixpkgs i.e. un-released
 
 ```diff
 @@ Approach 1: Update Nix packages to unstable release @@
