@@ -4,10 +4,7 @@
 - Nix for Automated Dependency Management
 - Leverage Nix Community to Fix CVEs .. Fast
 
-### 🏎️ We start by building a Nix Evironment
-```diff
-@@ taking curl & ca certificates as an example @@
-```
+### 🏎️ We start by building a nix evironment with curl & cacerts
 
 ```nix
 # This is a Nix file named default.nix
