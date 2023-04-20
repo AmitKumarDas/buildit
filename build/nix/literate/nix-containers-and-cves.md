@@ -366,9 +366,8 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ Lets Take a Moment to Understand What Just Happened @@
+@@ 🔥 Let us take a Moment to Understand What Just Happened @@
 
-! Unpacking Above:
 # 1/ SBOM was generated on fly
 # 2/ SBOM was fed to multiple scanners
 # 3/ Each scanner reports the CVEs from the provided SBOM
@@ -379,13 +378,11 @@ INFO     Wrote: vulns.csv
 ```
 
 ```diff
-@@ CVEs due to BUILDTIME dependencies @@
+@@ Can we get a CVE report due to BUILDTIME dependencies? @@
 
-! This is easy in Nix (/ Guix)
-! Since Nix knows the dependencies ahead of time (before build)
-```
+# This is easy in Nix
+# Since Nix knows the dependencies ahead of time
 
-```diff
 ! nix run github:tiiuae/sbomnix#vulnxscan -- ./result --buildtime
 ```
 ```sh
