@@ -1351,9 +1351,9 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 
 ### Thank You
 ```yaml
-- https://github.com/teamniteo/nix-docker-base
-- 🔥 🧨 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
+- 🔥 https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
 - 💎 https://github.com/teamniteo/nix-docker-base/tree/master/static-root-files/etc
+- 💎 https://news.ycombinator.com/item?id=30918962
 ```
 
 ### Extras
