@@ -667,6 +667,16 @@ in rec {
 ```
 
 ```diff
+@@ 😍 rustls-ffi replaces GnuTLS @@
+@@ ./result/bin/curl --version @@
+
+curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 rustls-ffi/0.9.2/rustls/0.20.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
+Release-Date: 2023-03-20
+Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz SPNEGO SSL threadsafe UnixSockets zstd
+```
+
+```diff
 @@ Scan for CVEs from the SBOM @@
 ! nix run github:tiiuae/sbomnix#vulnxscan -- ./result
 ```
@@ -679,15 +689,6 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 | CVE-2023-0466 | https://nvd.nist.gov/vuln/detail/CVE-2023-0466 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
 | CVE-2023-0465 | https://nvd.nist.gov/vuln/detail/CVE-2023-0465 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
 | CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.0.8     |    1    |   0   |    1     |   2   |
-```
-
-```diff
-@@ ./result/bin/curl --version @@
-
-curl 8.0.1 (x86_64-pc-linux-gnu) libcurl/8.0.1 rustls-ffi/0.9.2/rustls/0.20.8 zlib/1.2.13 brotli/1.0.9 zstd/1.5.4 libidn2/2.3.4 libssh2/1.10.0 nghttp2/1.51.0
-Release-Date: 2023-03-20
-Protocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp scp sftp smtp smtps telnet tftp
-Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos Largefile libz SPNEGO SSL threadsafe UnixSockets zstd
 ```
 
 ```diff
@@ -719,7 +720,7 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 
 ```diff
 @@ Above shows openssl as a runtime dependency @@
-@@ 💥 ❌ 🧨 WIP: Investigate if openssl is really needed as a runtime dependency @@
+@@ 🧨 TODO: Investigate if openssl is really needed as a runtime dependency @@
 ```
 
 ### 🧑‍🔬 Approach 4: Use OpenSSL 3.1.0 from OpenSSL Source Code
