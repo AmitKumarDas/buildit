@@ -209,13 +209,19 @@ tryme                      latest     574751459789   16 minutes ago   55.5MB
 @@ Note: Nix knew the container image size ahead of time @@
 ```
 
-### ✂️ Deconstruct Image Size
+#### ✂️ Extras: Deconstruct Image Size
 ```diff
-@@ Same as size of /dist @@
-
-! du -hacL /dist
+@@ Readers can skip this if they do not want to get into the size details @@
+@@ Click 'Size Details' otherwise @@
 ```
 
+<details>
+  <summary>Size Details</summary>
+  
+```diff
+@@ Size of image should ideally be same as size of /dist @@
+! du -hacL /dist
+```
 ```Dockerfile
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
@@ -264,9 +270,8 @@ Step 4/8 : RUN   du -hacL /dist
 57M	total 👈 🔥
 ```
 
-### 🧰 Whats inside /dist?
 ```diff
-@@  What is inside /dist thats formed in the image? @@
+@@  What folders get formed inside /dist (that gets formed in the image)? @@
 
 ! ls -ltra /dist
 ```
@@ -282,6 +287,8 @@ drwxr-xr-x 5 root root 4096 Apr 11 11:55 .
 drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
+</details>
+  
 ### 🕵️‍♀️ Scan Nix Builds for CVEs via SBOM 😍
 ```diff
 @@ Lets find CVEs due to RUNTIME dependencies @@
