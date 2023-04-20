@@ -25,6 +25,7 @@ in {
 ```
 
 ```diff
+# Run following command to build the environment
 + nix build -f default.nix
 ```
 
