@@ -178,18 +178,13 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
 
-### 🚗 Search for the Fix
+### 🚗 Detour: Search for the Fix
 ```diff
-@@  Strength of Nix Community @@
-```
-```diff
+@@ This turned to be a common issue @@ 
+@@ Community has it solved @@
 ! https://github.com/30block/sweet-home/commit/5e4ab948f43acd69c94af5c5676f983ca991683d
-```
 
-### ✅ Apply the Fix
-```diff
-@@ Fix is as simple as an additional option @@
-
+@@ Fix was as simple as an additional option @@
 ! --option filter-syscalls false
 ```
 
@@ -220,28 +215,14 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 
 ```diff
 + docker build . -t tryme
-```
-
-```sh
-...
-Linking /dist/run/profile to /nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment
-Linking from /dist/etc to /nix/store/y9wc4ag3qykd5i4v0rf7m19hwayhc0vw-user-environment/etc
-Copying all the profiles Nix dependencies to /dist
-Finished Nix profile export to /dist
-...
-```
-
-```diff
 + docker images
 ```
-
 ```sh
 REPOSITORY                 TAG        IMAGE ID       CREATED          SIZE
 tryme                      latest     574751459789   16 minutes ago   55.5MB
 ```
-
 ```diff
-@@ Nix knew above size ahead of time @@
+@@ Note: Nix knew the container image size ahead of time @@
 ```
 
 ### ✂️ Deconstruct Image Size
