@@ -30,11 +30,8 @@ in {
 
 ### 🧐 What just happened?
 ```diff
+# This oputputs the path of the environment that just got built
 ! nix build -f default.nix --print-out-paths
-
-# It oputputs the path of the environment that just got built
-```
-```
 /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env
 ```
 
@@ -91,9 +88,9 @@ in {
 ```
 
 ```diff
-! Hi.. I am from the future
-
-@@ [Future]: Remember total size of runtime dependencies is 53.2M (look above) @@
+@@ Size of the environment @@
+! nix path-info /nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env -Sh
+/nix/store/f5r0g1mr62dk1k6gaj2dm9q1is42arak-env  53.2M
 ```
 
 ### 🧨 Can we trace each dependency?
@@ -122,11 +119,8 @@ in {
 ```
 
 ```diff
-! Hi.. I am from future
-
-@@ [Future]: Remember below uses Nix 22.11 @@
+@@ Note: Below uses Nix 22.11 @@
 ```
-
 ```Dockerfile
 # refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
@@ -158,22 +152,11 @@ ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```diff
 + docker build . -t tryme
 ```
-
-```diff
-- => ERROR [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist                          13.1s
-```
 ```sh
 ------                                                                                                                             
  > [build 3/3] RUN   nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist:                                      
-#7 0.804 installing 'env'                                                                                                          
-#7 4.654 these 2 derivations will be built:                                                                                        
-#7 4.656   /nix/store/imf2qzrzs0qggbabsn3f5mr3wa5jxhkh-builder.pl.drv                                                              
-#7 4.656   /nix/store/k1rhrji3ha5zfhb15q21ki5fds9gr58h-env.drv                                                                     
-#7 4.660 these 12 paths will be fetched (10.44 MiB download, 68.78 MiB unpacked):
 ...
 ❌ #7 12.99 error: unable to load seccomp BPF program: Invalid argument ❌
-#7 12.99 
-#7 12.99        … while setting up the build environment
 ------
 executor failed running [/bin/sh -c nix-env -f default.nix -iA myEnv --show-trace   && export-profile /dist]: exit code: 1
 ```
@@ -317,7 +300,7 @@ drwxr-xr-x 1 root root 4096 Apr 11 11:55 ..
 ```
 
 ```diff
-# This fetches CVEs from SBOM
+# This outputs CVEs by parsing the SBOM
 + ./grype sbom.cdx.json
 ```
 ```sh
