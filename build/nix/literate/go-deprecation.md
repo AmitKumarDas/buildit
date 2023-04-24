@@ -16,3 +16,15 @@
 # https://github.com/coredns/coredns/issues/5997
 # https://docs.google.com/document/d/1C7utWMjGpDcBc5TB_ooddERsid59sFLC7gqLzyS5aKY/edit
 ```
+
+### Quote / UnQuote
+```diff
+@@ Impossible to update @@ 
+
+# Older, long-term-supported versions of Kubernetes to a newer version of Go
+# Those older versions don’t have the same access to performance improvements and bug fixes
+```
+
+```diff
+@@ Practice of being able to opt out of these risky changes using GODEBUG settings @@
+```
