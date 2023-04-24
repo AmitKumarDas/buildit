@@ -28,3 +28,8 @@
 ```diff
 @@ Practice of being able to opt out of these risky changes using GODEBUG settings @@
 ```
+
+```diff
+@@ Overall the implementation is fairly short and straightforward @@
+@@ Documentation probably outweighs new code @@
+```
