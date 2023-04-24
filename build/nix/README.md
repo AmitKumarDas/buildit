@@ -12,6 +12,16 @@
 ### Quote / Unquote
 
 ```diff
+@@ Nix & Go - Bespoke Hashes @@
+
+# Nix uses it’s own reproducible archive format NAR
+# Which is used for both UPLOADING BUILD RESULTS and for DIRECTORY HASHING
+
+# The Go developers faced with similar concerns created their own directory hashing scheme
+# Which is fundamentally incompatible with Nix hashes
+```
+
+```diff
 @@ nixpkgs- vs nixos- channels! when to use what? @@
 # refer: https://matrix.ai/blog/intro-to-nix-channels-and-reproducible-nixos-environment
 
