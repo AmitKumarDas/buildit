@@ -12,6 +12,15 @@
 ### Quote / Unquote
 
 ```diff
+@@ nixpkgs- vs nixos- channels! when to use what? @@
+# refer: https://matrix.ai/blog/intro-to-nix-channels-and-reproducible-nixos-environment
+
+# We may ignore NixPkgs channels (nixpkgs-*) and only focus on NixOS channels (nixos-*) 
+# Since NixPkgs channels are intended to be used by non-NixOS users 
+# e.g. other Linux distributions or Macintosh users
+```
+
+```diff
 @@ Nixpkgs pinning makes use of a Content Addressed Hash @@ 
 + The result is a cryptographically guaranteed snapshot of the software you're expecting
 
@@ -88,7 +97,15 @@
 - Do your package releases disappear as soon as newer ones are available
 ```
 
-### In The Wild
+```diff
+@@ small channels & security fixes @@
+
+# The small channel variants are updated before the entire package set is built
+# These variants will be up to date with the latest security changes and bug fixes 
+# Sometimes Nix will force a build from source rather than downloading pre-built packages
+```
+
+### TIL
 ```diff
 @@ Multi Output Derivations @@
 # https://discourse.nixos.org/t/how-can-i-install-curl-with-its-zsh-completion-script/5902
@@ -102,6 +119,11 @@
 ```diff
 @@ Pinning + Overrides @@
 # https://gist.github.com/jb55/6e93156ca7fe90a36bb08df0408446a3
+```
+
+```diff
+@@ Channel Names @@
+# https://matrix.ai/blog/intro-to-nix-channels-and-reproducible-nixos-environment
 ```
 
 ### Getting Started
