@@ -12,6 +12,14 @@
 ### Quote / Unquote
 
 ```diff
+@@ Software Dependency Problems @@
+
+# https://research.swtch.com/deps
+# You would not hire a software developer you’ve never heard of and know nothing about
+# Does it look like the authors have been careful, conscientious, and consistent?
+```
+
+```diff
 @@ Nix & Go - Bespoke Hashes @@
 
 # Nix uses it’s own reproducible archive format NAR
