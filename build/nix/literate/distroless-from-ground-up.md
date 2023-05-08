@@ -9,7 +9,7 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
-### 🚴‍♀️ Getting Started with Bazel Dependency Management 🚴‍♀️
+### 🚴‍♀️ Bazel 101 🚴‍♀️
 ```diff
 @@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
 ```
@@ -59,8 +59,33 @@ _maybe(
 )
 ```
 
-### 💥 Crash Course on Starlark 💥
+### 💥 Bazel & Starlark 101 💥
 
 ```diff
 @@ https://jayconrod.com/posts/106/writing-bazel-rules--simple-binary-rule @@
+
+# 1/ You say WHAT you want to build, NOT HOW to build it 👈 🧐
+# 2/ Each BUILD file implicitly defines a Bazel package
+```
+
+```diff
+@@ PACKAGE VS. TARGET VS. BUILD VS. DIRECTORY @@
+
+# 1/ A PACKAGE consists of the TARGETS declared in the BUILD.bazel file
+# 2/ and all of the FILES in the package's DIRECTORY and SUBDIRECTORIES
+# 3/ EXCLUDING targets and files defined in OTHER packages' subdirectories
+```
+
+```diff
+@@ Labels are strings that look like "@io_bazel_rules_go//go:def.bzl" @@
+
+# 1/ a repository name (io_bazel_rules_go)
+# 2/ a package name (go)
+# 3/ and a file or target name (def.bzl)
+
+@@ Repository name and the package name may be omitted @@ 
+# when a label refers to something in the same repository or package
+
+@@ Repositories are defined in a file called WORKSPACE @@ 
+# which lives in the root directory of a project
 ```
