@@ -1,8 +1,13 @@
-### Motivation
+### 🍬 🍬 🍬 Motivation
 - Teams feel distroless handles self contained binaries well
 - Can teams use distroless for binaries that have a bunch of shared dependencies?
+- Will understanding Bazel help build custom distroless images?
 
-### Crash Course on Bazel Dependency Management to Handle Distroless
+```diff
+@@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
+```
+
+### 🚴‍♀️ 🚴‍♀️ 🚴‍♀️ Getting Started with Bazel Dependency Management
 ```diff
 @@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
 ```
@@ -35,7 +40,7 @@
 # -- Verify whether a dependency has been declared by calling native.existing_rule
 ```
 
-### What we learnt so far
+### 🎁 🎁 🎁 Learnings so far
 ```bzl
 def _maybe(rule, name, **kwargs):
   if not native.existing_rule(name):
