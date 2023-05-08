@@ -1,13 +1,15 @@
-### 🍬 🍬 🍬 Motivation
-- Teams feel distroless handles self contained binaries well
-- Can teams use distroless for binaries that have a bunch of shared dependencies?
+### 🍬 Motivation 🍬
+- Teams feel use of distroless images are limited!
+- Is distroless suitable for binaries that have a bunch of shared dependencies?
+- Does distroless go beyond minimal size to accounted size?
+- What is distroless' answer to securing Software Supply Chain?
 - Will understanding Bazel help build custom distroless images?
 
 ```diff
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
-### 🚴‍♀️ 🚴‍♀️ 🚴‍♀️ Getting Started with Bazel Dependency Management
+### 🚴‍♀️ Getting Started with Bazel Dependency Management 🚴‍♀️
 ```diff
 @@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
 ```
@@ -40,7 +42,7 @@
 # -- Verify whether a dependency has been declared by calling native.existing_rule
 ```
 
-### 🎁 🎁 🎁 Learnings so far
+### 🥤 Learnings so far 🥤
 ```bzl
 def _maybe(rule, name, **kwargs):
   if not native.existing_rule(name):
@@ -55,4 +57,10 @@ _maybe(
   strip_prefix = "zlib-1.2.11",
   urls = ["https://github.com/madler/zlib/archive/v1.2.11.tar.gz"],
 )
+```
+
+### 💥 Crash Course on Starlark 💥
+
+```diff
+@@ https://jayconrod.com/posts/106/writing-bazel-rules--simple-binary-rule @@
 ```
