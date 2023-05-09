@@ -173,6 +173,41 @@ _maybe(
 ```diff
 # Structs, providers, and depsets: Data structures to pass information between rules
 # Struct values are immutable
-# There are also to_json and to_proto methods on every struct,
+# There are also to_json and to_proto methods on every struct
+# We'll use depsets to accumulate information about dependencies
+# NO need to explicitly WRITE ALL TRANSITIVE dependencies in the go_binary rule
+```
+
+### 🚴‍♀️ Bazel 101 - Day 5 🚴‍♀️
+```diff
+@@ https://jayconrod.com/posts/108/writing-bazel-rules--data-and-runfiles @@
+```
+
+```diff
+# data files are made available at run-time using data attributes
+# useful for plugins, configuration files, certificates and keys, and resources
+```
+
+### 🚴‍♀️ Bazel 101 - Day 6 🚴‍♀️
+```diff
+@@ https://jayconrod.com/posts/109/writing-bazel-rules--moving-logic-to-execution @@
+```
+
+```diff
+# Rule set authors can write code for any of these phases
+# It's often possible to solve a problem multiple ways
+# Execution phase has many advantages
+# Execution code has I/O access to source files, so it can be smarter
+# It can be written in any language, so it can be faster and more flexible than Starlark
+# Work can be distributed across many machines
+# And the results can be cached persistently, so it can be faster for everyone
+```
+
+```diff
+# In Go, importcfg files map import paths 🥤
+# e.g. "net/http" to compiled package files like /home/jay/go/pkg/linux_amd64/net/http.a
+# The ‑I and ‑L compiler and linker options, which let us specify directories to search
+# Using search paths requires extra I/O and is somewhat inflexible and error-prone
+# So it's better to use importcfg files
 ```
 
