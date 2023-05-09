@@ -1,7 +1,7 @@
 ### 🍬 Motivation 🍬
 - Teams feel use of distroless images are limited!
-- Is distroless suitable for binaries that have a bunch of shared dependencies?
-- Does distroless go beyond minimal size to accounted size?
+- Is distroless suitable for binaries that depend on shared dependencies e.g. c/c++ projects?
+- Can distroless go beyond minimalism i.e. from minimal size to size that is accounted?
 - What is distroless' answer to securing Software Supply Chain?
 - Will understanding Bazel help build custom distroless images?
 
