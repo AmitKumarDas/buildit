@@ -9,7 +9,7 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
-### 🚴‍♀️ Bazel 101 🚴‍♀️
+### 🚴‍♀️ Bazel 101 - Part 1 🚴‍♀️
 ```diff
 @@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
 ```
@@ -59,7 +59,7 @@ _maybe(
 )
 ```
 
-### 💥 Bazel & Starlark 101 💥
+### 🚴‍♀️ Bazel 101 - Part 2 🚴‍♀️
 
 ```diff
 @@ https://jayconrod.com/posts/106/writing-bazel-rules--simple-binary-rule @@
