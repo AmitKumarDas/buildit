@@ -9,6 +9,45 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
+
+### Learn from distroless/nodejs commit history
+
+```diff
+@@ The Beginning - May 25, 2017 🎬 @@
+```
+```diff
+# https://github.com/GoogleContainerTools/distroless/commit/5a9613d06902f518a80edc0382dc51fe0520a4db
+
+@@ WHAT @@
+# nodejs/BUILD
+# BUILD.nodejs
+# WORKSPACE
+
+@@ HOW @@
+# load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+# load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
+# new_http_archive(sha256=xxx, url=https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.gz)
+
+@@ USAGE @@
+# examples/nodejs/hello_http.js
+# examples/nodejs/hello.js
+# examples/nodejs/testdata/hello.yaml
+# load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+```
+
+### 🥤 Takeaways from the Wild 🥤
+```diff
+# rules_docker is used by GCP's distroless to place Debian .debs into an image
+# google/go-containerregistry is a Go module to interact with images & tarballs & layouts
+# crane is a CLI that uses the above (in the same repo) to do the same stuff from the commandline
+# `crane append` adds a layer to an image, entirely in the registry, without pulling the image
+# For static binaries "crane append" + "crane push" eliminate the need for "docker build"
+# Crane also exposes a good library for docker operations if you want to build custom tooling on top
+```
+
+<details>
+  <summary> Bazel Basics: Click to read </summary>
+
 ### 🚴‍♀️ Bazel 101 - Day 1 🚴‍♀️
 ```diff
 @@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
@@ -210,15 +249,5 @@ _maybe(
 # Using search paths requires extra I/O and is somewhat inflexible and error-prone
 # So it's better to use importcfg files
 ```
-
-### 🥤 Takeaways from the Wild 🥤
-```diff
-# rules_docker is used by GCP's distroless to place Debian .debs into an image
-# google/go-containerregistry is a Go module to interact with images & tarballs & layouts
-# crane is a CLI that uses the above (in the same repo) to do the same stuff from the commandline
-# `crane append` adds a layer to an image, entirely in the registry, without pulling the image
-# For static binaries "crane append" + "crane push" eliminate the need for "docker build"
-# Crane also exposes a good library for docker operations if you want to build custom tooling on top
-```
-
+</details>
 
