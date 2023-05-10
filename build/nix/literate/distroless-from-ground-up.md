@@ -14,8 +14,7 @@
 
 ```diff
 @@ The Beginning - May 25, 2017 🎬 @@
-```
-```diff
+
 # https://github.com/GoogleContainerTools/distroless/commit/5a9613d06902f518a80edc0382dc51fe0520a4db
 
 @@ WHAT @@
