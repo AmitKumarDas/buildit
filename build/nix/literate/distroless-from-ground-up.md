@@ -190,7 +190,7 @@ _maybe(
 
 ### 🚴‍♀️ Bazel 101 - Day 6 🚴‍♀️
 ```diff
-@@ https://jayconrod.com/posts/109/writing-bazel-rules--moving-logic-to-execution @@
+@@ https://jayconrod.com/posts/109/writing-bazel-rules--moving-logic-to-execution @@ 🥵
 ```
 
 ```diff
@@ -210,4 +210,15 @@ _maybe(
 # Using search paths requires extra I/O and is somewhat inflexible and error-prone
 # So it's better to use importcfg files
 ```
+
+### 🥤 Takeaways from the Wild 🥤
+```diff
+# rules_docker is used by GCP's distroless to place Debian .debs into an image
+# google/go-containerregistry is a Go module to interact with images & tarballs & layouts
+# crane is a CLI that uses the above (in the same repo) to do the same stuff from the commandline
+# `crane append` adds a layer to an image, entirely in the registry, without pulling the image
+# For static binaries "crane append" + "crane push" eliminate the need for "docker build"
+# Crane also exposes a good library for docker operations if you want to build custom tooling on top
+```
+
 
