@@ -18,3 +18,6 @@
 
 # https://lazamar.co.uk/nix-versions/
 ```
+
+### TODO (Read these & put to Takeaways section)
+- https://sandervanderburg.blogspot.com/2020/07/on-using-nix-and-docker-as-deployment.html
