@@ -13,7 +13,7 @@
 ### 🚴‍♀️ Learn from distroless/nodejs Commits 🚴‍♀️
 
 ```diff
-@@ The Beginning - May 25, 2017 @@
+@@ Origins - May 25, 2017 @@
 
 # https://github.com/GoogleContainerTools/distroless/commit/5a9613d06902f518a80edc0382dc51fe0520a4db
 
@@ -32,6 +32,29 @@
 # examples/nodejs/hello.js
 # examples/nodejs/testdata/hello.yaml
 # load("@runtimes_common//structure_tests:tests.bzl", "structure_test")
+```
+
+```diff
+@@ Oct 09, 2017 @@
+
+# https://github.com/GoogleContainerTools/distroless/commit/82c279bf5c797697d76106c8b7285bc0ba3b5134
+
+@@ WHAT @@
+# debug busybox
+
+@@ HOW @@
+# load("@io_bazel_rules_docker//docker:docker.bzl", "docker_bundle")
+# load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
+# package(default_visibility = ["//base:__subpackages__"])
+```
+
+```diff
+@@ Sep 3, 2020 @@
+
+# https://github.com/GoogleContainerTools/distroless/commit/a09561c78cc2da2ae97891805ed31133f3bc30bf
+
+@@ Naming Conventions @@
+# Debian versions X NodeJS versions
 ```
 
 ### 🥤 Takeaways from the Wild 🥤
