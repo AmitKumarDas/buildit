@@ -71,6 +71,20 @@
 # Nested for loops looks flat 🔥
 ```
 
+```diff
+@@ Oct 14, 2020 @@
+
+# https://github.com/GoogleContainerTools/distroless/commit/40976b8b65aec783a7571ad20d7b1fa0cd12c69e
+
+@@ WHAT @@
+# Build s390x images on x86 machine
+# Added BASE_ARCHITECTURES ["amd64", "arm64"]
+# DEBIAN_SECURITY_SNAPSHOT DEBIAN_SNAPSHOT
+
+@@ TIL @@
+# Debian package Name to Version mapping
+```
+
 ### 🥤 Takeaways from the Wild 🥤
 ```diff
 # rules_docker is used by GCP's distroless to place Debian .debs into an image
