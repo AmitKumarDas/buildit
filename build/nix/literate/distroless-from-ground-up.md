@@ -55,6 +55,20 @@
 
 @@ Naming Conventions @@
 # Debian versions X NodeJS versions
+
+@@ CI CD / Usage @@
+# bazel run
+# docker tag
+# load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+```
+
+```diff
+@@ Oct 1, 2020 @@
+
+# https://github.com/GoogleContainerTools/distroless/commit/2d680191bf29b044a2e0b9d916040d733a725ba9
+
+@@ Multi Architecture Support @@
+# Nested for loops looks flat 🔥
 ```
 
 ### 🥤 Takeaways from the Wild 🥤
