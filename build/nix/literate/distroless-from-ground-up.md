@@ -85,6 +85,14 @@
 # Debian package Name to Version mapping
 ```
 
+```diff
+@@ Sep 20, 2021 @@
+
+# https://github.com/GoogleContainerTools/distroless/commit/9c4d532437878c3694aac298b6a279bcd400577e
+
+@@ 3 Major Versions of NodeJS @@
+```
+
 ### 🥤 Takeaways from the Wild 🥤
 ```diff
 # rules_docker is used by GCP's distroless to place Debian .debs into an image
