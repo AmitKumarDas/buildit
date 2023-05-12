@@ -47,5 +47,24 @@
 @@ shadowSetup @@
 # This constant string is a helper
 # Used to set up the base files for managing USERS and GROUPS, only if such files don't exist already
-# It is suitable for being used in a runAsRoot script 
+# It is suitable for being used in a runAsRoot script
+
+# Creating base files like /etc/passwd or /etc/login.defs are necessary 
+# -- for shadow-utils to manipulate users and groups.
 ```
+
+```nix
+buildImage {
+  name = "shadow-basic";
+
+  runAsRoot = ''
+    #!${stdenv.shell}
+    ${shadowSetup}
+    groupadd -r redis
+    useradd -r -g redis redis
+    mkdir /data
+    chown redis:redis /data
+  '';
+}
+```
+
