@@ -8,16 +8,17 @@
 
 ```diff
 @@ nix shell vs. nix develop @@
+@@ runtime shell vs. development shell @@
 
 # nix shell makes the executable available at $PATH 💥
 
 # nix develop does not do above
 # We can, however, run the executable by specifying the path to the script
-# -- e.g. ./my-script
-# Alternatively: 
+# -- e.g. ./my-script           😓
+# Alternatively:                🙂
 # -- 1/ nix build 
 # -- 2/ result/bin/my-script
-# Simpler: nix run
+# Simpler: nix run              😍
 ```
 
 ```diff
