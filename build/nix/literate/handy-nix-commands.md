@@ -1,10 +1,60 @@
 ### Motivation
-- Most of the time I start searching for specific Nix commands to meet my build goals
+- Most of the time I am on lookout for specific Nix commands to meet my desired goals
 
 ### 🙇‍♀️ Shoutouts 🙇‍♀️
 - https://github.com/mhwombat/nix-for-numbskulls
 
+### Prerequisites
+
+```diff
+@@ If nix is forgotten by your terminal @@
+
+! . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh # source the profile
+```
+
 ### 🥤 Takeaways 🥤
+
+```diff
+@@ Why nix run can't find flake.nix? @@
+
+# 1/ Nix flakes ONLY “SEES” files that are part of the REPOSITORY 🧐 <3 git 🔥
+# 2/ "git add" the needed files to the repo before building or running the flake
+# -- e.g. git add flake.nix setup.py hello.py
+# -- e.g. nix run
+# 3/ git add flake.lock
+
+@@ Share Amongst Team ~ Well Cajole Them To Install Nix @@
+
+# e.g. nix run "git+https://codeberg.org/mhwombat/hello-flake"
+```
+
+```diff
+@@ nix shell vs nix-shell @@
+
+# nix-shell builds a TEMPORARY environment on the fly without the need for a .flake file
+# -- e.g. nix-shell -p python3
+# -- e.g. nix-shell -p "python3.withPackages (ps: with ps; [ build ])" # python + build tool
+
+@@ The non-hyphenated commands were introduced when support for flakes was added to Nix @@ 🧐 📚
+
+@@ Rule of Thumb @@ 🤙
+# Non-hyphenated commands for FLAKES
+# Hyphenated commands are for everything else
+```
+
+```diff
+@@ nix-shell to mkShell @@ 🔥 🔥 🔥
+
+# nix-shell -p "python3.withPackages (ps: with ps; [ build ])"
+#
+# vs.
+#
+# devShells = rec {
+#   default = pkgs.mkShell {
+#     packages = [ (python.withPackages (ps: with ps; [ build ])) ];
+#   };
+# };
+```
 
 ```diff
 @@ nix shell vs. nix develop @@
