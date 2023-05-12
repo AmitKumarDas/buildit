@@ -7,7 +7,48 @@
 ### 🥤 Takeaways 🥤
 
 ```diff
-@@ build install & internet @@
+@@ nix shell vs. nix develop @@
+
+# nix shell makes the executable available at $PATH 💥
+
+# nix develop does not do above
+# We can, however, run the executable by specifying the path to the script
+# -- e.g. ./my-script
+# Alternatively: 
+# -- 1/ nix build 
+# -- 2/ result/bin/my-script
+# Simpler: nix run
+```
+
+```diff
+@@ Don't need to INSTALL, simply RUN @@
+
+# nix run "git+https://codeberg.org/mhwombat/hello-flake"
+```
+
+```diff
+@@ Let flake build your SHELL environment @@
+
+# nix shell "git+https://codeberg.org/mhwombat/hello-flake"
+# In this shell, the command is on our $PATH 👈 👈 👈
+# So we can execute the command by name within the SHELL
+
+@@ Remember this is NOT INSTALL @@ 😍
+# Nix didn’t install the package
+# It merely built and placed it in a directory called the “Nix store”
+# Thus we can have multiple versions of a package without worrying about conflicts
+
+@@ Locate the executable When You are In Nix Shell @@
+# which <name-of-your- executable>
+# Above will give you the nix path
+# -- e.g. /nix/store/0xbn2hi6h1m5h4kc02vwffs2cydrbc0r-hello-flake/bin/hello-flake
+
+@@ You Can Try This Cumbersome Invocation from Nix Path As Well @@
+# /nix/store/0xbn2hi6h1m5h4kc02vwffs2cydrbc0r-hello-flake/bin/hello-flake
+```
+
+```diff
+@@ build, install & internet @@
 
 # The build step runs in a PURE environment to ensure that builds are REPRODUCIBLE
 # -- This means NO INTERNET ACCESS; indeed no access to any files outside the build directory
@@ -16,7 +57,7 @@
 ```
 
 ```diff
-@@ What is available during the build and install phases? @@
+@@ What is available during the build and install phases? @@ 💯
 
 @@ stdenv is availble that consists of: @@
 # - The GNU C Compiler, configured with C and C++ support
@@ -33,7 +74,7 @@
 # - The patch command
 # - On Linux, stdenv also includes the patchelf utility
 
-@@ following environment variables are variable: @@
+@@ Following environment variables are available during build & install phases @@ 💯
 # $name is the package name
 # $src refers to the source directory
 # $out is the PATH to the location in the Nix STORE where the package will be added
