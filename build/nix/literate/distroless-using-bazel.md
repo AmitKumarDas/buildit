@@ -29,6 +29,7 @@
 - sudo apt install bazel-bootstrap
 ```
 
+#### Setup Distroless on Bazel On Nix
 ```diff
 @@ We will setup Bazel inside a Nix shell instead @@
 
@@ -102,7 +103,8 @@ mkShell {
 }
  
 @@ Got a different error when executed bazel @@
-- ERROR: The project you're trying to build requires Bazel 6.0.0 (specified in /home/amitd2/work/distroless/.bazelversion), 
+- ERROR: The project you're trying to build requires Bazel 6.0.0
+- (specified in /home/amitd2/work/distroless/.bazelversion), 
 - but it wasn't found in /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin.
 
 - Bazel binaries for all official releases can be downloaded from here:
@@ -143,8 +145,58 @@ mkShell {
 }
 ```
 
+#### Run distroless on Bazel on Nix
+```diff
+@@ Execute following from the root of distroless @@
+@@ bazel run //base @@
 
-### 🚴‍♀️ Build Distroless From Distroless 🚴‍♀️
+@@ Resulted in Error @@
+- ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
+- //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
+
+- ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
+- no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
+```
+
+```diff
+@@ Try the steps from a test file in distroless @@
+# refer: https://github.com/GoogleContainerTools/distroless/blob/main/test.sh
+
+# bazel clean --curses=no
+# bazel build --curses=no //...
+
+@@ Resulted in above error @@
+
+- ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
+- //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
+
+- ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
+- no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
+```
+
+```diff
+@@ Debug if add_prefix is present or not @@
+
+# https://github.com/bazelbuild/bazel/commit/87c8b09061eb4d51271630353b1718c39dfd1ebe
+# Above commit introduces add_prefix on Aug 23 2022
+
+@@ What's our Bazel version @@
+bazel version
+Build label: 6.0.0-pre.20220720.3- (@non-git)
+Build target: bazel-out/k8-opt/bin/src/main/java/com/google/devtools/build/lib/bazel/BazelServer_deploy.jar
+Build time: Tue Jan 1 00:00:00 1980 (315532800)
+Build timestamp: 315532800
+Build timestamp as int: 315532800
+```
+
+```diff
+@@ Let us set Bazel to 6.2.0 release @@
+# https://github.com/bazelbuild/bazel/releases/tag/6.2.0
+
+
+```
+
+### 🚴‍♀️ Can we Build Distroless From Distroless 🚴‍♀️
 
 ```diff
 @@ Learn Distroless From its Commits @@
