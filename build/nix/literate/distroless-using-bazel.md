@@ -33,7 +33,7 @@
 # refer: https://www.tweag.io/blog/2018-03-15-bazel-nix/
 ```
 
-### 🚴‍♀️ Learn from distroless/nodejs Commits 🚴‍♀️
+### 🚴‍♀️ Learn distroless From nodejs Commits 🚴‍♀️
 
 ```diff
 @@ Origins - May 25, 2017 @@
