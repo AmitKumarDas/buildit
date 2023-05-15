@@ -29,7 +29,7 @@
 - sudo apt install bazel-bootstrap
 ```
 
-#### Setup Distroless on Bazel On Nix
+#### ⚙️ [Hands On] Setup Distroless on Bazel On Nix ⚙️
 ```diff
 @@ We will setup Bazel inside a Nix shell instead @@
 
@@ -145,7 +145,7 @@ mkShell {
 }
 ```
 
-#### Run distroless on Bazel on Nix
+#### 🏃‍♀️ [Hands On] Run distroless on Bazel on Nix 🏃‍♀️
 ```diff
 @@ Execute following from the root of distroless @@
 @@ bazel run //base @@
