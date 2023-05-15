@@ -9,6 +9,29 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
+### 👩‍🔬 Hands On 👩‍🔬
+```diff
+@@ Quick bazel build guide on Ubuntu @@
+
+# git clone https://github.com/GoogleContainerTools/distroless.git
+# cd distroless
+```
+
+```diff
+@@ Run 'bazel' command on your terminal @@
+- Command 'bazel' not found, but can be installed with:
+- sudo apt install bazel-bootstrap
+```
+
+```diff
+@@ We will create Nix shells instead @@
+
+# This helps us to understand the exact build requirements
+# This will avoid use of system installations. Therefore builds will be easy to reproduce
+# In the future, we may want to use Nix to configure external dependencies for c/c++ projects
+
+# refer: https://www.tweag.io/blog/2018-03-15-bazel-nix/
+```
 
 ### 🚴‍♀️ Learn from distroless/nodejs Commits 🚴‍♀️
 
