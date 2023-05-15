@@ -30,7 +30,7 @@
 ```
 
 ```diff
-@@ We will create Nix shells instead @@
+@@ We will create Nix shell instead @@
 
 # This helps us to understand the exact build requirements
 # This will avoid use of system installations. Therefore builds will be easy to reproduce
@@ -40,6 +40,8 @@
 ```
 
 ```diff
+@@ Tried with followed in a file called shell.nix @@
+
 { pkgs ? import <nixpkgs> {} }:
 
 (pkgs.buildFHSUserEnv {
@@ -50,15 +52,96 @@
    pkgs.gcc
  ];
 }).env
-```
 
-```diff
+@@ However, nix-shell resulted in error @@
+
 - ** (process:782091): ERROR **: 11:14:38.685: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
 - No such file or directory
 - Trace/breakpoint trap (core dumped)
 ```
 
+```diff
+@@ Let us find what all Bazel versions are supported in Nix @@
 
+nix-env -qP --available bazel
+nixpkgs.bazel    bazel-3.7.2
+nixpkgs.bazel_4  bazel-4.2.2
+nixpkgs.bazel_5  bazel-5.4.0
+nixpkgs.bazel_6  bazel-6.0.0-pre.20220720.3
+```
+
+```diff
+@@ Lets try with bazel_5 in our shell.nix @@
+
+{ pkgs ? import <nixpkgs> {} }:
+
+(pkgs.buildFHSUserEnv {
+  name = "bazel-userenv";
+  targetPkgs = pkgs: [
+    pkgs.bazel_5
+  ];
+}).env
+
+@@ Running nix-shell still gave above error @@
+
+- ** (process:784573): ERROR **: 11:29:45.049: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
+- No such file or directory
+- Trace/breakpoint trap (core dumped)
+
+@@ Had same error with bazel_4 & bazel_6 as well @@
+```
+
+```diff
+@@ Tried a different shell.nix @@
+
+{ pkgs ? import <nixpkgs> {} }:
+
+with pkgs;
+mkShell {
+ packages = [ bazel_6 ];
+}
+ 
+@@ Got a different error when executed bazel @@
+- ERROR: The project you're trying to build requires Bazel 6.0.0 (specified in /home/amitd2/work/distroless/.bazelversion), 
+- but it wasn't found in /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin.
+
+- Bazel binaries for all official releases can be downloaded from here:
+-  https://github.com/bazelbuild/bazel/releases
+
+- Please put the downloaded Bazel binary into this location:
+-  /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/bazel-6.0.0-linux-x86_64
+```
+
+```diff
+@@ Debugging further @@
+
+ls -ltr /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/
+total 31764
+-r-xr-xr-x 1 root root      254 Jan  1  1970 bazel-execlog
+-r-xr-xr-x 1 root root 32518044 Jan  1  1970 bazel-6.0.0-pre.20220720.3-linux-x86_64 👈 🧐 🤔
+-r-xr-xr-x 1 root root     3363 Jan  1  1970 bazel
+
+@@ Hey, the executable is already there !! @@
+
+@@ Is it a problem in below config? @@
+cat /home/amitd2/work/distroless/.bazelversion
+6.0.0
+
+@@ Solution: Removing .bazelversion worked @@
+# nix-shell
+# bazel
+
+@@ Note that distroless project does not use Nix @@
+
+@@ Out final shell.nix looks like below @@
+
+{ pkgs ? import <nixpkgs> {} }:
+
+with pkgs;
+mkShell {
+ packages = [ bazel_6 ];
+}
+```
 
 
 ### 🚴‍♀️ Build Distroless From Distroless 🚴‍♀️
