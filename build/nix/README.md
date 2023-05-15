@@ -12,6 +12,14 @@
 ### Quote / Unquote
 
 ```diff
+@@ Case for Nix & Bazel @@
+
+# Nix is designed to support package management, not the build system
+# To get fast incremental rebuilds on any source code change, we turned to Bazel
+# We also reuse all of Bazel’s built-in practices for building C/C++, Java, Scala, Rust, Go, Haskell
+```
+
+```diff
 @@ Software Dependency Problems @@
 
 # https://research.swtch.com/deps
