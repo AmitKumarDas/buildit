@@ -9,9 +9,15 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
+### 🏔️ Destinations 🗻
+```diff
+# https://github.com/GoogleContainerTools/distroless
+# https://github.com/tweag/nix_bazel_codelab
+```
+
 ### 👩‍🔬 Hands On 👩‍🔬
 ```diff
-@@ Quick bazel build guide on Ubuntu @@
+@@ Distroless Quick Starter @@
 
 # git clone https://github.com/GoogleContainerTools/distroless.git
 # cd distroless
@@ -33,7 +39,34 @@
 # refer: https://www.tweag.io/blog/2018-03-15-bazel-nix/
 ```
 
-### 🚴‍♀️ Learn distroless From nodejs Commits 🚴‍♀️
+```diff
+{ pkgs ? import <nixpkgs> {} }:
+
+(pkgs.buildFHSUserEnv {
+ name = "bazel-userenv-example";
+ targetPkgs = pkgs: [
+   pkgs.bazel
+   pkgs.glibc
+   pkgs.gcc
+ ];
+}).env
+```
+
+```diff
+- ** (process:782091): ERROR **: 11:14:38.685: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
+- No such file or directory
+- Trace/breakpoint trap (core dumped)
+```
+
+
+
+
+### 🚴‍♀️ Build Distroless From Distroless 🚴‍♀️
+
+```diff
+@@ Learn Distroless From its Commits @@
+@@ NodeJS Commit History @@
+```
 
 ```diff
 @@ Origins - May 25, 2017 @@
