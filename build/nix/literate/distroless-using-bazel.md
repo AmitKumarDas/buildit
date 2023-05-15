@@ -30,7 +30,7 @@
 ```
 
 ```diff
-@@ We will create Nix shell instead @@
+@@ We will setup Bazel inside a Nix shell instead @@
 
 # This helps us to understand the exact build requirements
 # This will avoid use of system installations. Therefore builds will be easy to reproduce
