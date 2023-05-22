@@ -21,3 +21,13 @@
 @@ Security Scanner - Many In One @@
 # https://github.com/mchmarny/vimp
 ```
+
+```diff
+@@ Zero Trust Distributed Computing with WebAssembly and wasmCloud @@
+# https://wasmcloud.com/blog/zero_trust_security/
+```
+
+```diff
+@@ Solve SBOM crisis with WASM @@
+# https://www.infoworld.com/article/3694902/solving-the-sbom-crisis-with-webassembly-components.html
+```
