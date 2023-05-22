@@ -1,8 +1,28 @@
 ### Quote / UnQuote
 
 ```diff
+@@ Run kube-apiserver as non-root @@
+# https://github.com/kubernetes/kubernetes/pull/96134
+
+@@ Run kube-scheduler & kube-addon-manager as non-root @@
+# https://github.com/kubernetes/kubernetes/pull/90156
+
+@@ Run etcd as non-root @@
+# https://github.com/kubernetes/kubernetes/pull/100635
+```
+
+```diff
+@@ User Namespaces in Stateless Pods @@
+# https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/127-user-namespaces/README.md
+```
+
+```diff
 @@ Kubernetes should configure the ambient capability set @@
 # https://github.com/kubernetes/kubernetes/issues/56374
+# https://github.com/kubernetes/enhancements/issues/2763
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
+# https://twitter.com/RafaelGoodman/status/1645869685391626240/photo/1
+# https://static.sched.com/hosted_files/kccnceu2023/b7/KubeconEU2023_Least_Privilege_Containers.pdf
 ```
 
 ```diff
