@@ -13,6 +13,11 @@
 ```
 
 ```diff
-@@ Scanners @@
+@@ Comparing Container Scanners @@
 # https://blogs.vmware.com/opensource/2023/04/19/comparing-container-scanners-for-detection-accuracy/
+```
+
+```diff
+@@ Security Scanner - Many In One @@
+# https://github.com/mchmarny/vimp
 ```
