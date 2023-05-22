@@ -1,6 +1,11 @@
 ### Quote / UnQuote
 
 ```diff
+@@ Least Priviledge Containers: Keeping a Bad Day from Getting Worse @@
+# https://twitter.com/mrgcastle/status/1659650484242894849?s=51&t=OiMfKjQhgER9FYpC7P0sUg
+```
+
+```diff
 @@ 99% of breaches in 2025 __ Gartner @@
 # will have a root cause of customer misconfigurations or mistakes
 
