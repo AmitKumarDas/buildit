@@ -1,6 +1,11 @@
 ### Quote / UnQuote
 
 ```diff
+@@ Malicious Compliance: Reflections on Trusting Container Scanners @@
+# https://youtu.be/9weGi0csBZM
+```
+
+```diff
 @@ Run kube-apiserver as non-root @@
 # https://github.com/kubernetes/kubernetes/pull/96134
 
