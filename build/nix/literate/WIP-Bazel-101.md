@@ -29,19 +29,18 @@ target            - same as :target          - conventionally only used for file
 ```
 
 ```diff
-@@ Bazel has NO TOOLS to: @@
-# 1/ LIST INDIRECT dependencies 
-# 2/ RESOLVE CONFLICTS between multiple declarations
+@@ Bazel CAN NOT: @@
+# 1/ List INDIRECT dependencies 
+# 2/ Resolve CONFLICTS between multiple declarations
 ```
 
 ```diff
 @@ Best Practices: Dependency Management @@
 
-# 1/ Name of the file s.a. deps.bzl or myabc_deps.bzl
-# 2/ Put above in ROOT of the directory & hence make it easy to find
-# 3/ AVOID LOADING OTHER .bzl files here since it needs those .bzl files to be declared earlier
-# 4/ DON'T OVERRIDE EARLIER DECLARATIONS of the same repositories. How? 
-# -- Verify whether a dependency has been declared by calling native.existing_rule
+# 1/ NAME                                                - deps.bzl or myabc_deps.bzl
+# 2/ PLACE                                               - at ROOT - easy to find
+# 3/ AVOID LOADING OTHER .bzl files inside .bzl file     - it forces those .bzl files to be declared earlier
+# 4/ DON'T OVERRIDE EARLIER DECLARATIONS                 - of the same repositories
 ```
 
 #### 🥤 Snippets 🥤
