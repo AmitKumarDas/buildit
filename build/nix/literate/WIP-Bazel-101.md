@@ -8,8 +8,8 @@
 ```diff
 @@ @workspace//pkg/path:target @@
 
-//pkg/path:target - omit @workspace          - if in same workspace
-:target           - omit //pkg/path          - if in same package
+//pkg/path:target - OMIT @workspace          - if in same workspace
+:target           - OMIT //pkg/path          - if in same package
 target            - same as :target          - conventionally only used for files
 //pkg/path        - same as //pkg/path:path
 ```
@@ -17,16 +17,15 @@ target            - same as :target          - conventionally only used for file
 ### 🚴‍♀️ Bazel 101 - Day 1 🚴‍♀️
 
 ```diff
-# WORKSPACE file in present in root 💥
-# Is USED to declare external DEPENDENCIES 💥
+# WORKSPACE file present in root Is USED to declare external DEPENDENCIES      💥
 ```
 
 ```diff
 @@ Managing WORKSPACE file - Most difficult @@
 
-@@ Can run arbitrary commands on the host system @@ 💣
-@@ WORKSPACE files in external repositories are NOT evaluated RECURSIVELY @@ 😢
-@@ You're responsible for declaring direct dependencies & indirect dependencies @@ 😢
+# Can run arbitrary COMMANDS on the host system                                💣
+# WORKSPACE files in external repositories are NOT evaluated RECURSIVELY       😢
+# You declare direct & indirect DEPENDENCIES                                   😢
 ```
 
 ```diff
