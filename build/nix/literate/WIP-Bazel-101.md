@@ -1,8 +1,20 @@
+### Credit
+```diff
+# https://jayconrod.com/posts/
+# https://www.youtube.com/watch?v=2KUunGBZiiM
+```
+
+### Summary
+```diff
+@@ @workspace//pkg/path:target @@
+
+//pkg/path:target - omit @workspace          - if in same workspace
+:target           - omit //pkg/path          - if in same package
+target            - same as :target          - conventionally only used for files
+//pkg/path        - same as //pkg/path:path
+```
 
 ### 🚴‍♀️ Bazel 101 - Day 1 🚴‍♀️
-```diff
-@@ https://jayconrod.com/posts/115/organizing-bazel-workspace-files @@
-```
 
 ```diff
 # WORKSPACE file in present in root 💥
@@ -10,21 +22,22 @@
 ```
 
 ```diff
-! Managing WORKSPACE file is one of the most difficult parts of using Bazel
+@@ Managing WORKSPACE file - Most difficult @@
 
-@@ Can run arbitrary commands on the host system @@
-@@ WORKSPACE files in external repositories are NOT evaluated RECURSIVELY @@
-@@ You're responsible for declaring direct dependencies & indirect dependencies @@
+@@ Can run arbitrary commands on the host system @@ 💣
+@@ WORKSPACE files in external repositories are NOT evaluated RECURSIVELY @@ 😢
+@@ You're responsible for declaring direct dependencies & indirect dependencies @@ 😢
 ```
 
 ```diff
 @@ Bazel has NO TOOLS to: @@
-# 1/ LIST indirect dependencies 
+# 1/ LIST INDIRECT dependencies 
 # 2/ RESOLVE CONFLICTS between multiple declarations
 ```
 
 ```diff
 @@ Best Practices: Dependency Management @@
+
 # 1/ Name of the file s.a. deps.bzl or myabc_deps.bzl
 # 2/ Put above in ROOT of the directory & hence make it easy to find
 # 3/ AVOID LOADING OTHER .bzl files here since it needs those .bzl files to be declared earlier
@@ -52,30 +65,24 @@ _maybe(
 ### 🚴‍♀️ Bazel 101 - Day 2 🚴‍♀️
 
 ```diff
-@@ https://jayconrod.com/posts/106/writing-bazel-rules--simple-binary-rule @@
-
-# 1/ You say WHAT you WANT to build, NOT HOW to build it 👈 🧐
-# 2/ Each BUILD file implicitly defines a Bazel PACKAGE 💥
+@@ Each BUILD file implicitly defines a Bazel PACKAGE @@ 💥 
 # Note: BUILD file may be BLANK to define a package 💥
 ```
 
 ```diff
 @@ PACKAGE VS. TARGET VS. BUILD VS. DIRECTORY @@
 
-# 1/ A PACKAGE consists of the TARGETS declared in the BUILD.bazel file 💥
-# 2/ and all of the FILES in the package's DIRECTORY and SUBDIRECTORIES
+# 1/ A PACKAGE contains TARGETS declared in the BUILD.bazel file
+# 2/ And all of the FILES in the package's DIRECTORY and SUBDIRECTORIES
 # 3/ EXCLUDING targets and files defined in OTHER packages' subdirectories
 ```
 
 ```diff
-@@ Labels are strings that look like "@io_bazel_rules_go//go:def.bzl" @@
+@@ Labels ~ strings ~ "@io_bazel_rules_go//go:def.bzl" @@
 
 # 1/ REPO name (io_bazel_rules_go)
 # 2/ PACKAGE name (go)
 # 3/ FILE or TARGET name (def.bzl)
-
-@@ Repository name and the package name may be omitted @@ 
-# -- when a label refers to something in the same repository or package
 
 @@ Repositories are defined in a file called WORKSPACE @@ 💥
 # -- lives in the root directory of a project
