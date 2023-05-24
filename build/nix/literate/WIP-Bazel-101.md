@@ -2,9 +2,16 @@
 ```diff
 # https://jayconrod.com/posts/
 # https://www.youtube.com/watch?v=2KUunGBZiiM
+# https://www.youtube.com/watch?v=hLD6vKl4Txc
 ```
 
 ### Summary
+
+```diff
+@@ .bazelrc for build configurations @@
+# So you do not need to pass them as args    - while executing bazel run
+```
+
 ```diff
 @@ @workspace//pkg/path:target @@
 
