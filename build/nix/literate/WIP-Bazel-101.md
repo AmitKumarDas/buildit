@@ -3,7 +3,7 @@
 # https://jayconrod.com/posts/
 # https://www.youtube.com/watch?v=2KUunGBZiiM
 # https://www.youtube.com/watch?v=hLD6vKl4Txc
-# https://github.com/kriscfoster/multi-language-bazel-monorepo
+# https://github.com/kriscfoster/multi-language-bazel-monorepo    😍
 ```
 
 ### Summary
