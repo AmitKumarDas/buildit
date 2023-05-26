@@ -35,8 +35,9 @@
 @@ mkYarnPackage @@
 # Creates the node_modules directory located at libexec/{package-name}/node_modules
 
-@@ mkDerivation @@
-# Build logic will be to symlink the previously built node_module and call yarn build
+@@ mkDerivation i.e. Build Logic @@
+# - Symlink the previously built node_module 
+# - yarn build
 
 @@ Refer @@
 # https://github.com/NixOS/nixpkgs/
@@ -95,7 +96,7 @@
 # nix build gitlab:/all-dressed-programming/yarn-nix-example
 ```
 
-### Advanced - Deep Dive yarn2nix Source
+### Advanced - Deep Dive into yarn2nix Source Code
 ```diff
 
 ```
