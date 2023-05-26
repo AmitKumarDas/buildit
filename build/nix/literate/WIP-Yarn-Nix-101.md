@@ -43,7 +43,7 @@
 # - pkgs/development/tools/yarn2nix-moretea/yarn2nix/default.nix
 ```
 
-### Step 2 - Flake: The build Recipe
+### Step 2 - Flake: The Build Recipe
 ```nix
 {
   description = "Example of a project that integrates nix flake with yarn.";
