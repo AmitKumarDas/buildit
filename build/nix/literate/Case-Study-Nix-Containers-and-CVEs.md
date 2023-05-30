@@ -129,11 +129,8 @@ COPY default.nix default.nix
 RUN \
   # Install the program to propagate to the final image
   nix-env -f default.nix -iA myEnv --show-trace \
-  # Exports a root directory structure containing all dependencies
-  # installed with nix-env under /run/profile
+  # Exports a root directory with all dependencies installed in /run/profile
   # Refer: https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
-  # Refer: Read extras section on this page
-  # Note: Nix profile does the job of ldd & more
   && export-profile /dist
 
 # Second Docker stage, we start with a completely empty image
