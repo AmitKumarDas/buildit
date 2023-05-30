@@ -120,26 +120,26 @@ in {
 @@ Note: Below uses Nix 22.11 @@
 ```
 ```Dockerfile
-# refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
+# Refer: https://hub.docker.com/r/niteo/nixpkgs-nixos-22.11/tags
 FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 
 # Import the project source
 COPY default.nix default.nix
 
 RUN \
-  # Install the program to propagate to the final image
+  # Install the env to propagate to the final image
   nix-env -f default.nix -iA myEnv --show-trace \
   # Exports a root directory with all dependencies installed in /run/profile
   # Refer: https://github.com/teamniteo/nix-docker-base/blob/master/scripts/export-profile
   && export-profile /dist
 
-# Second Docker stage, we start with a completely empty image
+# Final image is built on scratch
 FROM scratch
 
 # Copy the /dist root folder from the previous stage into this one
 COPY --from=build /dist /
 
-# Set PATH so Nix binaries can be found
+# Set PATH so Nix built binaries can be found
 ENV PATH=/run/profile/bin
 ENV NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 ```
@@ -173,11 +173,10 @@ FROM niteo/nixpkgs-nixos-22.11:ea96b4af6148114421fda90df33cf236ff5ecf1d AS build
 COPY default.nix default.nix
 
 RUN \
-  # Install the program to propagate to the final image
+  # Install the env to propagate to the final image
   # Fix is additional option as seen in 👇 line
   nix-env -f default.nix -iA myEnv --option filter-syscalls false \
-  # Exports a root directory structure containing all dependencies
-  # installed with nix-env under /run/profile
+  # Exports a root directory containing all dependencies installed under /run/profile
   && export-profile /dist
 
 # Second Docker stage, we start with a completely empty image
