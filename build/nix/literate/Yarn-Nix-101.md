@@ -88,15 +88,10 @@
 ```
 
 ### Step 3 - Run
-```
+```diff
 @@ Running from inside the cloned repo @@
 # nix build .#node-modules
 
 @@ Run without cloning the repo @@
 # nix build gitlab:/all-dressed-programming/yarn-nix-example
-```
-
-### Advanced - Deep Dive into yarn2nix Source Code
-```diff
-
 ```
