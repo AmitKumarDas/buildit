@@ -1,6 +1,17 @@
 ### Quote / UnQuote
 
 ```diff
+@@ Flux at the Point of Change: @@
+@@ Using the K8s Golang SDK and the Flux Api to Automatically Fix and Deploy CVEs in Your Base Images @@
+# - Bryan Oliver, Thoughtworks, Inc.
+
+# https://youtu.be/TEeZ1gYWwrw
+# Does your Org has the concept of Golden Images?
+# Auto Update the Version of Base Images
+# Compliance At the Point of Change
+```
+
+```diff
 @@ Malicious Compliance: Reflections on Trusting Container Scanners @@
 # https://youtu.be/9weGi0csBZM
 ```
