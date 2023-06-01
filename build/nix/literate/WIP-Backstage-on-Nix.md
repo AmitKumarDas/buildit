@@ -6,12 +6,15 @@
 ```
 
 ```diff
-@@ Step 1 @@
+@@ Step 1: Understand Nix packages required for local development @@
 ```
 
 ```sh
-# Verify all packages required for 
-nix-env -qP --available git
+nix-env -qP --available git yarn nodejs
+```
+
+```diff
+@@ Step 2: Prepare the environment for local development @@
 ```
 
 ```nix
@@ -24,15 +27,13 @@ let
 in pkgs.stdenv.mkDerivation {
   name = "backstage-dev-shell";
 
-  buildInputs = with pkgs; [ git ];
+  buildInputs = with pkgs; [ git yarn nodejs ];
 }
 ```
 
 ```sh
 $ nix-shell
-[nix-shell:~/work/nix/jun-backstage]$ git version
-git version 2.39.0
-
+[nix-shell:~/work/nix/jun-backstage]$
 [nix-shell:~/work/nix/jun-backstage]$ exit
 ```
 
