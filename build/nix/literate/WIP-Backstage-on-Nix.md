@@ -6,7 +6,7 @@
 ```
 
 ```diff
-@@ Step 1: Understand Nix packages required for local development @@
+@@ Step 1: Understand Nix Packages Required for Local Development @@
 ```
 
 ```sh
@@ -14,7 +14,7 @@ nix-env -qP --available git yarn nodejs
 ```
 
 ```diff
-@@ Step 2: Prepare the environment for local development @@
+@@ Step 2: Prepare Backstage Environment for Local Development @@
 ```
 
 ```nix
