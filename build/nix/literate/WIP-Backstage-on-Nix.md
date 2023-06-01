@@ -1,14 +1,44 @@
 ### Getting Started & Local Development
 ```diff
+@@ Step 0 - Clean Up @@
+
+# nix-collect-garbage
 ```
 
-### Architecture
 ```diff
-@@ https://backstage.io/docs/overview/architecture-overview/ @@
-
+@@ Step 1 @@
 ```
 
-### Architecture Decision Records
-```diff
-@@ https://backstage.io/docs/architecture-decisions/ @@
+```sh
+# Verify all packages required for 
+nix-env -qP --available git
+```
+
+```nix
+# file: shell.nix
+
+# Configures a shell environment that builds required 
+# local packages to run Backstage
+let 
+  pkgs = import <nixpkgs> {};
+in pkgs.stdenv.mkDerivation {
+  name = "backstage-dev-shell";
+
+  buildInputs = with pkgs; [ git ];
+}
+```
+
+```sh
+$ nix-shell
+[nix-shell:~/work/nix/jun-backstage]$ git version
+git version 2.39.0
+
+[nix-shell:~/work/nix/jun-backstage]$ exit
+```
+
+
+### References
+```yaml
+- https://backstage.io/docs/overview/architecture-overview/
+- https://backstage.io/docs/architecture-decisions/
 ```
