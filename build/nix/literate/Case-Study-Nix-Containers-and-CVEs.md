@@ -771,10 +771,10 @@ Features: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTPS-proxy IDN Kerberos L
 /nix/store/cnljympmlw1kg4j94y700dj10d7na2p5-gcc-12.2.0-lib    	  38.7M
 /nix/store/6masxpxid431cm1b1f6k4b39fq3im0jz-zstd-1.5.4        	  39.8M
 /nix/store/7q7g02x7g19a9rbs0s33c7ln25vmq2cc-brotli-1.0.9-lib  	  32.6M
-/nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8     	  37.1M
+/nix/store/98md6rh7sni201qc171dkvjxhb34bb4b-openssl-3.0.8     	  37.1M  👈
 /nix/store/alkg051b3nsmagczqgwnrh5zm98nkqp1-zlib-1.2.13       	  31.1M
 /nix/store/8cshalb7w38lkal5hbnsqy2mrdhqc1l8-libssh2-1.10.0    	  37.5M
-/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0     	  37.1M
+/nix/store/inqyv3wf4hby7m4zcc1xpfsxy5dazp2k-openssl-3.1.0     	  37.1M  👈
 /nix/store/7p23dw8qna6hykicjl4c1a7jpflyjwbm-bash-5.2-p15      	  32.5M
 /nix/store/ni9s9kffvm2d00jgbz4fqhj1cxw0n5sl-keyutils-1.6.3-lib	  31.0M
 /nix/store/vy6xib9jjcaw9wjx1j7ggvvnhlpyz81m-libkrb5-1.20.1    	  34.8M
@@ -902,7 +902,7 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 | CVE-2023-0464 | https://nvd.nist.gov/vuln/detail/CVE-2023-0464 | openssl   | 3.1.0     |    1    |   0   |    1     |   2   |
 
 @@ 🕵️‍♀️ Above implies openssl 3.1.0 has not fixed the CVEs yet! @@
-+ We probably need not upgrade openssl to 3.1.0 right away!
++ We probably NEED NOT upgrade openssl to 3.1.0 right away!
 ```
 
 ### Future Works
@@ -946,10 +946,12 @@ Potential vulnerabilities impacting 'result' or some of its runtime dependencies
 
 ```diff
 @@ Nix Profile Gist: @@
-# Nix symlinks binaries into entries of the Nix store representing the user environments
-# These user environments are then symlinked 
-# 🔥 Into labeled profiles stored in /nix/var/nix/profiles
-# 🔥 Which are in turn symlinked to the user's ~/.nix-profile
+# 1/ Nix symlinks BINARIES into entries of the Nix STORE => representing the USER Environments
+# 2/ These USER Environments are then Symlinked 
+#  -- 🔥 Into labeled profiles stored in /nix/var/nix/profiles
+#  -- 🔥 Which are in turn symlinked to the user's ~/.nix-profile
+
+@@ Question: Was it 3 symlinks or what ? @@
 ```
 
 ### Label
