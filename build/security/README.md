@@ -1,6 +1,21 @@
 ### Quote / UnQuote
 
 ```diff
+@@ Balance Availability vs Security Patching: Few Solutions @@
+
+# Release Channel
+# Maintenance Exclusion Window
+# Pod Disruption Budget
+# Termination Grace Period
+# Regional Clusters vs Zonal Clusters
+# Security Posture Dashboard
+# Deprecation Insights & Recommendations
+# 
+
+# https://cloud.google.com/blog/products/identity-security/how-to-solve-challenges-when-security-patching-google-kubernetes-engine
+```
+
+```diff
 @@ Flux at the Point of Change: @@
 @@ Using the K8s Golang SDK and the Flux Api to Automatically Fix and Deploy CVEs in Your Base Images @@
 # - Bryan Oliver, Thoughtworks, Inc.
