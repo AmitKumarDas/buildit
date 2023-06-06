@@ -38,7 +38,12 @@ $ nix-shell
 ```
 
 
-### References
+### Re-Imagined
+```yaml
+- https://aws.amazon.com/blogs/opensource/how-traveloka-uses-backstage-as-an-api-developer-portal-for-amazon-api-gateway/
+```
+
+### Others
 ```yaml
 - https://backstage.io/docs/overview/architecture-overview/
 - https://backstage.io/docs/architecture-decisions/
