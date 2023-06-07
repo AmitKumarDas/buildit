@@ -25,16 +25,18 @@
 
 ```diff
 @@ Run 'bazel' command on your terminal @@
-- Command 'bazel' not found, but can be installed with:
-- sudo apt install bazel-bootstrap
+
+# Command 'bazel' NOT FOUND, but can be installed with:
+# sudo apt install bazel-bootstrap
 ```
 
 #### ⚙️ [Hands On] Setup Distroless on Bazel On Nix ⚙️
 ```diff
 @@ We will setup Bazel inside a Nix shell instead @@
 
-# This helps us to understand the exact build requirements
-# This will avoid use of system installations. Therefore builds will be easy to reproduce
+# Helps understand the EXACT BUILD requirements
+# AVOIDS use of SYSTEM installations
+# Builds will be easy to REPRODUCE
 # In the future, we may want to use Nix to configure external dependencies for c/c++ projects
 
 # refer: https://www.tweag.io/blog/2018-03-15-bazel-nix/
@@ -56,13 +58,13 @@
 
 @@ However, nix-shell resulted in error @@
 
-- ** (process:782091): ERROR **: 11:14:38.685: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
-- No such file or directory
-- Trace/breakpoint trap (core dumped)
+# ** (process:782091): ERROR **: 11:14:38.685: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
+# NO SUCH FILE or DIRECTORY
+# Trace/breakpoint trap (core dumped)
 ```
 
 ```diff
-@@ Let us find what all Bazel versions are supported in Nix @@
+@@ Let us FIND what all Bazel VERSIONS are supported in Nix @@
 
 nix-env -qP --available bazel
 nixpkgs.bazel    bazel-3.7.2
@@ -85,9 +87,9 @@ nixpkgs.bazel_6  bazel-6.0.0-pre.20220720.3
 
 @@ Running nix-shell still gave above error @@
 
-- ** (process:784573): ERROR **: 11:29:45.049: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
-- No such file or directory
-- Trace/breakpoint trap (core dumped)
+# ** (process:784573): ERROR **: 11:29:45.049: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
+# NO SUCH FILE or DIRECTORY
+# Trace/breakpoint trap (core dumped)
 
 @@ Had same error with bazel_4 & bazel_6 as well @@
 ```
@@ -102,16 +104,16 @@ mkShell {
  packages = [ bazel_6 ];
 }
  
-@@ Got a different error when executed bazel @@
-- ERROR: The project you're trying to build requires Bazel 6.0.0
-- (specified in /home/amitd2/work/distroless/.bazelversion), 
-- but it wasn't found in /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin.
+@@ Got a DIFFERENT ERROR when executed bazel @@
+# ERROR: The project you're trying to build requires Bazel 6.0.0
+# (specified in /home/amitd2/work/distroless/.bazelversion), 
+# but it wasn't found in /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin.
 
-- Bazel binaries for all official releases can be downloaded from here:
--  https://github.com/bazelbuild/bazel/releases
+# Bazel binaries for all official releases can be downloaded from here:
+#  https://github.com/bazelbuild/bazel/releases
 
-- Please put the downloaded Bazel binary into this location:
--  /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/bazel-6.0.0-linux-x86_64
+# Please put the downloaded Bazel binary into this location:
+# /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/bazel-6.0.0-linux-x86_64
 ```
 
 ```diff
@@ -151,11 +153,11 @@ mkShell {
 @@ bazel run //base @@
 
 @@ Resulted in Error @@
-- ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
-- //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
+# ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
+# //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
 
-- ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
-- no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
+# ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
+# NO SUCH PACKAGE '@rules_rust//rust': error loading package 'external': Could not LOAD //external package
 ```
 
 ```diff
@@ -167,11 +169,11 @@ mkShell {
 
 @@ Resulted in above error @@
 
-- ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
-- //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
+# ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
+# //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
 
-- ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
-- no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
+# ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
+# no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
 ```
 
 ```diff
@@ -190,7 +192,7 @@ Build timestamp as int: 315532800
 ```
 
 ```diff
-@@ Let us set Bazel to 6.2.0 release @@
+@@ Let us BUMP Bazel to 6.2.0 release @@
 # https://github.com/bazelbuild/bazel/releases/tag/6.2.0
 
 
