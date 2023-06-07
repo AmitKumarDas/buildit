@@ -60,8 +60,10 @@
 # Needed for shadow-utils to manipulate users and groups
 ```
 
+### HOW
+
 ```diff
-@@ 📚 / HOW / SHOW / SYNTAX / ShadowSetup @@
+@@ 📚 / SIMPLE / ShadowSetup @@
 ```
 
 ```nix
@@ -80,7 +82,7 @@ buildImage {
 ```
 
 ```diff
-@@ 😍 / SPECIFIC / HOW / pull.nix / Pull Image as a Tar File @@
+@@ 😍 / OUTCOME / pull.nix / Pull Image as a Tar File @@
 ```
 
 ```nix
