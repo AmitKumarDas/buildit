@@ -60,7 +60,7 @@
 # Needed for shadow-utils to manipulate users and groups
 ```
 
-### 📚 / HOW / SHOW / SYNTAX
+### 📚 : HOW : SHOW : SYNTAX
 
 ```nix
 buildImage {
@@ -77,7 +77,7 @@ buildImage {
 }
 ```
 
-### 😍 / SPECIFIC / HOW / pull.nix / Pull Image as a Tar File
+### 😍 : SPECIFIC : HOW : pull.nix : Pull Image as a Tar File
 ```nix
 { stdenv, lib, curl, jshon, python, runCommand }:
 
