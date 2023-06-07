@@ -43,7 +43,7 @@
 ```
 
 ```diff
-@@ Tried with followed in a file called shell.nix @@
+@@ Attempt 1: shell.nix @@
 
 { pkgs ? import <nixpkgs> {} }:
 
@@ -56,7 +56,7 @@
  ];
 }).env
 
-@@ However, nix-shell resulted in error @@
+@@ Error @@
 
 # ** (process:782091): ERROR **: 11:14:38.685: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
 # NO SUCH FILE or DIRECTORY
@@ -74,7 +74,7 @@ nixpkgs.bazel_6  bazel-6.0.0-pre.20220720.3
 ```
 
 ```diff
-@@ Lets try with bazel_5 in our shell.nix @@
+@@ Attempt 2: bazel_5 in shell.nix @@
 
 { pkgs ? import <nixpkgs> {} }:
 
@@ -85,17 +85,12 @@ nixpkgs.bazel_6  bazel-6.0.0-pre.20220720.3
   ];
 }).env
 
-@@ Running nix-shell still gave above error @@
-
-# ** (process:784573): ERROR **: 11:29:45.049: bind_mount: mount(source, target, NULL, MS_BIND | MS_REC, NULL): 
-# NO SUCH FILE or DIRECTORY
-# Trace/breakpoint trap (core dumped)
-
+@@ Running nix-shell still gave ABOVE error @@
 @@ Had same error with bazel_4 & bazel_6 as well @@
 ```
 
 ```diff
-@@ Tried a different shell.nix @@
+@@ Attempt 3: Tried a DIFFERENT shell.nix @@
 
 { pkgs ? import <nixpkgs> {} }:
 
@@ -108,16 +103,10 @@ mkShell {
 # ERROR: The project you're trying to build requires Bazel 6.0.0
 # (specified in /home/amitd2/work/distroless/.bazelversion), 
 # but it wasn't found in /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin.
-
-# Bazel binaries for all official releases can be downloaded from here:
-#  https://github.com/bazelbuild/bazel/releases
-
-# Please put the downloaded Bazel binary into this location:
-# /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/bazel-6.0.0-linux-x86_64
 ```
 
-```diff
-@@ Debugging further @@
+```sh
+# Attempt 4: Debugging further
 
 ls -ltr /nix/store/qg9zsc4cvi5bhg6ds57rdcw9m17h33v5-bazel-6.0.0-pre.20220720.3/bin/
 total 31764
@@ -125,19 +114,17 @@ total 31764
 -r-xr-xr-x 1 root root 32518044 Jan  1  1970 bazel-6.0.0-pre.20220720.3-linux-x86_64 👈 🧐 🤔
 -r-xr-xr-x 1 root root     3363 Jan  1  1970 bazel
 
-@@ Hey, the executable is already there !! @@
-
-@@ Is it a problem in below config? @@
+# Is it a problem in below config?
 cat /home/amitd2/work/distroless/.bazelversion
 6.0.0
+```
 
-@@ Solution: Removing .bazelversion worked @@
+```diff
+@@ Attempt 5: Solution: Removing .bazelversion worked @@
 # nix-shell
 # bazel
 
-@@ Note that distroless project does not use Nix @@
-
-@@ Out final shell.nix looks like below @@
+@@ Current shell.nix @@
 
 { pkgs ? import <nixpkgs> {} }:
 
@@ -149,40 +136,31 @@ mkShell {
 
 #### 🏃‍♀️ [Hands On] Run distroless on Bazel on Nix 🏃‍♀️
 ```diff
-@@ Execute following from the root of distroless @@
-@@ bazel run //base @@
+@@ Attempt 6: Execute following from the root of distroless @@
+# bazel run //base
 
 @@ Resulted in Error @@
 # ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
 # //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
-
-# ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
-# NO SUCH PACKAGE '@rules_rust//rust': error loading package 'external': Could not LOAD //external package
 ```
 
 ```diff
-@@ Try the steps from a test file in distroless @@
+@@ Attempt 7: Try DIFFERENT steps from a test file in distroless @@
 # refer: https://github.com/GoogleContainerTools/distroless/blob/main/test.sh
 
 # bazel clean --curses=no
 # bazel build --curses=no //...
 
-@@ Resulted in above error @@
-
-# ERROR: /home/amitd2/work/distroless/WORKSPACE:96:13: 
-# //external:jetty: no such attribute 'add_prefix' in 'http_archive' rule
-
-# ERROR: Encountered error while reading extension file 'rust/repositories.bzl': 
-# no such package '@rules_rust//rust': error loading package 'external': Could not load //external package
+@@ Resulted in ABOVE error @@
 ```
 
 ```diff
-@@ Debug if add_prefix is present or not @@
+@@ Attempt 8: Debug if add_prefix is present or not @@
 
 # https://github.com/bazelbuild/bazel/commit/87c8b09061eb4d51271630353b1718c39dfd1ebe
 # Above commit introduces add_prefix on Aug 23 2022
 
-@@ What's our Bazel version @@
+@@ Nix Installed Bazel version @@
 bazel version
 Build label: 6.0.0-pre.20220720.3- (@non-git)
 Build target: bazel-out/k8-opt/bin/src/main/java/com/google/devtools/build/lib/bazel/BazelServer_deploy.jar
@@ -192,10 +170,39 @@ Build timestamp as int: 315532800
 ```
 
 ```diff
-@@ Let us BUMP Bazel to 6.2.0 release @@
-# https://github.com/bazelbuild/bazel/releases/tag/6.2.0
-
-
+@@ Attempt 9: BUMP Bazel based on the commit from lazamar.co.uk site @@
 ```
 
+```nix
+# shell.nix
+# Refer: https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=bazel
 
+{ pkgs ? import (builtins.fetchTarball {
+  url = "https://github.com/NixOS/nixpkgs/archive/8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8.tar.gz";
+}) {} }:
+
+with pkgs;
+mkShell {
+  packages = [ bazel_6 ];
+}
+```
+
+```sh
+bazel version
+Build label: 6.0.0- (@non-git)
+Build target: bazel-out/k8-opt/bin/src/main/java/com/google/devtools/build/lib/bazel/BazelServer_deploy.jar
+Build time: Tue Jan 1 00:00:00 1980 (315532800)
+Build timestamp: 315532800
+Build timestamp as int: 315532800
+```
+
+```sh
+bazel run //base
+ERROR: Skipping '//base': no such target '//base:base': target 'base' not declared in package 'base' defined by /home/amitd2/work/distroless/base/BUILD (Tip: use `query "//base:*"` to see all the targets in that package)
+WARNING: Target pattern parsing failed.
+ERROR: no such target '//base:base': target 'base' not declared in package 'base' defined by /home/amitd2/work/distroless/base/BUILD (Tip: use `query "//base:*"` to see all the targets in that package)
+INFO: Elapsed time: 0.091s
+INFO: 0 processes.
+FAILED: Build did NOT complete successfully (0 packages loaded)
+ERROR: Build failed. Not running target
+```
