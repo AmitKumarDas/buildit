@@ -9,7 +9,7 @@
 @@ Risk Reward Ratio: Learning Bazel vs. Managing thousands of CVEs @@
 ```
 
-### 🏔️ Destinations 🗻
+### 🏔️ References 🗻
 ```diff
 # https://github.com/GoogleContainerTools/distroless
 # https://github.com/tweag/nix_bazel_codelab
