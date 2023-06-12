@@ -6,7 +6,7 @@
 - My Awesome Nix Collections
 
 ### Train Yourself
-This is a set of steps which should get you to above goals
+These are a set of hands-on activities that should help you achieve above goals
 
 ### Chapters
 
@@ -20,7 +20,7 @@ This is a set of steps which should get you to above goals
   - Generate SBOM
 ```
 
-### Nix Basics
+### Nix Basics - Dev Environments
 ```yaml
 - https://nixos.wiki/wiki/Development_environment_with_nix-shell
 ```
