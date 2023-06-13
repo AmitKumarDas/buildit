@@ -22,5 +22,5 @@ These are a set of hands-on activities that should help you achieve above goals
   - https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
   - https://discourse.nixos.org/t/introducing-crane-composable-and-cacheable-builds-with-cargo/17275
 - Build K8s:
-  - [4052-generic-controlplane](https://github.com/kubernetes/enhancements/blob/06979b018697c346f537512984f32df7867fdb66/keps/sig-api-machinery/4052-generic-controlplane/README.md)
+  - https://github.com/kubernetes/enhancements/blob/06979b018697c346f537512984f32df7867fdb66/keps/sig-api-machinery/4052-generic-controlplane/README.md
 ```
