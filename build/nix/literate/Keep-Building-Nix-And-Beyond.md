@@ -13,6 +13,12 @@ These are a set of hands-on activities that should help you achieve above goals
 ```yaml
 - Basic Series:
   - https://nixos.wiki/wiki/Development_environment_with_nix-shell
+- JVM Series:
+  - https://av.tib.eu/media/50716 # scala
+- Folder Structure Series:
+  - https://av.tib.eu/media/50716 # ci.nix, shell.nix, pkgs.nix
+- Override Series:
+  - https://av.tib.eu/media/50716
 - Unpack Series:
   - https://github.com/ipetkov/crane
   - https://github.com/nlewo/nix2container
