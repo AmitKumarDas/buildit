@@ -31,6 +31,7 @@ These are a set of hands-on activities that should help you achieve above goals
     - # nativeBuildInputs vs propagatedBuildInputs vs buildInputs
     - # mkYarnPackage # builtins.filterSource # lib.cleanSource # removes symlinks
 ```
+
 ```yaml
 - JVM Series:
   - https://av.tib.eu/media/50716 # scala
