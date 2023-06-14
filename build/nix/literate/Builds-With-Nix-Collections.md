@@ -13,6 +13,8 @@ These are a set of hands-on activities that should help you achieve above goals
 ```yaml
 - Basic Series:
   - https://nixos.wiki/wiki/Development_environment_with_nix-shell
+- Unit Test Series:
+  - https://www.tweag.io/blog/2022-09-01-unit-test-your-nix-code/
 - JVM Series:
   - https://av.tib.eu/media/50716 # scala
 - Folder Structure Series:
