@@ -45,6 +45,10 @@ These are a set of hands-on activities that should help you achieve above goals
 - JVM Series:
   - https://av.tib.eu/media/50716 # scala
 - Unpack Series:
+  - https://github.com/google/go-containerregistry/tree/main/cmd/crane
+  - https://github.com/containers/skopeo
+  - https://github.com/oras-project/oras
+  - https://github.com/oras-project/oras-go
   - https://github.com/ipetkov/crane
   - https://github.com/nikstur/bombon
 - Nix Discussions: 
