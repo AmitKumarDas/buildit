@@ -33,9 +33,8 @@ These are a set of hands-on activities that should help you achieve above goals
 ```
 
 ```yaml
-- Unpack Series - https://github.com/nlewo/nix2container
+- Unpack Series - https://github.com/nlewo/nix2container # Move to its Own Page
 - https://www.youtube.com/watch?v=-hsxXBabdX0&t=4361s
-  - layers + config + manifest
 ```
 
 ```yaml
