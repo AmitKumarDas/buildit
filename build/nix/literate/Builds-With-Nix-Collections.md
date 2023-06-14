@@ -35,6 +35,10 @@ These are a set of hands-on activities that should help you achieve above goals
 ```yaml
 - Unpack Series - https://github.com/nlewo/nix2container # Move to its Own Page
 - https://www.youtube.com/watch?v=-hsxXBabdX0&t=4361s
+  - 1/ A go program generates JSON files from a graph of store paths
+  - At build time Nix uses go program to generate JSON files
+  - 2/ go library generates layer tar streams from these JSON files
+  - At runtime a modified Skopeo uses the go library to stream layers
 ```
 
 ```yaml
