@@ -33,11 +33,16 @@ These are a set of hands-on activities that should help you achieve above goals
 ```
 
 ```yaml
+- Unpack Series - https://github.com/nlewo/nix2container
+- https://www.youtube.com/watch?v=-hsxXBabdX0&t=4361s
+  - layers + config + manifest
+```
+
+```yaml
 - JVM Series:
   - https://av.tib.eu/media/50716 # scala
 - Unpack Series:
   - https://github.com/ipetkov/crane
-  - https://github.com/nlewo/nix2container
   - https://github.com/nikstur/bombon
 - Nix Discussions: 
   - https://discourse.nixos.org/t/generating-software-bill-of-materials-from-derivation/14089
