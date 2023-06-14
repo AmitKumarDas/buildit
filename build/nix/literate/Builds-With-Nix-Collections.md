@@ -11,9 +11,8 @@ These are a set of hands-on activities that should help you achieve above goals
 
 ### Chapters
 
-```yaml
-- Basic Series:
-  - https://nixos.wiki/wiki/Development_environment_with_nix-shell
+```diff
+@@ Basic Series @@
 ```
 
 ```yaml
