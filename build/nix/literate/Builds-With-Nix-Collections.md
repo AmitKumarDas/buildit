@@ -14,13 +14,24 @@ These are a set of hands-on activities that should help you achieve above goals
 ```yaml
 - Basic Series:
   - https://nixos.wiki/wiki/Development_environment_with_nix-shell
-  - https://www.tweag.io/blog/2022-09-01-unit-test-your-nix-code/ # import & inherit # {}: let in
-  - https://www.tweag.io/blog/2022-09-01-unit-test-your-nix-code/ # unit testing
-  - https://www.tweag.io/blog/2022-09-01-unit-test-your-nix-code/ # nix eval --impure --expr
-  - https://av.tib.eu/media/50716 # ci.nix, shell.nix, pkgs.nix # folder structure
-  - https://av.tib.eu/media/50716 # override
-  - https://av.tib.eu/media/39625 # pinning nixpkgs
-  - https://av.tib.eu/media/39625 # patches is easy to maintain than a fork
+  - https://www.tweag.io/blog/2022-09-01-unit-test-your-nix-code/ 
+    - # import & inherit # {}: let in
+    - # UNIT TESTING
+    - # nix eval --impure --expr
+  - https://av.tib.eu/media/50716 
+    - # ci.nix, shell.nix, pkgs.nix # FOLDER structure
+    - # OVERRIDE
+  - https://av.tib.eu/media/39625 
+    - # PINNING nixpkgs
+    - # PATCHES is easy to maintain than a FORK
+  - https://av.tib.eu/media/39618 
+    - # FROM mkDerivation TO mkShell
+    - # Run against nix-shell WITHOUT stepping inside via --run
+    - # Not PURE # Not COMPOSABLE
+    - # nativeBuildInputs vs propagatedBuildInputs vs buildInputs
+    - # mkYarnPackage # builtins.filterSource # lib.cleanSource # removes symlinks
+```
+```yaml
 - JVM Series:
   - https://av.tib.eu/media/50716 # scala
 - Unpack Series:
