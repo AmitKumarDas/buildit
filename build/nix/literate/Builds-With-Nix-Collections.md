@@ -12,7 +12,14 @@ These are a set of hands-on activities that should help you achieve above goals
 ### Chapters
 
 ```diff
-@@ Basic Series @@
+@@ Read Series @@
+```
+```sh
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
+https://blog.lenny.ninja/part-1-quickly-packaging-services-using-nix-flakes.html
+https://blog.lenny.ninja/part-2-quickly-packaging-services-using-nix-flakes.html
+https://blog.replit.com/super-colliding-nix-stores
+https://blog.replit.com/nix
 ```
 
 ```yaml
@@ -24,21 +31,36 @@ These are a set of hands-on activities that should help you achieve above goals
   - At runtime a modified Skopeo uses the go library to stream layers
 ```
 
-```yaml
-- JVM Series:
-  - https://av.tib.eu/media/50716 # scala
-- Unpack Series:
-  - https://github.com/google/go-containerregistry/tree/main/cmd/crane
-  - https://github.com/containers/skopeo
-  - https://github.com/oras-project/oras
-  - https://github.com/oras-project/oras-go
-  - https://github.com/ipetkov/crane
-  - https://github.com/nikstur/bombon
-- Nix Discussions: 
-  - https://discourse.nixos.org/t/generating-software-bill-of-materials-from-derivation/14089
-  - https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
-  - https://discourse.nixos.org/t/introducing-crane-composable-and-cacheable-builds-with-cargo/17275
-- Build K8s:
-  - https://github.com/kubernetes/enhancements/ + /keps/sig-api-machinery/4052-generic-controlplane/README.md
-    - blob/06979b018697c346f537512984f32df7867fdb66
+
+```diff
+@@ Unpack Series: @@
 ```
+```sh
+https://github.com/google/go-containerregistry/tree/main/cmd/crane
+https://github.com/containers/skopeo
+https://github.com/oras-project/oras
+https://github.com/oras-project/oras-go
+https://github.com/ipetkov/crane
+https://github.com/nikstur/bombon
+https://github.com/DBCDK/kubernixos
+https://github.com/numtide/devshell
+https://github.com/DeterminateSystems/nix-installer-action
+```
+
+```diff
+@@ Nix Discussions: @@
+```
+```sh
+https://discourse.nixos.org/t/generating-software-bill-of-materials-from-derivation/14089
+https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
+https://discourse.nixos.org/t/introducing-crane-composable-and-cacheable-builds-with-cargo/17275
+```
+
+```diff
+@@ Build K8s: @@
+```
+```sh
+https://github.com/kubernetes/enhancements/ + /keps/sig-api-machinery/4052-generic-controlplane/README.md
+  -- blob/06979b018697c346f537512984f32df7867fdb66
+```
+
