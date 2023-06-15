@@ -6,10 +6,7 @@
 - My Awesome Nix Collections
 - This is my way of writing a book on Nix
 
-### Train Yourself
-These are a set of hands-on activities that should help you achieve above goals
-
-### Chapters
+### Unpack Series
 
 ```diff
 @@ Read Series @@
@@ -20,6 +17,9 @@ https://blog.lenny.ninja/part-1-quickly-packaging-services-using-nix-flakes.html
 https://blog.lenny.ninja/part-2-quickly-packaging-services-using-nix-flakes.html
 https://blog.replit.com/super-colliding-nix-stores
 https://blog.replit.com/nix
+https://discourse.nixos.org/t/introducing-crane-composable-and-cacheable-builds-with-cargo/17275
+https://discourse.nixos.org/t/generating-software-bill-of-materials-from-derivation/14089
+https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
 ```
 
 ```yaml
@@ -47,14 +47,6 @@ https://github.com/numtide/devshell
 https://github.com/DeterminateSystems/nix-installer-action
 ```
 
-```diff
-@@ Nix Discussions: @@
-```
-```sh
-https://discourse.nixos.org/t/generating-software-bill-of-materials-from-derivation/14089
-https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
-https://discourse.nixos.org/t/introducing-crane-composable-and-cacheable-builds-with-cargo/17275
-```
 
 ```diff
 @@ Build K8s: @@
