@@ -4,7 +4,6 @@
 - Software builds needs a focussed approach, a champion team, etc.
 - Building a career on software builds
 - My Awesome Nix Collections
-- This is my way of writing a book on Nix
 
 ### Unpack Series
 
