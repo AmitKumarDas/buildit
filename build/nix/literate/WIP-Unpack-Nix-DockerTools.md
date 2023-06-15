@@ -7,7 +7,8 @@
 
 ```diff
 @@ contents ~ ADD @@
-
+```
+```sh
 # A DERIVATION
 # Gets COPIED in the new layer of the resulting image
 # Same as ADD contents/ / in a Dockerfile
@@ -15,7 +16,8 @@
 
 ```diff
 @@ runAsRoot ~ RUN @@
-
+```
+```sh
 # A bash script 
 # Will RUN as ROOT in the overlayed environment
 # Overlay ENV == Base Image Layers + the contents Derivation + New Resulting Layer
@@ -25,43 +27,40 @@
 
 ```diff
 @@ config ~ Specs @@
-
+```
+```sh
 # Docker Image Specification v1.0.0
-# After the new layer has been created, its closure is copied to the layer itself
+# After the new layer has been created, this spec's closure is copied to the layer itself
 # Closure i.e. Dependencies == contents + config + runAsRoot
 # ONLY new Dependencies that are NOT in the EXISTING LAYERS will be copied
 ```
 
 ```diff
-@@ ONLY ONE NEW SINGLE LAYER @@
-
-# Result: ONLY ONE NEW SINGLE LAYER will be produced and added to the resulting image
+@@ How to Inspect an Image using Nix? @@
 ```
-
-```diff
-@@ Note: Inspect the Image @@
-
-# Using buildArgs 🧐 🧐
+```sh
+# Using buildArgs
 ```
 
 ```diff
 @@ shadowSetup @@
-
-# A HELPER
+```
+```sh
 # Sets up BASE FILES for managing USERS and GROUPS, iff files don't exist
-# Suitable for use in runAsRoot
+# Suitable for use in runAsRoot                               # TIP
 ```
 
 ```diff
 @@ Note: Base files like /etc/passwd or /etc/login.defs @@
-
+```
+```sh
 # Needed for shadow-utils to manipulate users and groups
 ```
 
 ### HOW
 
 ```diff
-@@ 📚 ShadowSetup @@
+@@ ShadowSetup @@
 ```
 
 ```nix
@@ -80,7 +79,7 @@ buildImage {
 ```
 
 ```diff
-@@ 😍 pull.nix ~ Pull Image as a Tar File @@
+@@ pull.nix ~ Pull Image as a Tar File @@
 ```
 
 ```nix
@@ -132,7 +131,7 @@ let layer = stdenv.mkDerivation {
   preferLocalBuild = true;
 };
 
-in runCommand "${name}.tar.gz" {} ''                        # TIP: Desired at Last Line
+in runCommand "${name}.tar.gz" {} ''                        # TIP: Desired State is Here
   tar -C ${layer} -czf $out .
 ''
 ```
