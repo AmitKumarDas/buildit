@@ -3,20 +3,18 @@
 - Focus on learning Nix to build container images
 - Learn from Commit History i.e. https://github.com/NixOS/nixpkgs/commit/{insert-commit-number}
 
-## Jan 13, 2016 - 4a4561ce244c0cea1cb07fd02f176b11f094f570
-
 ### WHAT
 
 ```diff
-@@ contents @@
+@@ contents ~ ADD @@
 
-# Is a DERIVATION
-# Gets copied in the new layer of the resulting image
+# A DERIVATION
+# Gets COPIED in the new layer of the resulting image
 # Same as ADD contents/ / in a Dockerfile
 ```
 
 ```diff
-@@ runAsRoot @@
+@@ runAsRoot ~ RUN @@
 
 # A bash script 
 # Will RUN as ROOT in the overlayed environment
@@ -26,7 +24,7 @@
 ```
 
 ```diff
-@@ config @@
+@@ config ~ Specs @@
 
 # Docker Image Specification v1.0.0
 # After the new layer has been created, its closure is copied to the layer itself
@@ -63,7 +61,7 @@
 ### HOW
 
 ```diff
-@@ 📚 / SIMPLE / ShadowSetup @@
+@@ 📚 ShadowSetup @@
 ```
 
 ```nix
@@ -71,8 +69,8 @@ buildImage {
   name = "shadow-basic";
 
   runAsRoot = ''
-    #!${stdenv.shell}
-    ${shadowSetup}
+    #!${stdenv.shell}                  # TIL
+    ${shadowSetup}                     # TIL
     groupadd -r redis
     useradd -r -g redis redis
     mkdir /data
@@ -82,11 +80,11 @@ buildImage {
 ```
 
 ```diff
-@@ 😍 / OUTCOME / pull.nix / Pull Image as a Tar File @@
+@@ 😍 pull.nix ~ Pull Image as a Tar File @@
 ```
 
 ```nix
-{ stdenv, lib, curl, jshon, python, runCommand }:
+{ stdenv, lib, curl, jshon, python, runCommand }:         # First Set of Args
 
 # Inspired and simplified version of fetchurl.
 # For simplicity we only support sha256.
@@ -98,26 +96,27 @@ buildImage {
 , indexUrl ? "https://index.docker.io"
 , registryUrl ? "https://registry-1.docker.io"
 , registryVersion ? "v1"
-, curlOpts ? "" }:
+, curlOpts ? "" }:                                        # Second Set of Args
 
 let layer = stdenv.mkDerivation {
   inherit name imageName imageTag imageId
           indexUrl registryUrl registryVersion curlOpts;
 
-  builder = ./pull.sh; # 🧐 WHAT IS THIS
-  detjson = ./detjson.py; # 🧐 WHAT IS THIS
+  builder = ./pull.sh;                                       # TIL
+  detjson = ./detjson.py;                                    # TIL
 
-  buildInputs = [ curl jshon python ];
+  buildInputs = [ curl jshon python ];                       # USED at RUNTIME
 
   outputHashAlgo = "sha256";
-  outputHash = sha256; # 🧐 HOW IS THIS DIFFERENT THAN THE LINE ABOVE
+  outputHash = sha256;                                       # 🧐 WHY
   outputHashMode = "recursive";
 
-  impureEnvVars = [
-    # We borrow these environment variables from the caller to allow
-    # easy proxy configuration.  This is IMPURE, but a Fixed-Output
-    # Derivation like fetchurl is allowed to do so since its result is
-    # by definition pure.
+  impureEnvVars = [                                                        # TIL
+    # We BORROW these ENV VARIABLES from the caller to allow
+    # easy proxy configuration.
+    # 
+    # This is IMPURE, but a Fixed-Output Derivation like fetchurl
+    # is allowed to do so since its RESULT IS by definition PURE.          # TIL # HOW
     "http_proxy" "https_proxy" "ftp_proxy" "all_proxy" "no_proxy"
 
     # This variable allows the user to pass ADDITIONAL OPTIONS to curl
@@ -129,11 +128,11 @@ let layer = stdenv.mkDerivation {
   ];
 
   # Doing the download on a remote machine just duplicates network
-  # traffic, so don't do that. # 🧐 HOW IS THIS POSSIBLE?
+  # traffic, so don't do that.                                             # 🧐 DOUBT
   preferLocalBuild = true;
 };
 
-in runCommand "${name}.tar.gz" {} ''
+in runCommand "${name}.tar.gz" {} ''                        # TIP: Desired at Last Line
   tar -C ${layer} -czf $out .
 ''
 ```
