@@ -4,6 +4,7 @@
 - Teach someone
 
 ### Unpack These as Nix Builds
+- https://security.googleblog.com/2023/06/bringing-transparency-to-confidential.html
 - Nix
 - Backstage
 - Contour/Envoy
