@@ -5,6 +5,9 @@
 
 ### Unpack These as Nix Builds
 - https://security.googleblog.com/2023/06/bringing-transparency-to-confidential.html
+- https://github.com/cloud66-oss
+- https://media.ccc.de/v/bob2023-cloud-done-the-nix-way-arni
+- https://github.com/jetpack-io
 - Nix
 - Backstage
 - Contour/Envoy
