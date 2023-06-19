@@ -36,6 +36,8 @@ https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
 @@ Unpack Series: @@
 ```
 ```sh
+https://discourse.nixos.org/t/introducing-attic-a-self-hostable-nix-binary-cache-server/24343/5
+https://github.com/zhaofengli/attic
 https://github.com/dch82/NixOS-Config-Base
 https://github.com/gchq/nix-bootstrap
 https://github.com/google/go-containerregistry/tree/main/cmd/crane
