@@ -12,6 +12,7 @@
   - Dagger
   - https://github.com/solo-io
   - https://github.com/kubernetes/enhancements/issues/3744 # Go LTS & K8s
+  - https://github.com/golang/go/issues/56986 # Go Backward Compatibility
   - https://github.com/kubernetes/enhancements/pull/4052 # K8s Generic Control Plane
 - Decide?
   - https://github.com/cloud66-oss
