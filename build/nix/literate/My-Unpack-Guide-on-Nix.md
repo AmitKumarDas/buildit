@@ -36,6 +36,7 @@ https://discourse.nixos.org/t/vulnix-new-maintainer-needed/27209
 @@ Unpack Series: @@
 ```
 ```sh
+https://github.com/dch82/NixOS-Config-Base
 https://github.com/gchq/nix-bootstrap
 https://github.com/google/go-containerregistry/tree/main/cmd/crane
 https://github.com/containers/skopeo
