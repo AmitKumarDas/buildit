@@ -12,16 +12,21 @@
     - https://github.com/project-oak/hello-transparent-release
     - https://github.com/slsa-framework/slsa-github-generator/blob/main/internal/builders/docker/README.md
     - https://github.com/slsa-framework/slsa-verifier
+    - https://slsa.dev/blog/2023/06/slsa-github-worfklows-container-based
   - GUAC
     - https://github.com/guacsec/guac
   - OAK
     - https://github.com/project-oak/oak/blob/main/README.md
     - https://github.com/project-oak/transparent-release
+    - https://github.com/nix-community/trustix
   - Dagger
   - https://github.com/solo-io # eBPF
   - https://github.com/aquasecurity/btfhub # eBPF
   - https://github.com/aquasecurity/libbpfgo # eBPF
 - Decide?
+  - Bazel
+    - https://github.com/jfrog/jfrog-distroless
+    - https://github.com/kriscfoster/multi-language-bazel-monorepo
   - https://github.com/kubernetes/enhancements/issues/3744 # Go LTS & K8s
   - https://github.com/golang/go/issues/56986 # Go Backward Compatibility
   - https://github.com/kubernetes/enhancements/pull/4052 # K8s Generic Control Plane
