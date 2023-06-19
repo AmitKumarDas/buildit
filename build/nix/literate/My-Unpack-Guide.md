@@ -7,6 +7,7 @@
 ### Unpack These as Nix Builds
 - Now:
   - Nix
+  - SLSA # https://github.com/slsa-framework/slsa-github-generator/blob/main/internal/builders/docker/README.md
   - GUAC # https://github.com/guacsec/guac
   - OAK # https://github.com/project-oak/oak/blob/main/README.md
   - Dagger
