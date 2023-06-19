@@ -11,6 +11,7 @@
 @@ Read Series @@
 ```
 ```sh
+https://github.com/nixcon
 https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
 https://blog.lenny.ninja/part-1-quickly-packaging-services-using-nix-flakes.html
 https://blog.lenny.ninja/part-2-quickly-packaging-services-using-nix-flakes.html
