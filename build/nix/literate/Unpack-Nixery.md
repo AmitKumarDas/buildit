@@ -4,8 +4,12 @@
 - A demo instance is available at nixery.dev
 
 ### Usage
-- docker pull nixery.dev/shell/git
+```diff
+@@ docker pull nixery.dev/shell/git @@
+```
+```yaml
 - You receive an image that was built ad-hoc containing a shell environment and git
+```
 
 ### Few Code Snippets to Learn Nix & Nixery
 ```diff
