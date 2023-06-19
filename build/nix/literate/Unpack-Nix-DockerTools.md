@@ -3,6 +3,9 @@
 - Focus on learning Nix to build container images
 - Learn from Commit History i.e. https://github.com/NixOS/nixpkgs/commit/{insert-commit-number}
 
+### Commit References
+- https://github.com/NixOS/nixpkgs/commit/4a4561ce244c0cea1cb07fd02f176b11f094f570
+
 ### WHAT
 
 ```diff
@@ -58,6 +61,19 @@
 ```
 
 ### HOW
+
+```diff
+@@ Making of a Shell Script ~ stdenv.shell + coreutils @@
+```
+```nix
+shellScript = text:
+  writeScript "script.sh" ''
+    #!${stdenv.shell}
+    set -e
+    export PATH=${coreutils}/bin:/bin             # cat, ls, rm, etc. # vs. Busybox # New PATH
+    ${text}
+  '';
+```
 
 ```diff
 @@ ShadowSetup @@
