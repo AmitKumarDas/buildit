@@ -11,6 +11,7 @@
     - https://github.com/slsa-framework/slsa-github-generator
     - https://github.com/project-oak/hello-transparent-release
     - https://github.com/slsa-framework/slsa-github-generator/blob/main/internal/builders/docker/README.md
+    - https://github.com/slsa-framework/slsa-verifier
   - GUAC
     - https://github.com/guacsec/guac
   - OAK
