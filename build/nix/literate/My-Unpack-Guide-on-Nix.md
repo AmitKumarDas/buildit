@@ -38,6 +38,10 @@
 @@ Unpack Series: @@
 ```
 ```yaml
+- https://discourse.nixos.org/t/save-cachix-bandwith-and-your-time-with-phoenix-ci/29367
+  - https://github.com/DevPalace/phoenix-ci/
+- https://discourse.nixos.org/t/dmerge-a-mini-dsl-for-data/27314
+  - https://github.com/divnix/dmerge # vs overlays # vs NixOS module system
 - https://discourse.nixos.org/t/introducing-attic-a-self-hostable-nix-binary-cache-server/24343/5
 - https://github.com/zhaofengli/attic
 - https://github.com/dch82/NixOS-Config-Base
@@ -51,5 +55,6 @@
 - https://github.com/DBCDK/kubernixos
 - https://github.com/numtide/devshell
 - https://github.com/DeterminateSystems/nix-installer-action
+- https://github.com/cachix/nixpkgs-python
 ```
 
