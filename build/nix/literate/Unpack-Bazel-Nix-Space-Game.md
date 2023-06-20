@@ -6,19 +6,25 @@
 - starter: https://github.com/tweag/nix_bazel_codelab/tree/main#nixbazel-codelab
 ```
 
-### Starter: Expected Learnings
+### Starter: What is What
+```yaml
+- WORKSPACE: External Dependencies
+- .bazelrc: Configures Bazel
+- http_archive: Import Bazel Dependencies
+- nixpkgs_package: Import Nix Dependencies into Bazel
+- nix/: Pinning Nix
+- shell.nix: Developement Environment that includes Bazel
+```
+
+### Starter: Takeaways
 ```yaml
 - Bazel: Rule Sets
 - Tool: Buildfier
-- Nix: Shell
+- Tool: Nix based Development Environment
 - Bazel: rules_nixpkgs
 - Tool: direnv
 ```
 
-### Starter: What is What
-```yaml
-- 
-```
+### Main: What is What
 
-
-### Main Quotes
+### Main: Takeaways
