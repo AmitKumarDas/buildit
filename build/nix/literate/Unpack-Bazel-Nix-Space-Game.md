@@ -33,7 +33,7 @@
 - Tool: direnv
 ```
 
-### Starter: My Journey
+### Starter: Baby Steps
 ```diff
 @@ Step 0: @@
 ```
@@ -111,6 +111,39 @@ INFO: Elapsed time: 45.323s
 INFO: 0 processes.
 FAILED: Build did NOT complete successfully (1 packages loaded)
 FAILED: Build did NOT complete successfully (1 packages loaded)
+```
+
+```diff
+@@ Step 5: Add Java based Bazel Target @@
+```
+```diff
+git diff
+diff --git a/java/src/main/java/bazel/bootcamp/BUILD.bazel b/java/src/main/java/bazel/bootcamp/BUILD.bazel
+index 2f91aa0..896f9c6 100644
+--- a/java/src/main/java/bazel/bootcamp/BUILD.bazel
++++ b/java/src/main/java/bazel/bootcamp/BUILD.bazel
+@@ -1,6 +1,10 @@
+ load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
+ 
+ # section 1 code to add here
++java_binary(
++    name = "HelloBazelBootcamp",
++    srcs = ["HelloBazelBootcamp.java"],
++)
+```
+
+```sh
+[nix-shell:~/work/nix_bazel_codelab]$ bazel run //java/src/main/java/bazel/bootcamp:HelloBazelBootcamp
+INFO: Analyzed target //java/src/main/java/bazel/bootcamp:HelloBazelBootcamp (32 packages loaded, 630 targets configured).
+INFO: Found 1 target...
+Target //java/src/main/java/bazel/bootcamp:HelloBazelBootcamp up-to-date:
+  bazel-bin/java/src/main/java/bazel/bootcamp/HelloBazelBootcamp.jar
+  bazel-bin/java/src/main/java/bazel/bootcamp/HelloBazelBootcamp
+INFO: Elapsed time: 190.456s, Critical Path: 4.31s
+INFO: 7 processes: 4 internal, 2 linux-sandbox, 1 worker.
+INFO: Build completed successfully, 7 total actions
+INFO: Build completed successfully, 7 total actions
+Welcome to the Bootcamp! Let's get going :)
 ```
 
 ## Main
