@@ -9,11 +9,15 @@
 ### Starter: What is What
 ```yaml
 - WORKSPACE: External Dependencies
+- BUILD.bazel: Define Bazel packages & targets in that package
 - .bazelrc: Configures Bazel
+```
+
+```yaml
 - http_archive: Import Bazel Dependencies
 - nixpkgs_package: Import Nix Dependencies into Bazel
 - nix/: Pinning Nix
-- shell.nix: Developement Environment that includes Bazel
+- shell.nix: Development Environment that includes Bazel
 ```
 
 ### Starter: Takeaways
