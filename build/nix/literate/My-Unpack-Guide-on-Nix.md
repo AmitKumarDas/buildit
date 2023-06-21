@@ -39,6 +39,9 @@
 ```
 ```yaml
 - https://www.buildbuddy.io/blog/buck2-review/
+- https://github.com/buildbuddy-io/buildbuddy
+- https://github.com/buildbuddy-io/soci-snapshotter
+- https://github.com/buildbuddy-io/protoc-gen-protobufjs
 - https://github.com/DeterminateSystems/nix-installer-action
 - https://github.com/DeterminateSystems/nix-installer
 - https://determinate.systems/posts/flake-checker
