@@ -38,6 +38,8 @@
 @@ Unpack Series: @@
 ```
 ```yaml
+- https://determinate.systems/posts/flake-checker
+  - https://github.com/DeterminateSystems/flake-checker
 - https://discourse.nixos.org/t/save-cachix-bandwith-and-your-time-with-phoenix-ci/29367
   - https://github.com/DevPalace/phoenix-ci/
 - https://discourse.nixos.org/t/dmerge-a-mini-dsl-for-data/27314
