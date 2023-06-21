@@ -38,6 +38,8 @@
 @@ Unpack Series: @@
 ```
 ```yaml
+- https://github.com/DeterminateSystems/nix-installer-action
+- https://github.com/DeterminateSystems/nix-installer
 - https://determinate.systems/posts/flake-checker
   - https://github.com/DeterminateSystems/flake-checker
 - https://discourse.nixos.org/t/save-cachix-bandwith-and-your-time-with-phoenix-ci/29367
