@@ -19,6 +19,10 @@
     - https://github.com/project-oak/oak/blob/main/README.md
     - https://github.com/project-oak/transparent-release
     - https://github.com/nix-community/trustix
+  - FRSCA
+    - https://github.com/buildsec/frsca
+  - Cartographer
+    - https://github.com/vmware-tanzu/cartographer
   - Dagger
   - https://github.com/solo-io # eBPF
   - https://github.com/aquasecurity/btfhub # eBPF
