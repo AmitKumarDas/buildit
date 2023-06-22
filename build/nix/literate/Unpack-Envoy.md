@@ -1,5 +1,5 @@
 ## Build Envoy - Docker Way
-### What is What ++ TIL
+### What is What
 ```yaml
 - envoy-build-tools repo:
   - Has source code of all the images
@@ -23,6 +23,7 @@
 - Windows 2019 based Envoy Docker image at envoyproxy/envoy-build-windows2019:<hash> is used for CI checks
 ```
 
+### Hot Takes
 ```yaml
 - envoyproxy/envoy-build-ubuntu: 
   - Ubuntu 20.04 (Focal) with GCC 9 and Clang 14 compiler
