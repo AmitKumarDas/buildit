@@ -11,7 +11,7 @@ let
   inherit (pkgs) buildGoModule lib;
 in
 buildGoModule rec {
-  pname = "my-go-project";
+  name = "my-go-project";                  # pname does not work for custom derivation
   version = "0.3.4";
 
   src = fetchFromGitHub {
