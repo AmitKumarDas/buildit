@@ -26,8 +26,9 @@ buildGoModule rec {
     hash = "";
   };
 
-  # Depends on go.mod/go.sum
-  vendorHash = "";                         # This runs till the hash error & you know which hash to use
+  # Set this to "" if you do not know the hash
+  # You will know the value when the build results in hash mismatch error
+  vendorHash = "";
 
   # -s	disable symbol table
   # -w	disable DWARF generation
