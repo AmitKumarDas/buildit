@@ -27,7 +27,7 @@ buildGoModule rec {
   };
 
   # Depends on go.mod/go.sum
-  vendorHash = "";                         # This runs without the hash
+  vendorHash = "";                         # This runs till the hash error & you know which hash to use
 
   # -s	disable symbol table
   # -w	disable DWARF generation
