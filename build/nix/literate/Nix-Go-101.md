@@ -51,6 +51,7 @@ buildGoModule rec {
 ```nix
 # Name: shell.nix
 # Note: Execute this file using nix-shell
+# Note: Inside nix-shell run 'which name-of-cli' to get the nix store path of the binary
 
 { pkgs ? import <nixpkgs> { } }:
 
