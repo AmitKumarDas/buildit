@@ -81,5 +81,12 @@ in pkgs.mkShell {
     rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
     ref = "main";
   };
+
+  # If above ssh:// has issues then try https://
+  src = fetchGit {
+    url = "https://gitlab.eng.myorg.com/shepp/shepp.git";
+    rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
+    ref = "main";
+  };
 ...
 ```
