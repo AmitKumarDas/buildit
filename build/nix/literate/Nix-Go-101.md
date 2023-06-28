@@ -3,7 +3,7 @@
 - refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
 ```
 
-#### `Dummy: Take 1`
+#### `A Dummy Project`
 ```nix
 # Name: default.nix
 
@@ -60,10 +60,10 @@ in pkgs.mkShell {
 }
 ```
 
-#### `Dummy: Take 1.1`
+#### `When Private GitLab`
 ```nix
 # File: default.nix
-# Note: Most of the content remain same as above
+# Note: Most of the content remain same as in 'A Dummy Project'
 
   # Note: This is commented
   #src = fetchFromGitLab {
