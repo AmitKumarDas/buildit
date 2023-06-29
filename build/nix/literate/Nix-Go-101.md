@@ -5,7 +5,11 @@
 
 #### `A Dummy Project`
 ```nix
-# Name: default.nix
+# File: default.nix
+# Step 1: nix-build
+# Step 2: ls -ltr
+# Step 3: ls -ltr result/bin
+# Step 4: ldd result/bin/<name-of-binary>            # Verify if the binary is static or dynamic
 
 {
   pkgs ? import <nixpkgs> { }
