@@ -1,6 +1,7 @@
 ### Nix Go 101
 ```yaml
 - refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
+- refer: https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 ```
 
 #### `A Dummy Project`
