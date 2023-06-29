@@ -94,5 +94,76 @@ in pkgs.mkShell {
     rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
     ref = "main";
   };
+```
 
+#### `Few Good Practices & symlinkJoin`
+```nix
+# File: https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/etcd/3.5.nix
+# Note: Above location will become stale once 3.5 is EOL
+# Note: Following is just a snippet. I.e. It will not build
+
+let
+  version = "3.5.9";
+
+  src = fetchFromGitHub {
+    ...
+  };
+
+  CGO_ENABLED = 0;
+
+  meta = with lib; {
+    ...
+  };
+
+  etcdserver = buildGoModule rec {
+    inherit CGO_ENABLED meta src version;
+
+    modRoot = "./server";
+
+    preInstall = ''
+      mv $GOPATH/bin/{server,etcd}
+    '';
+
+    # We set the GitSHA to `GitNotFound` to match official build scripts when
+    # git is unavailable. This is to avoid doing a full Git Checkout of etcd.
+    # User facing version numbers are still available in the binary, just not
+    # the sha it was built from.
+    ldflags = [ "-X go.etcd.io/etcd/api/v3/version.GitSHA=GitNotFound" ];
+  };
+
+  etcdutl = buildGoModule rec {
+    pname = "etcdutl";
+
+    inherit CGO_ENABLED meta src version;
+
+    modRoot = "./etcdutl";
+  };
+
+  etcdctl = buildGoModule rec {
+    pname = "etcdctl";
+
+    inherit CGO_ENABLED meta src version;
+
+    modRoot = "./etcdctl";
+  };
+in
+
+# symlinkJoin puts many derivations into the same directory structure
+# It works by creating a new derivation and adding symlinks to each of the paths listed
+symlinkJoin {
+  name = "etcd-${version}";
+
+  inherit meta version;
+
+  passthru = {
+    inherit etcdserver etcdutl etcdctl;
+    tests = { inherit (nixosTests) etcd etcd-cluster; };
+  };
+
+  paths = [
+    etcdserver
+    etcdutl
+    etcdctl
+  ];
+}
 ```
