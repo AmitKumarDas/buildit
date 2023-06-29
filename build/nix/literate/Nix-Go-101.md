@@ -49,9 +49,10 @@ buildGoModule rec {
 ```
 
 ```nix
-# Name: shell.nix
-# Note: Execute this file using nix-shell
-# Note: Inside nix-shell run 'which name-of-cli' to get the nix store path of the binary
+# File: shell.nix
+# Step 1: nix-shell
+# Step 2: which name-of-cli
+# Step 3: echo $PATH             # to understand how nix-shell has setup PATH
 
 { pkgs ? import <nixpkgs> { } }:
 
@@ -62,12 +63,12 @@ in pkgs.mkShell {
 }
 ```
 
-#### `When Private GitLab`
+#### `If Source Code is in a Private GitLab Then Try Below`
 ```nix
 # File: default.nix
 # Note: Most of the content remain same as in 'A Dummy Project'
 
-  # Note: This is commented
+  # Note: Commented for private GitLab repos
   #src = fetchFromGitLab {
     #owner = "gitlab.eng.myorg.com";
     #repo = "shepp";
@@ -88,5 +89,5 @@ in pkgs.mkShell {
     rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
     ref = "main";
   };
-...
+
 ```
