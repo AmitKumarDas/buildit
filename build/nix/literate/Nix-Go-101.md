@@ -7,6 +7,8 @@
 #### `Default & Shell Files for a Dummy Project`
 ```nix
 # File: default.nix
+
+# Run:
 # Step 1: nix-build
 # Step 2: ls -ltr
 # Step 3: ls -ltr result/bin
@@ -55,6 +57,8 @@ buildGoModule rec {
 
 ```nix
 # File: shell.nix
+
+# Run:
 # Step 1: nix-shell
 # Step 2: which name-of-cli
 # Step 3: echo $PATH             # to understand how nix-shell has setup PATH
