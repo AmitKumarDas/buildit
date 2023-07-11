@@ -4,7 +4,7 @@
 - refer: https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 ```
 
-#### `A Dummy Project`
+#### `Default & Shell Files for a Dummy Project`
 ```nix
 # File: default.nix
 # Step 1: nix-build
@@ -68,7 +68,7 @@ in pkgs.mkShell {
 }
 ```
 
-#### `If Source Code is in a Private GitLab Then Try Below`
+#### `If Code In Private GitLab Then Try Below`
 ```nix
 # File: default.nix
 # Note: Most of the content remain same as in 'A Dummy Project'
@@ -96,7 +96,7 @@ in pkgs.mkShell {
   };
 ```
 
-#### `Few Good Practices & symlinkJoin`
+#### `let .. in symlinkJoin {...}`
 ```nix
 # File: https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/etcd/3.5.nix
 # Note: Above location will become stale once 3.5 is EOL
@@ -148,8 +148,9 @@ let
   };
 in
 
-# symlinkJoin puts many derivations into the same directory structure
-# It works by creating a new derivation and adding symlinks to each of the paths listed
+# Title:   symlinkJoin
+# What:    Puts MANY DERivations into the SAME DIRectory
+# How:     Creates a NEW derivation and ADDs SYMlinks to each of the PAThs listed
 symlinkJoin {
   name = "etcd-${version}";
 
