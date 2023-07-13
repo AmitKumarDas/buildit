@@ -4,6 +4,12 @@
 - refer: https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 ```
 
+### Shoutouts 🙇‍♀️
+```yaml
+- https://github.com/hairyhenderson/gomplate/blob/main/Makefile
+```
+
+
 #### `TILs for All Seasons`
 ```yaml
 - GOOS ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/')
