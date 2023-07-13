@@ -1,7 +1,7 @@
 ## Program
 ```yaml
-- main: https://github.com/benradf/space-game
-- starter: https://github.com/tweag/nix_bazel_codelab
+- todo: https://github.com/benradf/space-game
+- now: https://github.com/tweag/nix_bazel_codelab
 ```
 
 ```yaml
@@ -22,15 +22,6 @@
 - nixpkgs_package: Import Nix Dependencies into Bazel
 - nix/: Pinning Nix
 - shell.nix: Development Environment that includes Bazel
-```
-
-### Starter: Takeaways
-```yaml
-- Bazel: Rule Sets
-- Tool: Buildfier
-- Tool: Nix based Development Environment
-- Bazel: rules_nixpkgs
-- Tool: direnv
 ```
 
 ### Starter: Baby Steps
