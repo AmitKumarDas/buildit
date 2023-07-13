@@ -106,14 +106,14 @@ in
   assert (lib.assertMsg (builtins.length allTags > 0) "At least one tag");
     writeShellScriptBin "docker-manifest" ''
       set -x # echo on
-      if ${lib.getExe buildah} manifest exists "${manifestName}"; then     # TIL: Invoke the Binary
+      if ${lib.getExe buildah} manifest exists "${manifestName}"; then     # TIL: Invoke Binary
         ${lib.getExe buildah} manifest rm "${manifestName}"
       fi
       ${lib.getExe buildah} manifest create "${manifestName}"
-      for IMAGE in ${builtins.toString images}; do                          # Use Shell Loops With Nix Funcs
+      for IMAGE in ${builtins.toString images}; do                     # Use Shell Loops With Nix Funcs
         ${lib.getExe buildah} manifest add "${manifestName}" "${sourceProtocol}$IMAGE"
       done
-      for NAME in ${builtins.toString allNames}; do                         # TIL: Awk, Sed, etc. Not Needed
+      for NAME in ${builtins.toString allNames}; do                    # TIL: Awk, Sed no more Needed
         for TAG in ${builtins.toString allTags}; do
           ${lib.getExe buildah} manifest push --all --format ${format} "${manifestName}" "${targetProtocol}$NAME:$TAG"
         done
