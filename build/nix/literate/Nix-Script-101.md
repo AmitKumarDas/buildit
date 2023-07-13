@@ -1,5 +1,8 @@
 
 #### `Preparation in Nix before Writing the Script`
+```yaml
+- shoutout: https://github.com/mirkolenz/flocken/blob/main/src/docker-manifest.nix
+```
 ```nix
 {
   lib,
