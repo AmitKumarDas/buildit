@@ -1,7 +1,7 @@
 
-### Writing a Container Entrypoint Shell Script
+#### `Writing a Container Entrypoint Shell Script`
 ```yaml
-- refer: https://github.com/mirkolenz/grpc-proxy/blob/main/default.nix
+- shoutout: https://github.com/mirkolenz/grpc-proxy/blob/main/default.nix
 ```
 
 ```nix
@@ -38,6 +38,9 @@ writeShellApplication {
 }
 ```
 
+```yaml
+- Invokes above .nix via callPackage
+```
 ```nix
 {
   lib,
@@ -58,12 +61,12 @@ in
   dockerTools.buildLayeredImage {
     name = "grpc-proxy";
     tag = "latest";
-    created = "now";
+    created = "now";                             # Q: Is this reproducibility? consistency?
     extraCommands = ''
-      mkdir -p tmp
+      mkdir -p tmp                               # Why? # TIL: Is mkdir not required in base image?
     '';
     config = {
-      entrypoint = [(lib.getExe entrypoint)];                  # TIL: getExe
+      entrypoint = [(lib.getExe entrypoint)];    # TIL: getExe to script # TIL: lib can be used here
       cmd = [];
     };
   }
