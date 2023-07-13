@@ -4,6 +4,15 @@
 - refer: https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 ```
 
+#### `TILs for All Seasons`
+```yaml
+- GOOS ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/')
+  - go version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/' # darwin
+- GOARCH ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\2/')
+  - go version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\2/' # amd64
+- go version # go version go1.19 darwin/amd64
+```
+
 #### `Default & Shell Files for a Dummy Project`
 ```nix
 # File: default.nix
