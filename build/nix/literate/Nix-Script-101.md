@@ -17,20 +17,20 @@ let
       config = { Cmd = [ (callPackage cmd { }) ]; };
     };
   architectures = [ "i686" "x86_64" "aarch64" "powerpc64le" ];
-  nixpkgs = import <nixpkgs>;
+  nixpkgs = import <nixpkgs>;                         # Just Define
   crossSystems = map (arch: {
     inherit arch;
     pkgs = (nixpkgs {
       crossSystem = { config = "${arch}-unknown-linux-musl"; };
     }).pkgsStatic;
-  }) architectures;
-  pkgs = nixpkgs { };
+  }) architectures;                                   # From List -to- List of Attrset
+  pkgs = nixpkgs { };                                 # Actual Invocation
   lib = pkgs.lib;
   images = map ({ arch, pkgs }: rec {
     inherit arch;
     image = pkgs.callPackage (buildImage arch) { };
     tag = "${tagBase}-${arch}";
-  }) crossSystems;
+  }) crossSystems;                                    # From List of Attrset -to- a List of Attrset
   loadAndPush = builtins.concatStringsSep "\n" (lib.concatMap
     ({ arch, image, tag }: [
       "$docker load -i ${image}"
