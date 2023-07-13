@@ -1,7 +1,7 @@
 
 ### Writing a Container Entrypoint Shell Script
 ```yaml
-- https://github.com/mirkolenz/grpc-proxy/blob/main/default.nix
+- refer: https://github.com/mirkolenz/grpc-proxy/blob/main/default.nix
 ```
 
 ```nix
@@ -36,4 +36,35 @@ writeShellApplication {
     ${lib.getExe envoy} -c "$PROXY_ENVOY_CONFIG"                              # Q: What is this envoy?
   '';
 }
+```
+
+```nix
+{
+  lib,
+  dockerTools,
+  callPackage,
+  ...
+}: let
+  entrypoint =
+    callPackage ./.
+    {
+      env = rec {
+        PROXY_HOST = "0.0.0.0";
+        ADMIN_HOST = PROXY_HOST;
+        BACKEND_HOST = "host.docker.internal";
+      };
+    };
+in
+  dockerTools.buildLayeredImage {
+    name = "grpc-proxy";
+    tag = "latest";
+    created = "now";
+    extraCommands = ''
+      mkdir -p tmp
+    '';
+    config = {
+      entrypoint = [(lib.getExe entrypoint)];                  # TIL: getExe
+      cmd = [];
+    };
+  }
 ```
