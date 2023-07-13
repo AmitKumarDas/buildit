@@ -1,3 +1,71 @@
+#### `Convert Text Files to Executables`
+##### `Docker Build & Push via Nix Script`
+```yaml
+- shoutout: https://gist.github.com/piperswe/6be06f58ba3925801b0dcceab22c997b
+```
+
+```nix
+{ name ? "ghcr.io/piperswe/hello", cmd ? ({ hello }: "${hello}/bin/hello")
+, tagBase ? "latest" }:
+
+let
+  buildImage = arch:
+    { dockerTools, callPackage }:
+    dockerTools.buildImage {
+      inherit name;
+      tag = "${tagBase}-${arch}";
+      config = { Cmd = [ (callPackage cmd { }) ]; };
+    };
+  architectures = [ "i686" "x86_64" "aarch64" "powerpc64le" ];
+  nixpkgs = import <nixpkgs>;
+  crossSystems = map (arch: {
+    inherit arch;
+    pkgs = (nixpkgs {
+      crossSystem = { config = "${arch}-unknown-linux-musl"; };
+    }).pkgsStatic;
+  }) architectures;
+  pkgs = nixpkgs { };
+  lib = pkgs.lib;
+  images = map ({ arch, pkgs }: rec {
+    inherit arch;
+    image = pkgs.callPackage (buildImage arch) { };
+    tag = "${tagBase}-${arch}";
+  }) crossSystems;
+  loadAndPush = builtins.concatStringsSep "\n" (lib.concatMap
+    ({ arch, image, tag }: [
+      "$docker load -i ${image}"
+      "$docker push ${name}:${tag}"
+    ]) images);                              # TIL: Functional # No Loops Needed # Invokes images
+  imageNames = builtins.concatStringsSep " "
+    (map ({ arch, image, tag }: "${name}:${tag}") images);
+
+in pkgs.writeTextFile {                      # Text File
+  inherit name;
+  text = ''
+    #!${pkgs.stdenv.shell}
+    set -euxo pipefail
+    docker=${pkgs.docker}/bin/docker         # What: This Versus 'lib.getExe docker'
+    ${loadAndPush}                           # TIL: No need of for loops # Functional logic
+    $docker manifest create --amend ${name}:${tagBase} ${imageNames}
+    $docker manifest push ${name}:${tagBase}
+  '';
+  executable = true;                         # Becomes Executable
+  destination = "/bin/push";
+}
+```
+
+```yaml
+- Invoke above .nix file
+```
+
+```sh
+#!/bin/sh
+
+# Required on macOS because cctools is marked as broken
+export NIXPKGS_ALLOW_BROKEN=1
+nix run -f image.nix -c push
+docker run ghcr.io/piperswe/hello
+```
 
 #### `Preparation in Nix before Writing the Script`
 ```yaml
