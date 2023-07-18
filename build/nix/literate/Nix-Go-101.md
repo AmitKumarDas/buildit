@@ -187,3 +187,14 @@ symlinkJoin {
   ];
 }
 ```
+
+#### `subPackages i.e. cmd / cli`
+```nix
+buildGoModule rec {
+  name = "";
+  version = "";
+  src = fetchFromGitHub {};
+
+  subPackages = [ "cmd/mycli" ];
+}
+```
