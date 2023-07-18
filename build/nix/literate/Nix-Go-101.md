@@ -198,3 +198,8 @@ buildGoModule rec {
   subPackages = [ "cmd/mycli" ];
 }
 ```
+
+#### `buildGoModule with Specific Version`
+```yaml
+- https://github.com/cachix/devenv/blob/main/src/modules/languages/go.nix
+```
