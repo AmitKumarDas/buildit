@@ -1,21 +1,22 @@
-#### `Convert Text Files to Executables`
-##### `Docker Build & Push via Nix Script`
+#### Convert Text Files to Executables
+##### Docker Build & Push via Nix Script
 ```yaml
 - shoutout: https://gist.github.com/piperswe/6be06f58ba3925801b0dcceab22c997b
 ```
 
 ```nix
-{ name ? "ghcr.io/piperswe/hello", cmd ? ({ hello }: "${hello}/bin/hello")
+{ name ? "ghcr.io/piperswe/hello"
+, cmd ? ({ hello }: "${hello}/bin/hello")
 , tagBase ? "latest" }:
 
 let
-  buildImage = arch:
-    { dockerTools, callPackage }:
-    dockerTools.buildImage {
+  buildImage = arch:                                 # A function # 1st arg
+    { dockerTools, callPackage }:                    # 2nd arg is a attrset
+    dockerTools.buildImage {                         # Actual func # This does not invoke
       inherit name;
       tag = "${tagBase}-${arch}";
       config = { Cmd = [ (callPackage cmd { }) ]; };
-    };
+    };                                               # This is a custom func on top of builtin func
   architectures = [ "i686" "x86_64" "aarch64" "powerpc64le" ];
   nixpkgs = import <nixpkgs>;                         # Just Define
   crossSystems = map (arch: {
@@ -67,7 +68,7 @@ nix run -f image.nix -c push
 docker run ghcr.io/piperswe/hello
 ```
 
-#### `Preparation in Nix before Writing the Script`
+#### Preparation in Nix before Writing the Script
 ```yaml
 - shoutout: https://github.com/mirkolenz/flocken/blob/main/src/docker-manifest.nix
 ```
@@ -121,7 +122,7 @@ in
     ''
 ```
 
-#### `Writing a Container Entrypoint Shell Script`
+#### Writing a Container Entrypoint Shell Script
 ```yaml
 - shoutout: https://github.com/mirkolenz/grpc-proxy/blob/main/default.nix
 ```
