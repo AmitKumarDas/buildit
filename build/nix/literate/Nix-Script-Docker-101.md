@@ -6,7 +6,7 @@
 
 ```nix
 { name ? "ghcr.io/piperswe/hello"
-, cmd ? ({ hello }: "${hello}/bin/hello")           # Anonymous func? # Accepts hello as arg # Also func is an arg
+, cmd ? ({ hello }: "${hello}/bin/hello")           # Anonymous func? # hello is func arg # Also func is an arg
 , tagBase ? "latest" }:
 
 let
@@ -29,7 +29,7 @@ let
   lib = pkgs.lib;
   images = map ({ arch, pkgs }: rec {
     inherit arch;
-    image = pkgs.callPackage (buildImage arch) { };
+    image = pkgs.callPackage (buildImage arch) { };   # TIL: callPackage is the way to INVoke func
     tag = "${tagBase}-${arch}";
   }) crossSystems;                                    # From List of Attrset -to- a List of Attrset
   loadAndPush = builtins.concatStringsSep "\n" (lib.concatMap
