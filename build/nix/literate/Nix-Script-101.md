@@ -6,7 +6,7 @@
 
 ```nix
 { name ? "ghcr.io/piperswe/hello"
-, cmd ? ({ hello }: "${hello}/bin/hello")
+, cmd ? ({ hello }: "${hello}/bin/hello")           # Anonymous func? # Accepts hello as arg # Also func is an arg
 , tagBase ? "latest" }:
 
 let
@@ -15,17 +15,17 @@ let
     dockerTools.buildImage {                         # Actual func # This does not invoke
       inherit name;
       tag = "${tagBase}-${arch}";
-      config = { Cmd = [ (callPackage cmd { }) ]; };
-    };                                               # This is a custom func on top of builtin func
-  architectures = [ "i686" "x86_64" "aarch64" "powerpc64le" ];
-  nixpkgs = import <nixpkgs>;                         # Just Define
+      config = { Cmd = [ (callPackage cmd { }) ]; };   # cmd has hello # callPackage maps hello to corresponding nix pkg
+    };                                               # This was a custom func on top of builtin func
+  architectures = [ "i686" "x86_64" "aarch64" "powerpc64le" ];        # A list
+  nixpkgs = import <nixpkgs>;                         # Define the import # This does not invoke
   crossSystems = map (arch: {
     inherit arch;
-    pkgs = (nixpkgs {
-      crossSystem = { config = "${arch}-unknown-linux-musl"; };
-    }).pkgsStatic;
+    pkgs = (nixpkgs {                                                  # Import is Invoked Here # Lazy
+      crossSystem = { config = "${arch}-unknown-linux-musl"; };        # TIL: crossSystem desired a specific ARCH
+    }).pkgsStatic;                                    # Stuff inside () is executed FIRST # Then get its pkgStatic
   }) architectures;                                   # From List -to- List of Attrset
-  pkgs = nixpkgs { };                                 # Actual Invocation
+  pkgs = nixpkgs { };                                 # Import is Invoked Here sss# Lazy
   lib = pkgs.lib;
   images = map ({ arch, pkgs }: rec {
     inherit arch;
