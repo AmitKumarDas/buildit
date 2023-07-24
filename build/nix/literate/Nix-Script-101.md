@@ -24,14 +24,14 @@ mkShell {
 }
 ```
 
-```sh
-# Following is update-doclinks.sh file
-```
+#### A script that Embeds shell.nix
 ```nix
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash ../shell.nix                 # Does this replace shell hooks? # Is it UX friendly?
+#! nix-shell -i bash ../shell.nix
 
-# DOUBT: Does above shebangs force script EXEcution inside the nix shell ENVironment?
+# Does above replaces the need for shell hooks?
+# Is above UX friendly?
+# Best of both worlds?
 
 # This script updates the links to Bazel's docs in the README.md file
 # to directly link to the version that is specified in .bazeliskrc
