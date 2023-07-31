@@ -1,3 +1,71 @@
+#### Bad vs Good Nix Scripting - Verified
+```yaml
+- https://www.sam.today/blog/creating-a-super-simple-derivation-learning-nix-pt-3
+```
+##### Bad
+```nix
+# DO NOT USE THIS; this is a BAD example
+with import <nixpkgs> {};
+
+let
+  # We just specify the derivation the same way as before
+  #
+  # This script is un-predictable outside of nix-shell:
+  # - MISSING DEPENDENCIES
+  # - POLLUTES ENVIRONMENT
+  # - NOT REPRODUCIBLE
+  simplePackage = pkgs.writeShellScriptBin "whatIsMyIp" ''
+    curl http://httpbin.org/get | jq --raw-output .origin
+  '';
+in
+stdenv.mkDerivation rec {
+  name = "test-environment";
+
+  # Then we add curl & jq to the list of buildInputs for the shell
+  # So curl and jq will be added to the PATH inside the shell
+  buildInputs = [ simplePackage pkgs.jq pkgs.curl ];
+}
+```
+
+##### Good
+```nix
+with import <nixpkgs> {};
+
+let
+  # The ${...} is for STRING INTERPOLATION
+  # The '' quotes are used for MULTI-LINE STRINGS
+  # whatIsMyIp is the name of the generated script
+  simplePackage = pkgs.writeShellScriptBin "whatIsMyIp" ''
+    ${pkgs.curl}/bin/curl http://httpbin.org/get \
+      | ${pkgs.jq}/bin/jq --raw-output .origin
+  '';
+in
+stdenv.mkDerivation rec {
+  name = "test-environment";
+
+  buildInputs = [ simplePackage ];
+}
+```
+##### Verify
+```sh
+$ nix-shell test.nix
+$ [nix-shell:~]$ cat $(which whatIsMyIp)
+#!/nix/store/hqi64wjn83nw4mnf9a5z9r4vmpl72j3r-bash-4.4-p12/bin/bash
+/nix/store/pkc7g36m95jymw3ga2i7pwrykcfs78il-curl-7.57.0-bin/bin/curl http://httpbin.org/get \
+  | /nix/store/znqn0z505i0bm1aiz2jaj1ki7z4ck1sv-jq-1.5/bin/jq --raw-output .origin
+```
+##### Lessons Learnt
+```yaml
+- All the binaries referenced in this script are ABSOLUTE paths
+- Due to above script doesn't rely on the PATH environment variable
+- So the script can be used ANYWHERE
+- https://github.com/NixOS/nixpkgs/tree/master/pkgs/build-support
+  - Solves most of our NEEDS
+- Additional Reference
+  - https://github.com/NixOS/nixpkgs/tree/master/pkgs/build-support/trivial-builders
+- 
+```
+
 #### A Dev Env Composed of Script & Nix Pkgs
 ```yaml
 - refer: https://github.com/tweag/nix_bazel_codelab/blob/main/shell.nix
