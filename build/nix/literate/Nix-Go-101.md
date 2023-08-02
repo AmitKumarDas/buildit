@@ -10,7 +10,7 @@
 ```
 
 
-#### `TILs for All Seasons`
+#### OS & Arch
 ```yaml
 - GOOS ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/')
   - go version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/' # darwin
