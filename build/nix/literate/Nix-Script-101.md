@@ -3,8 +3,8 @@
 - shoutout: https://www.ertt.ca/nix/shell-scripts/ 🙇‍♀️
 - pkgs.writeShellScriptBin lints the script for you 🍭🍭
 - Pure script implies package the original script as-is
-- Pure is possible via:
-  - 1/ symlinkJoin (a nix function) &
+- Pure script is possible via:
+  - 1/ symlinkJoin (a nix function) # --------------------- REPLACEMENT to stdenv.mkDerivation
   - 2/ wrapProgram (a shell script)
 ```
 ```nix
@@ -16,7 +16,7 @@ let
     cowsay Hello, world! Today is $DATE.
   '';
   my-buildInputs = with pkgs; [ cowsay ddate ];
-in pkgs.symlinkJoin {                                      # COMBINES files of MULTIPLE PKGS into ONE PKG
+in pkgs.symlinkJoin {                                      # A DERIVATION combining MULTIPLE PKGS into ONE PKG
   name = my-name;
   paths = [ my-script ] ++ my-buildInputs;                 # GLUED TOGETHER to PATH # RUNTIME DEPENDENCY
   buildInputs = [ pkgs.makeWrapper ];                      # BUILDTIME DEPENDENCY
