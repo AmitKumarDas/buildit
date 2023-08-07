@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ simplePackage ];
 }
 ```
-#### Verify
+#### Verify 🔬
 ```sh
 $ nix-shell test.nix
 $ [nix-shell:~]$ cat $(which whatIsMyIp)
