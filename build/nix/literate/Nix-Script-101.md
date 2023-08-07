@@ -1,7 +1,29 @@
+### Pure + Reproducible + Linted + Folder/File Practices 🎖️🎖️🎖️
+```yaml
+- shoutout: https://www.ertt.ca/nix/shell-scripts/
+- Developer Experience: bash script & nix are separate                  # --- IMP / CODE REVIEW
+- #!/usr/bin/env bash                                                   # --- ORIGINAL
+- #!/nix/store/1flh34xxg9q3fpc88xyp2qynxpkfg8py-bash-4.4-p23/bin/bash   # --- REPLACEMENT
+- uses writeScriptBin instead of writeShellScriptBin                    # --- IMP / CODE REVIEW
+```
+```bash
+#!/usr/bin/env bash
+DATE=$(ddate +'the %e of %B%, %Y')     # ------- SHEBANG that developers are used to
+cowsay Hello, world! Today is $DATE.   # ------- dependencies are used like they are already available
+```
+```nix
+my-src = builtins.readFile ./simple-script.sh;                   # ------- READ FILE from builtins
+my-script = (pkgs.writeScriptBin my-name my-src).overrideAttrs(old: { # -- OVERRIDE ATTRS
+  buildCommand = "${old.buildCommand}\n patchShebangs $out";     # ------- APPEND buildCommand with patchShebangs
+});
+```
+
 ### Pure Yet Reproducible & Auto Linted Shell Scripts 🎖️🎖️🎖️
 ```yaml
 - shoutout: https://www.ertt.ca/nix/shell-scripts/ 🙇‍♀️
-- pkgs.writeShellScriptBin lints the script for you 🍭🍭
+- pkgs.writeShellScriptBin LINTS the script for you 🍭🍭🍭
+- pkgs.writeShellScriptBin PREPENDS the script with shebang 🍭🍭🍭
+- pkgs.writeScriptBin DOESNT do above 🍭🍭🍭
 - Pure script implies package the original script as-is
 - Pure script is possible via:
   - 1/ symlinkJoin (a nix function) # --------------------- REPLACEMENT to stdenv.mkDerivation
