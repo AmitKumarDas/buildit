@@ -1,4 +1,4 @@
-#### Pure Yet Reproducible & Auto Linted Shell Scripts 🎖️🎖️
+### Pure Yet Reproducible & Auto Linted Shell Scripts 🎖️🎖️
 ```yaml
 - shoutout: https://www.ertt.ca/nix/shell-scripts/ 🙇‍♀️
 - pkgs.writeShellScriptBin lints the script for you 🍭🍭
@@ -35,11 +35,11 @@ in pkgs.symlinkJoin {                                      # A DERIVATION combin
   - 2/ Then REPLACES ITSELF (exec) with .my-script-wrapped
 ```
 
-#### Bad vs Good Nix Scripting & Verified
+### Bad vs Good Nix Scripting & Verified
 ```yaml
 - https://www.sam.today/blog/creating-a-super-simple-derivation-learning-nix-pt-3
 ```
-##### Bad
+#### Bad
 ```nix
 # DO NOT USE THIS; this is a BAD example
 with import <nixpkgs> {};
@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
 }
 ```
 
-##### Good
+#### Good
 ```nix
 with import <nixpkgs> {};
 
@@ -83,7 +83,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ simplePackage ];
 }
 ```
-##### Verify
+#### Verify
 ```sh
 $ nix-shell test.nix
 $ [nix-shell:~]$ cat $(which whatIsMyIp)
@@ -91,14 +91,14 @@ $ [nix-shell:~]$ cat $(which whatIsMyIp)
 /nix/store/pkc7g36m95jymw3ga2i7pwrykcfs78il-curl-7.57.0-bin/bin/curl http://httpbin.org/get \
   | /nix/store/znqn0z505i0bm1aiz2jaj1ki7z4ck1sv-jq-1.5/bin/jq --raw-output .origin
 ```
-##### Lessons Learnt 🍭
+#### Lessons Learnt 🍭
 ```yaml
 - All the binaries referenced in this script are ABSOLUTE paths
 - Hence script DOESN'T rely on PATH environment variable
 - Script can be run ANYWHERE but is IMPURE since Nix is MIXED
 ```
 
-#### A Dev Env Composed of Script & Nix Pkgs
+### A Dev Env Composed of Script & Nix Pkgs
 ```yaml
 - refer: https://github.com/tweag/nix_bazel_codelab/blob/main/shell.nix
 - refer: https://github.com/tweag/nix_bazel_codelab/blob/main/bin/update-doclinks.sh
@@ -124,7 +124,7 @@ mkShell {
 }
 ```
 
-#### Script Embedding shell.nix 🍭
+### Script Embedding shell.nix 🍭
 ```nix
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash ../shell.nix
