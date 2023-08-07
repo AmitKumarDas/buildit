@@ -1,4 +1,41 @@
-#### Bad vs Good Nix Scripting - Verified
+#### Pure Yet Reproducible & Auto Linted Shell Scripts
+```yaml
+- shoutout: https://www.ertt.ca/nix/shell-scripts/ 🙇‍♀️
+- pkgs.writeShellScriptBin lints the script for you 🍭🍭
+- Pure script implies package the original script as-is
+- Pure is possible via:
+  - 1/ symlinkJoin (a nix function) &
+  - 2/ wrapProgram (a shell script)
+```
+```nix
+let
+  pkgs = import nixpkgs {};
+  my-name = "my-pure-script";
+  my-script = pkgs.writeShellScriptBin my-name ''         # DERIVATION for our SCRIPT
+    DATE=$(ddate +'the %e of %B%, %Y')
+    cowsay Hello, world! Today is $DATE.
+  '';
+  my-buildInputs = with pkgs; [ cowsay ddate ];
+in pkgs.symlinkJoin {                                      # COMBINES files of MULTIPLE PKGS into ONE PKG
+  name = my-name;
+  paths = [ my-script ] ++ my-buildInputs;                 # GLUED TOGETHER to PATH # RUNTIME DEPENDENCY
+  buildInputs = [ pkgs.makeWrapper ];                      # BUILDTIME DEPENDENCY
+  postBuild = "wrapProgram $out/bin/${my-name} --prefix PATH : $out/bin";  # APPEND $out/bin to PATH # PREPEND???
+};
+```
+```yaml
+- run: nix build
+- run: ls -ltra result/bin
+  - # Following are due to wrapProgram
+  - my-script                                              # ----------------- Users CALL this
+  - .my-script-wrapped -> /nix/store/xxxxxxxxx-my-script/bin/my-script  # ---- ACTUAL SCRIPT CONTENTS
+- FLOW from my-script to .my-script-wrapped to the REPRODUCIBLE my-script at /nix/store path
+- result/bin/my-script has the MAGIC SMALL SCRIPT
+  - 1/ It UPDATES the PATH, as we’ve INSTRUCTED
+  - 2/ Then REPLACES ITSELF (exec) with .my-script-wrapped
+```
+
+#### Bad vs Good Nix Scripting & Verified
 ```yaml
 - https://www.sam.today/blog/creating-a-super-simple-derivation-learning-nix-pt-3
 ```
@@ -54,16 +91,11 @@ $ [nix-shell:~]$ cat $(which whatIsMyIp)
 /nix/store/pkc7g36m95jymw3ga2i7pwrykcfs78il-curl-7.57.0-bin/bin/curl http://httpbin.org/get \
   | /nix/store/znqn0z505i0bm1aiz2jaj1ki7z4ck1sv-jq-1.5/bin/jq --raw-output .origin
 ```
-##### Lessons Learnt
+##### Lessons Learnt 🍭
 ```yaml
 - All the binaries referenced in this script are ABSOLUTE paths
-- Due to above script doesn't rely on the PATH environment variable
-- So the script can be used ANYWHERE
-- https://github.com/NixOS/nixpkgs/tree/master/pkgs/build-support
-  - Solves most of our NEEDS
-- Additional Reference
-  - https://github.com/NixOS/nixpkgs/tree/master/pkgs/build-support/trivial-builders
-- 
+- Hence script DOESN'T rely on PATH environment variable
+- Script can be run ANYWHERE but is IMPURE since Nix is MIXED
 ```
 
 #### A Dev Env Composed of Script & Nix Pkgs
@@ -80,7 +112,7 @@ $ [nix-shell:~]$ cat $(which whatIsMyIp)
 { pkgs ? import ./nix/nixpkgs { } }:
 
 let
-  # ./bin/lab is a regular script with shebang set to #!/bin/sh
+  # ----------- ./bin/lab is a REGULAR SCRIPT with SHEBANG set to #!/bin/sh -----------
   lab-script = pkgs.writeShellScriptBin "lab" (builtins.readFile ./bin/lab);
 in
 with pkgs;
@@ -92,14 +124,13 @@ mkShell {
 }
 ```
 
-#### A script that Embeds shell.nix
+#### Script Embedding shell.nix 🍭
 ```nix
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash ../shell.nix
 
-# Does above replaces the need for shell hooks?
-# Is above UX friendly?
-# Best of both worlds?
+# --------- Does THIS REPLACE the NEED for shell HOOKS? ---------
+# --------- Is THIS UX FRIENDLY?                        ---------
 
 # This script updates the links to Bazel's docs in the README.md file
 # to directly link to the version that is specified in .bazeliskrc
