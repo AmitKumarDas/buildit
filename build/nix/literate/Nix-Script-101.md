@@ -1,4 +1,4 @@
-### Pure Yet Reproducible & Auto Linted Shell Scripts 🎖️🎖️
+### Pure Yet Reproducible & Auto Linted Shell Scripts 🎖️🎖️🎖️
 ```yaml
 - shoutout: https://www.ertt.ca/nix/shell-scripts/ 🙇‍♀️
 - pkgs.writeShellScriptBin lints the script for you 🍭🍭
