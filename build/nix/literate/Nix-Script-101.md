@@ -1,6 +1,7 @@
 ### Pure + Reproducible + Linted + Folder/File Practices 🎖️🎖️🎖️
 ```yaml
 - shoutout: https://www.ertt.ca/nix/shell-scripts/
+- refer to below section & add have separate files s.a .sh & .nix files
 - Developer Experience: bash script & nix are separate                  # --- IMP / CODE REVIEW
 - #!/usr/bin/env bash                                                   # --- ORIGINAL
 - #!/nix/store/1flh34xxg9q3fpc88xyp2qynxpkfg8py-bash-4.4-p23/bin/bash   # --- REPLACEMENT
