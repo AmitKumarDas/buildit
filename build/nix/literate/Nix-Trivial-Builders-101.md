@@ -3,7 +3,7 @@
 - https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/trivial-builders/default.nix
 ```
 
-### Simple Invocations
+### Learn Usage
 ```nix
 # Produce a store path named 'name'
 # The attributes in 'env' are added to the environment prior to running the command
@@ -37,7 +37,7 @@ writeTextFile {
 }
 ```
 
-### Unpack writeTextFile
+### Nix 101
 ```nix
 matches = builtins.match "/bin/([^/]+)" destination;       # --- REGEX
 ```
@@ -53,19 +53,81 @@ target=$out${lib.escapeShellArg destination}               # --- PATH CONSTRUCTI
 mkdir -p "$(dirname "$target")"                            # 🎖️🎖️🎖️ NESTED INTERPOLATIONS
 ```
 
-### Bash Inside Nix
+### Holy Grail - Unpack runCommandWith 🙇‍♀️
 ```nix
-''
-if [ -e "$textPath" ]; then                 # --- EXISTS?
-  mv "$textPath" "$target"
-else
-  echo -n "$text" > "$target"
-fi
+runCommandWith =
+  let
+    # prevent infinite recursion for the default stdenv value
+    defaultStdenv = stdenv;
+  in
+  {
+  # which stdenv to use, defaults to a stdenv with a C compiler, pkgs.stdenv
+    stdenv ? defaultStdenv
+  # whether to build this derivation locally instead of substituting
+  , runLocal ? false
+  # extra arguments to pass to stdenv.mkDerivation
+  , derivationArgs ? {}
+  # name of the resulting derivation
+  , name
+  # TODO(@Artturin): enable strictDeps always
+  }: buildCommand:                              # 🥤🥤🥤 buildCommand ~ Bash Commands
+  stdenv.mkDerivation ({
+    enableParallelBuilding = true;              # 🤔🤔🤔 WHAT?
+    inherit buildCommand name;
+    passAsFile = [ "buildCommand" ]             # --- "text" is another option
+      ++ (derivationArgs.passAsFile or []);
+  }
+  // lib.optionalAttrs (! derivationArgs?meta) {
+    pos = let args = builtins.attrNames derivationArgs; in
+      if builtins.length args > 0
+      then builtins.unsafeGetAttrPos (builtins.head args) derivationArgs
+      else null;
+  }
+  // (lib.optionalAttrs runLocal {
+        preferLocalBuild = true;
+        allowSubstitutes = false;
+     })
+  // builtins.removeAttrs derivationArgs [ "passAsFile" ]);
+```
 
-if [ -n "$executable" ]; then               # --- NOT false
-  chmod +x "$target"
-fi
-''
+### Holy Grail - Unpack writeTextFile - Learn To Create Your Own 🙇‍♀️
+```nix
+writeTextFile =
+  { name # the name of the derivation
+  , text
+  , executable ? false # run chmod +x ?
+  , destination ? ""   # relative path appended to $out eg "/bin/foo"
+  , checkPhase ? ""    # syntax checks, e.g. for scripts
+  , meta ? { }
+  , allowSubstitutes ? false
+  , preferLocalBuild ? true     # 👈👈👈
+  }:
+  let
+    matches = builtins.match "/bin/([^/]+)" destination;
+  in
+  runCommand name                            # 📚📚📚 This is a DERIVATION
+    { inherit text executable checkPhase allowSubstitutes preferLocalBuild;
+      passAsFile = [ "text" ];
+      meta = lib.optionalAttrs (executable && matches != null) {
+        mainProgram = lib.head matches;
+      } // meta;
+    }
+    ''
+      target=$out${lib.escapeShellArg destination}
+      mkdir -p "$(dirname "$target")"
+
+      if [ -e "$textPath" ]; then
+        mv "$textPath" "$target"
+      else
+        echo -n "$text" > "$target"        # 💡💡💡 Aliter: DOWNLOAD YOUR OWN binaries
+      fi
+
+      if [ -n "$executable" ]; then
+        chmod +x "$target"                 # 💡💡💡 Aliter: Make the DOWNLOADS as EXECUTABLES
+      fi
+
+      eval "$checkPhase"
+    '';
 ```
 
 ### Unpack WriteTextDir
@@ -139,7 +201,7 @@ writeShellApplication =
     checkPhase =
       if checkPhase == null then ''
         runHook preCheck
-        ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Syntax Check
+        ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Search this doc
         # use shellcheck which does not include docs
         # pandoc takes long to build                     # 🎖️🎖️🎖️🎖️ IGNORE docs via Static EXE
         # and documentation isn't needed for in nixpkgs usage   # 🎖️🎖️🎖️ shellcheck for free # LINTER
