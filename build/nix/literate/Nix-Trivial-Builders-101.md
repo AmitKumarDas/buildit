@@ -96,25 +96,62 @@ writeShellScript = name: text:
       ${text}
       '';
     checkPhase = ''
-      ${stdenv.shellDryRun} "$target"  # --- 🎖️🎖️ CHECKS SYNTAX
+      ${stdenv.shellDryRun} "$target"  # --- 🎖️🎖️ SYNTAX CHECK ONLY! NOT shellcheck!
     '';
   };
 ```
 
 ### Unpack writeShellApplication
 ```nix
-writeShellApplication {
+writeShellApplication {                 # 💡💡💡 Incredible for TESTING
   name = "my-file";
-  runtimeInputs = [ curl w3m ];         # --- 🥤🥤🥤 Nice! Use with CARE
+  runtimeInputs = [ curl w3m ];         # --- 🥤🥤🥤 WOW! Is this still SANDBOXED build?
   text = ''
-    curl -s 'https://nixos.org' | w3m -dump -T text/html
+    curl -s 'https://nixos.org' | w3m -dump -T text/html # 💡💡💡 One off Bash Commands
    '';
 }
 ```
 
 ```nix
+writeShellApplication =
+  { name
+  , text
+  , runtimeInputs ? [ ]
+  , checkPhase ? null
+  }:
+  writeTextFile {
+    inherit name;
+    executable = true;
+    destination = "/bin/${name}";
+    allowSubstitutes = true;
+    preferLocalBuild = false;
+    text = ''
+      #!${runtimeShell}                                # --- Interpreter / Shebang
+      set -o errexit                                   # --- NICE
+      set -o nounset
+      set -o pipefail
+    '' + lib.optionalString (runtimeInputs != [ ]) ''  # --- CONDITION
 
+      export PATH="${lib.makeBinPath runtimeInputs}:$PATH"  # 🎖️🎖️🎖️ HOW NIX makes PATH to WORK
+    '' + ''
+
+      ${text}
+    '';
+
+    checkPhase =
+      if checkPhase == null then ''
+        runHook preCheck
+        ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Syntax Check
+        # use shellcheck which does not include docs
+        # pandoc takes long to build                     # 🎖️🎖️🎖️🎖️ IGNORE docs via Static EXE
+        # and documentation isn't needed for in nixpkgs usage   # 🎖️🎖️🎖️ shellcheck for free # LINTER
+        ${lib.getExe (haskell.lib.compose.justStaticExecutables shellcheck.unwrapped)} "$target"
+        runHook postCheck                                # --- BEST Practice
+      ''
+      else checkPhase;
+  };
 ```
+
 
 
 
