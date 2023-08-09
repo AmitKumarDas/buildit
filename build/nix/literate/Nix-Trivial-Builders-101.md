@@ -53,7 +53,7 @@ target=$out${lib.escapeShellArg destination}               # --- PATH CONSTRUCTI
 mkdir -p "$(dirname "$target")"                            # 🎖️🎖️🎖️ NESTED INTERPOLATIONS
 ```
 
-### Holy Grail - Unpack runCommandWith 🙇‍♀️
+### The Origins - Unpack runCommandWith 🙇‍♀️
 ```nix
 runCommandWith =
   let
@@ -71,14 +71,14 @@ runCommandWith =
   , name
   # TODO(@Artturin): enable strictDeps always
   }: buildCommand:                              # 🥤🥤🥤 buildCommand ~ Bash Commands
-  stdenv.mkDerivation ({
+  stdenv.mkDerivation ({                        # --- This is a DERIVATION
     enableParallelBuilding = true;              # 🤔🤔🤔 WHAT?
     inherit buildCommand name;
     passAsFile = [ "buildCommand" ]             # --- "text" is another option
-      ++ (derivationArgs.passAsFile or []);
+      ++ (derivationArgs.passAsFile or []);     # 🤔🤔🤔 Pass Args as FILE?
   }
   // lib.optionalAttrs (! derivationArgs?meta) {
-    pos = let args = builtins.attrNames derivationArgs; in
+    pos = let args = builtins.attrNames derivationArgs; in    # 🧐🧐🧐 Fetch ARGS' KEYS?
       if builtins.length args > 0
       then builtins.unsafeGetAttrPos (builtins.head args) derivationArgs
       else null;
@@ -87,10 +87,10 @@ runCommandWith =
         preferLocalBuild = true;
         allowSubstitutes = false;
      })
-  // builtins.removeAttrs derivationArgs [ "passAsFile" ]);
+  // builtins.removeAttrs derivationArgs [ "passAsFile" ]); # 🧐🧐🧐 WHAT?
 ```
 
-### Holy Grail - Unpack writeTextFile - Learn To Create Your Own 🙇‍♀️
+### Unpack writeTextFile - Learn This To Create Your Own 🙇‍♀️🙇‍♀️🙇‍♀️
 ```nix
 writeTextFile =
   { name # the name of the derivation
