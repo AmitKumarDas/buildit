@@ -5,7 +5,33 @@
 
 ## Advanced
 
-### Unpack writeShellApplication
+### Learn symlinkJoin To Create Your Own 🙇‍♀️🙇‍♀️🙇‍♀️
+```nix
+symlinkJoin =
+  args_@{ name                            # 🍭🍭🍭 ALIAS ALL ARGuments as args_
+       , paths
+       , preferLocalBuild ? true
+       , allowSubstitutes ? false
+       , postBuild ? ""
+       , ...
+       }:
+  let
+    args = removeAttrs args_ [ "name" "postBuild" ]      # --- CUSTOMISE ARGS: args_ to args
+      // {
+        inherit preferLocalBuild allowSubstitutes;
+        passAsFile = [ "paths" ];                        # 🤔🤔 Does this set $pathsPath ?
+      }; # pass the defaults
+  in runCommand name args
+    ''
+      mkdir -p $out                                      # 💡💡💡 Pure Bash! mkdir is AVAILABLE!
+      for i in $(cat $pathsPath); do                     # 🧐🧐 Is this related to passAsFile ?
+        ${lndir}/bin/lndir -silent $i $out               # 💡💡💡 TIL: lndir is a utility
+      done
+      ${postBuild}
+    '';
+```
+
+### Unpack writeShellApplication: 💎 Inside
 ```nix
 writeShellApplication {                 # 💡💡💡 Incredible for TESTING
   name = "my-file";
@@ -31,12 +57,13 @@ writeShellApplication =
     preferLocalBuild = false;
     text = ''
       #!${runtimeShell}                                # --- Interpreter / Shebang
-      set -o errexit                                   # --- NICE
+      set -o errexit                                   # --- NICE! Automatic Addition
       set -o nounset
       set -o pipefail
     '' + lib.optionalString (runtimeInputs != [ ]) ''  # --- CONDITION
 
-      export PATH="${lib.makeBinPath runtimeInputs}:$PATH"  # 🎖️🎖️🎖️ HOW NIX makes PATH to WORK
+      # 👇👇👇 This is NOT equivalent of symlinkJoin 👇👇👇
+      export PATH="${lib.makeBinPath runtimeInputs}:$PATH"  # 🎖️🎖️🎖️ THIS! NIX + PATH = DEVEX
     '' + ''
 
       ${text}
@@ -156,7 +183,7 @@ writeTextFile =
     '';
 ```
 
-
+## Basics
 ### Learn Usage
 ```nix
 # Produce a store path named 'name'
@@ -239,7 +266,7 @@ writeShellScript = name: text:
   };
 ```
 
-### Teach Like I Am 5 on symlinkJoin
+### Teach Like I Am 5: symlinkJoin
 ```nix
 # ADDS symlinks of hello and stack to CURRENT build and prints "links added"
 symlinkJoin {
@@ -264,11 +291,26 @@ symlinkJoin {
 - From MULTIPLE INPUT DERIVATIONS
 ```
 
-### TIL: linkFarm
+### Teach Like I Am 5: linkFarm
 ```yaml
 - linkFarm is used to create a SIMPLE? derivation with SYMLINKS to OTHER DERIVATIONS
 - A derivation created with linkFarm is OFTEN USED in CI 💡💡💡
 - As a EASY way to BUILD MULTIPLE DERIVATIONS at ONCE 🍭🍭🍭
+- Dont BOTHER about $out/bin or $out/share
 ```
 
+```sh
+# Symlinks hello and stack paths in store to current
+# $out/hello-test and $out/foobar.
+linkFarm "myexample" [
+  { name = "hello-test"; path = pkgs.hello; }
+  { name = "foobar"; path = pkgs.stack; }
+]
+
+This creates a derivation with a directory structure like the following:
+
+/nix/store/qc5728m4sa344mbks99r3q05mymwm4rw-myexample
+|-- foobar -> /nix/store/6lzdpxshx78281vy056lbk553ijsdr44-stack-2.1.3.1
+`-- hello-test -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-hello-2.10
+```
 
