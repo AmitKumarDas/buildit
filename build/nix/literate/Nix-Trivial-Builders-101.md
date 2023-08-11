@@ -3,7 +3,7 @@
 - https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/trivial-builders/default.nix
 ```
 
-## Advanced
+## Advanced 🏃‍♀️🏃‍♀️🏃‍♀️
 
 ### Learn symlinkJoin To Create Your Own 🙇‍♀️🙇‍♀️🙇‍♀️
 ```nix
@@ -183,7 +183,7 @@ writeTextFile =
     '';
 ```
 
-## Basics
+## Basics 🚶‍♂️🚶‍♂️🚶‍♂️
 ### Learn Usage
 ```nix
 # Produce a store path named 'name'
