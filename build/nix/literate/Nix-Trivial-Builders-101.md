@@ -70,7 +70,7 @@ writeShellApplication =
     '';
 
     checkPhase =
-      if checkPhase == null then ''                      # --- QUIRK: No Ambiguity on reusing checkPhase
+      if checkPhase == null then ''                      # 🫣🫣🫣 No Ambiguity on reusing checkPhase
         runHook preCheck
         ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Search this doc
         # use shellcheck which does not include docs
