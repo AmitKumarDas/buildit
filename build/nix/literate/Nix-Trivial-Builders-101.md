@@ -199,7 +199,7 @@ writeShellApplication =
     '';
 
     checkPhase =
-      if checkPhase == null then ''
+      if checkPhase == null then ''                      # --- QUIRK: No Ambiguity on reusing checkPhase
         runHook preCheck
         ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Search this doc
         # use shellcheck which does not include docs
@@ -208,10 +208,62 @@ writeShellApplication =
         ${lib.getExe (haskell.lib.compose.justStaticExecutables shellcheck.unwrapped)} "$target"
         runHook postCheck                                # --- BEST Practice
       ''
-      else checkPhase;
+      else checkPhase;                                   # --- existing checkPhase?
   };
 ```
 
+### Extra Conditions
+```nix
+checkPhase =
+  # GHC (=> shellcheck) isn't supported on some platforms (such as risc-v)
+  # but we still want to use writeShellApplication on those platforms
+  let
+    shellcheckSupported = lib.meta.availableOn stdenv.buildPlatform shellcheck.compiler; # 🎖️🎖️🎖️
+    shellcheckCommand = lib.optionalString shellcheckSupported ''
+      # use shellcheck which does not include docs
+      # pandoc takes long to build and documentation isn't needed for just running the cli
+      ${lib.getExe (haskell.lib.compose.justStaticExecutables shellcheck.unwrapped)} "$target"
+    '';
+  in
+  if checkPhase == null then ''                 # --- The checkPhase defined OUTSIDE this block
+    runHook preCheck
+    ${stdenv.shellDryRun} "$target"
+    ${shellcheckCommand}
+    runHook postCheck
+  ''
+  else checkPhase;
+```
 
+### Teach Like I Am 5 on symlinkJoin
+```nix
+# ADDS symlinks of hello and stack to CURRENT build and prints "links added"
+symlinkJoin {
+  name = "myexample";
+  paths = [ pkgs.hello pkgs.stack ];
+  postBuild = "echo links added";
+}
+```
+
+```sh
+    This creates a DERIVATION with a DIRECTORY structure like the following: 🎖️🎖️🎖️
+
+    /nix/store/sglsr5g079a5235hy29da3mq3hv8sjmm-myexample
+    |-- bin
+    |   |-- hello -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-hello-2.10/bin/hello
+    |   `-- stack -> /nix/store/6lzdpxshx78281vy056lbk553ijsdr44-stack-2.1.3.1/bin/stack
+```
+
+```yaml
+- symlinkJoin creates a SINGLE DERIVATION
+- That appears to contain BINaries, LIBraries, DOCumentation, etc
+- From MULTIPLE INPUT DERIVATIONS
+```
+
+### TIL: linkFarm
+```yaml
+- linkFarm is used to create a SIMPLE? derivation with SYMLINKS to OTHER DERIVATIONS
+- A derivation created with linkFarm is OFTEN USED in CI 💡💡💡
+- As a EASY way to BUILD MULTIPLE DERIVATIONS at ONCE 🍭🍭🍭
+```
 
 
