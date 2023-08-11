@@ -297,6 +297,8 @@ symlinkJoin {
 - A derivation created with linkFarm is OFTEN USED in CI 💡💡💡
 - As a EASY way to BUILD MULTIPLE DERIVATIONS at ONCE 🍭🍭🍭
 - Dont BOTHER about $out/bin or $out/share
+- Notice the resulting PATHS:
+  - DOES NOT deal in BINARIES
 ```
 
 ```sh
