@@ -1,3 +1,10 @@
+### Go Comptability
+```yaml
+- refer: https://go.dev/blog/compat
+- tool: List of each package’s exported API in files separate from the actual packages
+- testing: Above are used as GOLDEN files
+```
+
 ### Nix Go 101
 ```yaml
 - refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
