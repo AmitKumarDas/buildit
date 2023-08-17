@@ -5,6 +5,11 @@
 - testing: Above are used as GOLDEN files
 ```
 
+### Go Dependencies
+```yaml
+- dependency: https://go.dev/doc/modules/managing-dependencies
+```
+
 ### Nix Go 101
 ```yaml
 - refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
