@@ -13,6 +13,12 @@
 ### Go & K8s
 ```yaml
 - https://github.com/kubernetes/community/pull/7474/files
+- PRs to mitigate last set of fires for go1.21 bump
+  - [fix] https://github.com/kubernetes/kubernetes/pull/119027
+  - [1.25 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120034
+  - [1.26 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120035
+  - [1.27 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120036
+  - [1.28 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120037
 ```
 
 ### Nix Go 101
