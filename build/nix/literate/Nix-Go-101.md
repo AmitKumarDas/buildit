@@ -10,6 +10,11 @@
 - dependency: https://go.dev/doc/modules/managing-dependencies
 ```
 
+### Go & K8s
+```yaml
+- https://github.com/kubernetes/community/pull/7474/files
+```
+
 ### Nix Go 101
 ```yaml
 - refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
