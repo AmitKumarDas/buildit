@@ -31,13 +31,13 @@ symlinkJoin =
     '';
 ```
 
-### Unpack writeShellApplication: 💎 Inside
+### Unpack writeShellApplication: 💎💍🌟 Inside
 ```nix
-writeShellApplication {                 # 💡💡💡 Incredible for TESTING
+writeShellApplication {                 # 💥💥💥 Incredible for TESTING
   name = "my-file";
   runtimeInputs = [ curl w3m ];         # --- 🥤🥤🥤 WOW! Is this still SANDBOXED build?
   text = ''
-    curl -s 'https://nixos.org' | w3m -dump -T text/html # 💡💡💡 One off Bash Commands
+    curl -s 'https://nixos.org' | w3m -dump -T text/html # 💥💥💥 One off Bash Commands
    '';
 }
 ```
@@ -70,7 +70,7 @@ writeShellApplication =
     '';
 
     checkPhase =
-      if checkPhase == null then ''                      # 🫣🫣🫣 Reusing checkPhase
+      if checkPhase == null then ''                      # 🫣🫣🫣 Orig checkPhase
         runHook preCheck
         ${stdenv.shellDryRun} "$target"                  # --- WHAT'S target? # --- Search this doc
         # use shellcheck which does not include docs
@@ -79,7 +79,7 @@ writeShellApplication =
         ${lib.getExe (haskell.lib.compose.justStaticExecutables shellcheck.unwrapped)} "$target"
         runHook postCheck                                # --- BEST Practice
       ''
-      else checkPhase;                                   # --- existing checkPhase?
+      else checkPhase;                                   # --- Orig checkPhase
   };
 ```
 
@@ -106,7 +106,7 @@ checkPhase =
 ```
 
 
-### The Origins - Unpack runCommandWith 🙇‍♀️
+### Unpacking runCommandWith - One of the Origins 🙇‍♀️🙇‍♀️🙇‍♀️
 ```nix
 runCommandWith =
   let
@@ -143,7 +143,7 @@ runCommandWith =
   // builtins.removeAttrs derivationArgs [ "passAsFile" ]); # 🧐🧐🧐 WHAT?
 ```
 
-### Unpack writeTextFile - Learn This To Create Your Own 🙇‍♀️🙇‍♀️🙇‍♀️
+### Unpacking writeTextFile - Learn It To Create Your Own 🙇‍♀️🙇‍♀️🙇‍♀️
 ```nix
 writeTextFile =
   { name # the name of the derivation
