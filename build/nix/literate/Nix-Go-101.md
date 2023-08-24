@@ -15,7 +15,8 @@ nixpkgs.go_1_20  go-1.20rc3
 
 ### Discover & Usage
 ```yaml
-- https://lazamar.co.uk/nix-versions/?package=go&version=1.17.6&fullName=go-1.17.6&keyName=go_1_17&revision=f76bef61369be38a10c7a1aa718782a60340d9ff&channel=nixpkgs-unstable
+- https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=go
+- https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
 ```
 
 ### Go Comptability
