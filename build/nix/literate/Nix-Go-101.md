@@ -13,6 +13,11 @@ nixpkgs.go       go-1.19.4
 nixpkgs.go_1_20  go-1.20rc3
 ```
 
+### Discover & Usage
+```yaml
+- https://lazamar.co.uk/nix-versions/?package=go&version=1.17.6&fullName=go-1.17.6&keyName=go_1_17&revision=f76bef61369be38a10c7a1aa718782a60340d9ff&channel=nixpkgs-unstable
+```
+
 ### Go Comptability
 ```yaml
 - refer: https://go.dev/blog/compat
@@ -236,19 +241,20 @@ buildGoModule rec {
 }
 ```
 
-### WIP: buildGoModule with Specific Version
+### TODO: buildGoModule with Specific Version
 ```yaml
 - https://github.com/cachix/devenv/blob/main/src/modules/languages/go.nix
 ```
 
-### Dummy shell.nix
+### shell.nix + tarball + pin + src + pkgs
 ```yaml
-- https://github.com/xtruder/go-testparrot/blob/master/shell.nix
+- refer: https://github.com/xtruder/go-testparrot/blob/master/shell.nix
 ```
 
 ```nix
 { src ? builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-20.09.tar.gz",
-  pkgs ? import src {}}:
+  pkgs ? import src {}
+}:
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
@@ -262,4 +268,32 @@ pkgs.mkShell {
 
   GO111MODULE = "on";
 }
+```
+
+### pin + tarball + commit
+```nix
+let
+  pkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/976fa3369d722e76f37c77493d99829540d43845.tar.gz";
+  }) {};
+
+  myPkg = pkgs.go;
+in
+...
+```
+
+### pin + git + unstable branch + commit
+```nix
+let
+  pkgs = import (builtins.fetchGit {
+    # Descriptive name to make the store path easier to identify                
+      name = "my-old-revision";                                                 
+      url = "https://github.com/NixOS/nixpkgs/";                       
+      ref = "refs/heads/nixpkgs-unstable";                     
+      rev = "976fa3369d722e76f37c77493d99829540d43845";                                           
+  }) {};                                                                           
+
+  myPkg = pkgs.go;
+in
+...
 ```
