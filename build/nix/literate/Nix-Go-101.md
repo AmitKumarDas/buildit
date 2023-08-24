@@ -32,8 +32,7 @@
 - https://github.com/hairyhenderson/gomplate/blob/main/Makefile
 ```
 
-
-#### OS & Arch
+### Utility: OS & Arch
 ```yaml
 - GOOS ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/')
   - go version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\1/' # darwin
@@ -42,7 +41,7 @@
 - go version # go version go1.19 darwin/amd64
 ```
 
-#### `Default & Shell Files for a Dummy Project`
+### Dummy Project
 ```nix
 # File: default.nix
 
@@ -110,7 +109,7 @@ in pkgs.mkShell {
 }
 ```
 
-#### `If Code In Private GitLab Then Try Below`
+### Private GitLab
 ```nix
 # File: default.nix
 # Note: Most of the content remain same as in 'A Dummy Project'
@@ -138,7 +137,7 @@ in pkgs.mkShell {
   };
 ```
 
-#### `let .. in symlinkJoin {...}`
+### symlinkJoin
 ```nix
 # File: https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/etcd/3.5.nix
 # Note: Above location will become stale once 3.5 is EOL
@@ -211,7 +210,7 @@ symlinkJoin {
 }
 ```
 
-#### `subPackages i.e. cmd / cli`
+### subPackages
 ```nix
 buildGoModule rec {
   name = "";
@@ -222,7 +221,30 @@ buildGoModule rec {
 }
 ```
 
-#### `buildGoModule with Specific Version`
+### WIP: buildGoModule with Specific Version
 ```yaml
 - https://github.com/cachix/devenv/blob/main/src/modules/languages/go.nix
+```
+
+### Dummy shell.nix
+```yaml
+- https://github.com/xtruder/go-testparrot/blob/master/shell.nix
+```
+
+```nix
+{ src ? builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-20.09.tar.gz",
+  pkgs ? import src {}}:
+
+pkgs.mkShell {
+  buildInputs = with pkgs; [
+    go_1_15
+    gopls
+    delve
+    go-outline
+  ];
+
+  hardeningDisable = [ "all" ];
+
+  GO111MODULE = "on";
+}
 ```
