@@ -1,3 +1,18 @@
+### Handy Commands
+```sh
+nix-env -qaP golang
+error: selector 'golang' matches no derivations, maybe you meant:
+       golangci-lint
+       golangci-lint-langserver
+```
+
+```sh
+nix-env -qaP go
+nixpkgs.go_1_18  go-1.18.10
+nixpkgs.go       go-1.19.4
+nixpkgs.go_1_20  go-1.20rc3
+```
+
 ### Go Comptability
 ```yaml
 - refer: https://go.dev/blog/compat
