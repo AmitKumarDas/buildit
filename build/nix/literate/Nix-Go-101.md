@@ -140,11 +140,6 @@ buildGoModule rec {
 }
 ```
 
-### TODO: buildGoModule with Specific Version
-```yaml
-- https://github.com/cachix/devenv/blob/main/src/modules/languages/go.nix
-```
-
 ### shell.nix + tarball + pin + src + pkgs
 ```yaml
 - refer: https://github.com/xtruder/go-testparrot/blob/master/shell.nix
