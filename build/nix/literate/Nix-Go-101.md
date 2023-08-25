@@ -17,6 +17,7 @@ nixpkgs.go_1_20  go-1.20rc3
 ```yaml
 - https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=go
 - https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
+- https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
 ```
 
 ### Go Comptability
@@ -42,12 +43,6 @@ nixpkgs.go_1_20  go-1.20rc3
   - [1.28 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120037
 ```
 
-### Nix Go 101
-```yaml
-- refer: https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/go/package.nix
-- refer: https://github.com/NixOS/nixpkgs/tree/master/pkgs/development/compilers/go
-```
-
 ### Shoutouts 🙇‍♀️
 ```yaml
 - https://github.com/hairyhenderson/gomplate/blob/main/Makefile
@@ -60,6 +55,10 @@ nixpkgs.go_1_20  go-1.20rc3
 - GOARCH ?= $(shell $(GO) version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\2/')
   - go version | sed 's/^.*\ \([a-z0-9]*\)\/\([a-z0-9]*\)/\2/' # amd64
 - go version # go version go1.19 darwin/amd64
+- GOOS = stdenv.targetPlatform.parsed.kernel.name;
+- GOARCH = goarch stdenv.targetPlatform;
+- GOBUILDOS = stdenv.buildPlatform.parsed.kernel.name;
+- GOBUILDARCH = goarch stdenv.buildPlatform;
 ```
 
 ### Dummy Project
