@@ -168,3 +168,82 @@ echo "linking to Bazel docs version ${BAZEL_VERSION[0]}"
 
 sed -i -Ee "s,(https://docs.bazel.build/versions/)([^/]*)/,\1${BAZEL_VERSION[0]}/,g" README.md
 ```
+
+### Private GitLab
+```nix
+  # Note: Following is used instead of above
+  src = fetchGit {
+    url = "ssh://git@gitlab.eng.myorg.com/shepp";
+    rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
+    ref = "main";
+  };
+
+  # If above ssh:// has issues then try https://
+  src = fetchGit {
+    url = "https://gitlab.eng.myorg.com/shepp/shepp.git";
+    rev = "3577441be0d95514eaa1a931a2dc15497dd7b5d2";
+    ref = "main";
+  };
+```
+
+### symlinkJoin
+```nix
+# File: https://github.com/NixOS/nixpkgs/blob/master/pkgs/servers/etcd/3.5.nix
+
+let
+  version = "3.5.9";
+
+  src = fetchFromGitHub {
+    ...
+  };
+
+  CGO_ENABLED = 0;
+
+  meta = with lib; {
+    ...
+  };
+
+  etcdserver = buildGoModule rec {
+    inherit CGO_ENABLED meta src version;
+    modRoot = "./server";
+
+    preInstall = ''
+      mv $GOPATH/bin/{server,etcd}
+    '';
+
+    # We set the GitSHA to `GitNotFound` to match official build scripts when
+    # git is unavailable. This is to avoid doing a full Git Checkout of etcd.
+    # User facing version numbers are still available in the binary, just not
+    # the sha it was built from.
+    ldflags = [ "-X go.etcd.io/etcd/api/v3/version.GitSHA=GitNotFound" ];
+  };
+
+  etcdutl = buildGoModule rec {
+    pname = "etcdutl";
+    inherit CGO_ENABLED meta src version;
+    modRoot = "./etcdutl";
+  };
+
+  etcdctl = buildGoModule rec {
+    pname = "etcdctl";
+    inherit CGO_ENABLED meta src version;
+    modRoot = "./etcdctl";
+  };
+in
+
+# What:    Puts MANY DERivations into the SAME DIRectory 🎖️🎖️🎖️
+# How:     Creates a NEW derivation and ADDs SYMlinks to each of the PAThs listed
+symlinkJoin {
+  name = "etcd-${version}";
+  inherit meta version;
+  passthru = {
+    inherit etcdserver etcdutl etcdctl;
+    tests = { inherit (nixosTests) etcd etcd-cluster; };
+  };
+  paths = [
+    etcdserver
+    etcdutl
+    etcdctl
+  ];
+}
+```
