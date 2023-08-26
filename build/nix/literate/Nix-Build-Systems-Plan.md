@@ -4,6 +4,7 @@
 ### Shoutout
 ```yaml
 - https://github.com/casey/just
+- https://github.com/golang/go/issues/50603 # version
 ```
 
 ### Notes on Just
@@ -29,4 +30,9 @@
 - syntax: ${..} for env variable substitution # 🎖️ YAML
 - env: load env variables from .env FILE if dotenv-load is set
 - parameters: to just recipes; different from env; different from variables
+```
+
+### Notes on Go & Version
+```yaml
+- refer: https://github.com/golang/go/issues/50603
 ```
