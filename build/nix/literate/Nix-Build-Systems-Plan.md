@@ -3,8 +3,6 @@
 
 ### Shoutout
 ```yaml
-- https://ductile.systems/freight-part-1/
-- https://github.com/mgattozzi/freight
 - https://github.com/casey/just
 ```
 
