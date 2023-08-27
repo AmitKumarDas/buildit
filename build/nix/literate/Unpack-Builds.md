@@ -1,5 +1,5 @@
 ### What
-- This is an experiment & useful for learning purposes
+- Deep dive into build systems & pieces that make one
 
 ### Shoutout
 ```yaml
