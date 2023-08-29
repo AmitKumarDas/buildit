@@ -41,6 +41,8 @@ nixpkgs.go_1_20  go-1.20rc3
   - [1.26 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120035
   - [1.27 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120036
   - [1.28 cherry-pick] https://github.com/kubernetes/kubernetes/pull/120037
+- https://github.com/prometheus/client_golang/issues/1337
+- https://github.com/kubernetes/kubernetes/issues/120236
 ```
 
 ### Shoutouts 🙇‍♀️
