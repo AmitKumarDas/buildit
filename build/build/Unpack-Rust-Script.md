@@ -46,8 +46,9 @@ cat now.ers | rust-script --count --loop \
 
 ### Testing Practice
 ```yaml
-- BUSINESS LOGIC & TESTING the same should be done in SAME LANGUAGE
-- Test the EXECUTION / EXPECTATION of running the code files in plain SCRIPTS
+- TEST_BUSINESS_LOGIC: SAME as the LANGUAGE used for Business Logic 
+- TEST_RUN_EXECUTION: EXPECTATION: Implement plain SCRIPTS
+- SCRIPT_TESTING_SAMPLE: https://github.com/fornwall/rust-script/tree/main/tests/scripts  # 🎖️
 ```
 
 ```sh
