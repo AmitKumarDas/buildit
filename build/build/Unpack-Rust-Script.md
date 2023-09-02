@@ -73,6 +73,7 @@ cat now.ers | rust-script --count --loop \
   - PRECONDITION: INSTALL_DEPENDENCIES: Container Images?
   - DEVEX: Container Images?
   - PERFORMANCE: Via Cache & Container Images?
+  - BENCHMARKING: Yes via Hyperfine
 ```
 
 ```toml
