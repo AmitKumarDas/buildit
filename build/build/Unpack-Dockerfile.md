@@ -1,6 +1,13 @@
 ### Shoutouts
 ```yaml
 - https://github.com/jmgilman/dev-container/blob/master/Dockerfile
+- https://github.com/fornwall/rust-static-builder
+```
+
+### TIL
+```yaml
+- https://github.com/fornwall/rust-static-builder/tree/master/scratch-with-certificates
+- 
 ```
 
 ### Create USER
@@ -17,10 +24,11 @@ RUN sed -i 's/%sudo.*ALL/%sudo   ALL=(ALL:ALL) NOPASSWD:ALL/' /etc/sudoers && \
     echo "experimental-features = nix-command flakes" >> /etc/nix.conf
 ```
 
-# COPY + CHOWN
+### COPY + CHOWN
 ```Dockerfile
 COPY --chown=${USER}:${USER} config/flake.nix /home/${USER}/myproj/flake.nix
 COPY --chown=${USER}:${USER} config/flake.lock /home/${USER}/myproj/flake.lock
 COPY --chown=${USER}:${USER} config/config.nix /home/${USER}/myproj/config.nix
 ```
+
 
