@@ -5,10 +5,8 @@
 
 ### Rust TILs
 ```yaml
-- Debug Formatter: {:?}
-- #!/usr/bin/env rust-script as a shebang line
-- -e/--expr option to accept a Rust expression
-- -d/--dep option to accepts dependencies (if any)
+- DEBUG_FORMAT: {:?}
+- ARRAY_ELEMS_SPLIT: wrapper_words[1..].iter()        # starts from 2nd element
 ```
 
 ### What makes Rust Expression to Work
