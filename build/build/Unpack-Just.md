@@ -4,7 +4,17 @@
 ### Shoutout
 ```yaml
 - https://github.com/casey/just
-- https://github.com/golang/go/issues/50603 # version
+```
+
+### TAGs
+```yaml
+- tag: build, tools
+- go: golang: version: https://github.com/golang/go/issues/50603
+```
+
+### Install Just
+```yaml
+
 ```
 
 ### Notes on Just
