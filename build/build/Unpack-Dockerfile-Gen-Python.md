@@ -23,7 +23,7 @@ def rustup_hash(arch):
         return f.read().decode('utf-8').split()[0]
 ```
 
-### Named Tuple
+### Named Tuple & Usage
 ```py
 // Definition
 // I.e. DebianArch type with properties bashbrew, dpkg, rust
@@ -37,6 +37,82 @@ debian_arches = [
     DebianArch("arm64v8", "arm64", "aarch64-unknown-linux-gnu"),
     DebianArch("i386", "i386", "i686-unknown-linux-gnu"),
 ]
+
+for arch in alpine_arches:
+    hash = rustup_hash(arch.rust)  // Named Dot Operations with Minimal Effort 🎖️🎖️🎖️
 ```
 
-### 
+### Variants & the Default
+```py
+debian_variants = [
+    "buster",
+    "bullseye",
+    "bookworm",
+]
+
+default_debian_variant = "bookworm"
+```
+
+### Git Commit of a File
+```py
+def file_commit(file):
+    return subprocess.run(
+            ["git", "log", "-1", "--format=%H", "HEAD", "--", file],
+            capture_output = True) \
+        .stdout \
+        .decode('utf-8') \
+        .strip()
+```
+
+### Read File
+```py
+def read_file(file):
+    with open(file, "r") as f:
+        return f.read()
+```
+
+### Write File
+```py
+def write_file(file, contents):
+    dir = os.path.dirname(file)
+    if dir and not os.path.exists(dir):
+        os.makedirs(dir)
+    with open(file, "w") as f:
+        f.write(contents)
+```
+
+### Generate Shell Script Within the Dockerfile Template
+```py
+// Notice Indentation
+// Really Simple Way to Build File Contents
+// Smart Use of %% vs ${} vs f"{}"
+// Simplest Ever Dockerfile Generation                 🎖️🎖️🎖️
+// Use of \\\n to Let the Script Rendered with \n      🎖️🎖️🎖️
+// Use of f-Strings to Python Variable Substitution    🎖️🎖️🎖️
+def update_debian():
+    arch_case = 'dpkgArch="$(dpkg --print-architecture)"; \\\n'
+    arch_case += '    case "${dpkgArch##*-}" in \\\n'
+    for arch in debian_arches:
+        hash = rustup_hash(arch.rust)
+        arch_case += f"        {arch.dpkg}) rustArch='{arch.rust}'; rustupSha256='{hash}' ;; \\\n"
+    arch_case += '        *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \\\n'
+    arch_case += '    esac'
+
+    template = read_file("Dockerfile-debian.template")
+    slim_template = read_file("Dockerfile-slim.template")
+
+    for variant in debian_variants:
+        rendered = template \
+            .replace("%%RUST-VERSION%%", rust_version) \
+            .replace("%%RUSTUP-VERSION%%", rustup_version) \
+            .replace("%%DEBIAN-SUITE%%", variant) \
+            .replace("%%ARCH-CASE%%", arch_case)
+        write_file(f"{rust_version}/{variant}/Dockerfile", rendered)
+
+        rendered = slim_template \
+            .replace("%%RUST-VERSION%%", rust_version) \
+            .replace("%%RUSTUP-VERSION%%", rustup_version) \
+            .replace("%%DEBIAN-SUITE%%", variant) \
+            .replace("%%ARCH-CASE%%", arch_case)
+        write_file(f"{rust_version}/{variant}/slim/Dockerfile", rendered)
+```
