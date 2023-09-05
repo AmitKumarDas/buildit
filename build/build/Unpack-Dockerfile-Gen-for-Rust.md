@@ -3,8 +3,11 @@
 - https://github.com/rust-lang/docker-rust/tree/master
 ```
 
-### Experiment Py vs rust-script for File Generation
+### Dockerfile Generation
 ```yaml
-- https://github.com/rust-lang/docker-rust/blob/master/x.py
-- additional refer: https://github.com/oxalica/rust-overlay/blob/master/scripts/fetch.py
+- Generate:
+  - Python: https://github.com/rust-lang/docker-rust/blob/master/x.py
+  - More Reference: https://github.com/oxalica/rust-overlay/blob/master/scripts/fetch.py
+- Experiment:
+  - Rust: via rust-script
 ```
