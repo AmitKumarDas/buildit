@@ -3,13 +3,9 @@
 - https://github.com/rust-lang/docker-rust/tree/master
 ```
 
-### Dockerfile Generation
+### Dockerfile Generation using Py & Dockerfile Templates
 ```yaml
-- Generate:
-  - Python: https://github.com/rust-lang/docker-rust/blob/master/x.py
-  - More Reference: https://github.com/oxalica/rust-overlay/blob/master/scripts/fetch.py
-- Experiment:
-  - Rust: via rust-script
+- https://github.com/rust-lang/docker-rust/blob/master/x.py
 ```
 
 ### Workflow
