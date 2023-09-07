@@ -26,6 +26,8 @@ ENV CGO_ENABLED 0
 
 ```Dockerfile
 # Architectures
+# TIL: A list of Environment Variables without = or [ ] operators / syntaxes
+# TIL: This can be interated using for loop
 ENV BASHBREW_ARCHES \
     amd64 \
     arm32v5 \
