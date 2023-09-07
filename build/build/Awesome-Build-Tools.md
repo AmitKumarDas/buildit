@@ -1,5 +1,10 @@
 ### Shoutouts
 ```yaml
+- https://theyahya.com/posts/go-pgo/
+  - Profile Guided Optimisation
+```
+
+```yaml
 - https://github.com/estesp/manifest-tool/tree/main
   - Docker, Digest, Index, Manifest, Golang, CLI, Debug
 ```
