@@ -19,6 +19,7 @@ RUN apt-get update; \
 ```
 
 ```Dockerfile
+# Stress on use of /usr/src/           🧐🧐🧐
 WORKDIR /usr/src/bashbrew
 ENV CGO_ENABLED 0
 ```
@@ -39,5 +40,6 @@ ENV BASHBREW_ARCHES \
     s390x \
     windows-amd64
 
+# Stress on use of /usr/local/bin/           🧐🧐🧐
 COPY scripts/bashbrew-arch-to-goenv.sh /usr/local/bin/
 ```
