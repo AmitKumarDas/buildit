@@ -25,3 +25,9 @@ IPv4Address, IPv6Address
 typing.Any
 typing.NewType
 ```
+
+### Check the Types
+```yaml
+- https://github.com/ltworf/typedload/blob/master/typedload/typechecks.py
+```
+
