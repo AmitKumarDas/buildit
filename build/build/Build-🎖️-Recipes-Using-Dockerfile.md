@@ -7,7 +7,7 @@
 - https://github.com/distribution/distribution/blob/main/dockerfiles/vendor.Dockerfile
 ```
 
-### Commands | Bash | Shell
+### Commands | Bash | Shell | Snippets | CMD | Script
 ```yaml
 - cp -a          # retains all properties
 - cp -a          # symlinks are not dereferenced
