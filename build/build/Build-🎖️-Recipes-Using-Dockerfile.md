@@ -19,6 +19,11 @@
 - dirname stdio.h                    # Outputs .
 - dir="$(readlink -f "$BASH_SOURCE")"      # Lazy
 - dir="$(dirname "$dir")"                  # Lazy # Hence run inside Dockerfile WORKDIR
+- chmod 1777 "$BASHBREW_CACHE"             # Ensures cache dir is writable by anyone (similar to /tmp)
+- chmod 1777 "$BASHBREW_CACHE"             # Allows to decide at runtime the exact uid/gid we'd like to run as
+- if [ "${1#*-}" = "$1" ]; then      # Does $1 contain -
+- if [ "${1#*-}" = "$1" ]; then      # ${1#*-} deletes the shortest match of *- from $1 # abc-def -> def
+- echo "${foo##*-}"                  # if foo = 123-456-789 then output is 789
 ```
 
 ### A Dockerfile Env for Golang
@@ -51,7 +56,8 @@ FROM golang:1.20-bullseye
 SHELL ["bash", "-Eeuo", "pipefail", "-xc"]
 ```
 
-### A Dockerfile Env to Build Golang with Bash
+### A Dockerfile Env to Build Golang - Include Build Script for DevEx - Part 1
+- bashbrew.sh
 ```bash
 #!/usr/bin/env bash
 set -Eeuo pipefail
@@ -81,4 +87,48 @@ COPY . .
 RUN CGO_ENABLED=0 ./bashbrew.sh --version; \
 	cp -al bin/bashbrew /
 ```
+
+### A Dockerfile Env to build Golang - Include Entrypoint Script for DevEx - Part 2
+- scripts/bashbrew-entrypoint.sh
+```sh
+#!/bin/sh
+set -e
+
+if [ "${1#-}" != "$1" ]; then
+	set -- bashbrew "$@"
+fi
+
+# if our command is a valid bashbrew subcommand, let's invoke it through bashbrew instead
+# (this allows for "docker run bashbrew build", etc)
+if bashbrew "$1" --help > /dev/null 2>&1; then
+	set -- bashbrew "$@"
+fi
+
+exec "$@"
+```
+
+```Dockerfile
+FROM infosiftr/moby
+SHELL ["bash", "-Eeuo", "pipefail", "-xc"]
+
+RUN apt-get update; \
+	apt-get install -y --no-install-recommends git ; \
+	rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /bashbrew /usr/local/bin/
+RUN bashbrew --version
+
+ENV BASHBREW_CACHE /bashbrew-cache
+# make sure our default cache dir exists and is writable by anyone (similar to /tmp)
+RUN mkdir -p "$BASHBREW_CACHE"; \
+	chmod 1777 "$BASHBREW_CACHE"
+# (this allows us to decide at runtime the exact uid/gid we'd like to run as)
+
+VOLUME $BASHBREW_CACHE
+
+COPY scripts/bashbrew-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["bashbrew-entrypoint.sh"]
+```
+
+
 
