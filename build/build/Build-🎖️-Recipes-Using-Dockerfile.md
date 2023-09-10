@@ -56,7 +56,7 @@ FROM golang:1.20-bullseye
 SHELL ["bash", "-Eeuo", "pipefail", "-xc"]
 ```
 
-### A Dockerfile Env to Build Golang - Include Build Script for DevEx - Part 1
+### Dockerfile to RELEASE Golang - Include Build Script for DevEx - Part I
 - bashbrew.sh
 ```bash
 #!/usr/bin/env bash
@@ -88,7 +88,7 @@ RUN CGO_ENABLED=0 ./bashbrew.sh --version; \
 	cp -al bin/bashbrew /
 ```
 
-### A Dockerfile Env to build Golang - Include Entrypoint Script for DevEx - Part 2
+### Dockerfile to RELEASE Golang - Include Entrypoint Script for DevEx - Part II
 - scripts/bashbrew-entrypoint.sh
 ```sh
 #!/bin/sh
@@ -130,5 +130,54 @@ COPY scripts/bashbrew-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["bashbrew-entrypoint.sh"]
 ```
 
+### Share Your Binary | Build From a Git COMMIT | Dockerfile Environment
+```Dockerfile
+FROM golang:1.20
 
+RUN go install golang.org/x/tools/cmd/cover@latest \
+    && go install golang.org/x/lint/golint@latest
+
+ENV REGISTRY_COMMIT=a4d9db5a884b70be0c96dd6a7a9dbef4f2798c51
+RUN set -x \
+	&& mkdir -p /go/src/github.com/distribution && cd /go/src/github.com/distribution \
+	&& git clone https://github.com/distribution/distribution.git && cd distribution \
+	&& git checkout "$REGISTRY_COMMIT" \
+	&& make binaries && cp bin/registry /usr/local/bin
+
+# The source is bind-mounted into this folder
+WORKDIR /go/src/github.com/estesp/manifest-tool
+```
+
+### Dockerfile Provides Go Environment | Makefile to Build
+```Dockerfile
+FROM golang:1.20
+
+RUN go install golang.org/x/tools/cmd/cover@latest \
+    && go install golang.org/x/lint/golint@latest
+
+# The source is bind-mounted into this folder
+WORKDIR /go/src/github.com/estesp/manifest-tool
+```
+```Mk
+PREFIX ?= ${DESTDIR}/usr
+INSTALLDIR=${PREFIX}/bin
+
+WORKDIR := /go/src/github.com/estesp/manifest-tool
+GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD 2>/dev/null)
+COMMIT_NO := $(shell git rev-parse HEAD 2> /dev/null || true)
+COMMIT := $(if $(shell git status --porcelain --untracked-files=no),"${COMMIT_NO}-dirty","${COMMIT_NO}")
+DOCKER_IMAGE := manifest-tool-dev$(if $(GIT_BRANCH),:$(GIT_BRANCH))
+DOCKER_RUN := docker run --rm -i
+DOCKER_RUNIT := $(DOCKER_RUN) -v $(shell pwd):/go/src/github.com/estesp/manifest-tool -w /go/src/github.com/estesp/manifest-tool "$(DOCKER_IMAGE)"
+
+shell: build-container
+	$(DOCKER_RUN_DOCKER) bash
+
+build:
+	$(DOCKER_RUN) \
+		-v $(shell pwd):$(WORKDIR) \
+		-w $(WORKDIR) \
+		golang:1.17 /bin/bash -c "\
+		cd v2 && go build -ldflags \"-X main.gitCommit=${COMMIT}\" -o ../manifest-tool github.com/estesp/manifest-tool/v2/cmd/manifest-tool"
+```
 
