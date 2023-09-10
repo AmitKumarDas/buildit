@@ -5,7 +5,6 @@
 - https://github.com/distribution/distribution/blob/main/dockerfiles/git.Dockerfile
 - https://github.com/distribution/distribution/blob/main/dockerfiles/lint.Dockerfile
 - https://github.com/distribution/distribution/blob/main/dockerfiles/vendor.Dockerfile
-- https://github.com/estesp/manifest-tool/tree/main
 ```
 
 ### Commands | Bash | Shell
