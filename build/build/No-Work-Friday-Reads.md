@@ -1,0 +1,23 @@
+```yaml
+- [ossf] Feeds parsing language manager updates
+- A generated Dockerfile from siderolabs
+- [kres] Generate several build instructions (read files)
+- [bldr] Build & Package software distributions using Buildkit
+- Dockerfile, Rust, Build, Cache, Mounts, Practices
+- [adr] Write a package manager in Golang
+- [impl] A package manager for a specific purpose in Go
+- Bootstrapping a Go project in 2023
+- [Git] https://github.com/solo-io/go-utils
+- [Pkg] https://github.com/solo-io/anyvendor
+- [OCI] https://github.com/solo-io/bumblebee/tree/main/spec
+- [Sh] [Rust] https://github.com/bruceadams/yj
+- [OCI] https://github.com/containers/buildah/blob/main/run_linux.go
+- https://blog.opstree.com/2021/04/20/docker-buildkit-faster-builds-mounts-and-features/
+- [Pkg] https://github.com/goreleaser/nfpm
+- [Pkg] https://github.com/rubygems/rubygems/tree/master/bundler
+- [Pkg] https://github.com/jordansissel/fpm/blob/main/lib/fpm/package.rb
+- [Pkg] https://github.com/crystal-community/toml.cr/blob/master/src/toml/parser.cr
+- [Sh] https://github.com/vitobotta/hetzner-k3s/tree/main/src
+- https://go.dev/blog/modules2019
+- [Pkg] https://github.com/BerriAI/litellm/blob/main/poetry.lock
+```
