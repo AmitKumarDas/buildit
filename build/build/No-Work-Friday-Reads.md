@@ -20,4 +20,5 @@
 - [Sh] https://github.com/vitobotta/hetzner-k3s/tree/main/src
 - https://go.dev/blog/modules2019
 - [Pkg] https://github.com/BerriAI/litellm/blob/main/poetry.lock
+- [Pkg] https://github.com/alecthomas/participle
 ```
