@@ -27,4 +27,6 @@
 - [slsa] https://github.com/google/capslock
 - [integration] [test] https://github.com/siderolabs/image-service/tree/main/internal/integration
 - [oci] https://github.com/siderolabs/image-service/tree/main/internal/artifacts
+- [validation] https://eng.d2iq.com/blog/improved-crd-validation-with-common-expression-language/?d_utk=95237064-ec4e-4237-be60-f2ba2cdfa0c5
+- [oci] https://github.com/cue-labs/oci/tree/main/ociregistry
 ```
