@@ -1,8 +1,8 @@
 ```yaml
 - [ossf] Feeds parsing language manager updates
 - A generated Dockerfile from siderolabs
-- [kres] Generate several build instructions (read files)
-- [bldr] Build & Package software distributions using Buildkit
+- [gen] [build] https://github.com/siderolabs/kres
+- [bldr] https://github.com/siderolabs/bldr
 - Dockerfile, Rust, Build, Cache, Mounts, Practices
 - [adr] Write a package manager in Golang
 - [impl] A package manager for a specific purpose in Go
@@ -21,4 +21,10 @@
 - https://go.dev/blog/modules2019
 - [Pkg] https://github.com/BerriAI/litellm/blob/main/poetry.lock
 - [Pkg] https://github.com/alecthomas/participle
+- [oci] https://github.com/chainguard-dev/apko
+- [sbom] https://github.com/chainguard-dev/bomshell
+- [Pkg] https://github.com/chainguard-dev/melange
+- [slsa] https://github.com/google/capslock
+- [integration] [test] https://github.com/siderolabs/image-service/tree/main/internal/integration
+- [oci] https://github.com/siderolabs/image-service/tree/main/internal/artifacts
 ```
