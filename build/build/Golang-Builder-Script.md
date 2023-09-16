@@ -14,3 +14,9 @@
 "mvdan.cc/sh/v3/shell"
 ```
 
+### Make Others' API your Own - http.Get
+```go
+func (p *Pipe) WithHTTPClient(c *http.Client) *Pipe {...}     # Builder Step
+func (p *Pipe) Get(url string) *Pipe {...}                    # Piggyback on the Known API
+func Get(url string) *Pipe {...}                              # New Instance
+```
