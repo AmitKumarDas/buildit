@@ -11,13 +11,19 @@ load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_regi
 rules_rust_dependencies()
 rust_register_toolchains(
     edition = "2018",
+    versions = [
+        "1.70.0",
+        "nightly/2023-06-01",
+    ],
 )
 ```
 
 ```yaml
-- Is similar to YAML | TOML
+- Similar to YAML | TOML
+- Datatypes | Struct | List | String
 - Invokes HTTP | GIT
 - Is REPRODUCIBLE
+- Community growth via REUSABLE RULES | LOAD/IMPORT
 ```
 
 ### 
