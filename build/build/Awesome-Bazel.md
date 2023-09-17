@@ -14,4 +14,10 @@ rust_register_toolchains(
 )
 ```
 
+```yaml
+- Is similar to YAML | TOML
+- Invokes HTTP | GIT
+- Is REPRODUCIBLE
+```
+
 ### 
