@@ -1,4 +1,4 @@
-### 'WORKSPACE' file importing 'rules_rust'
+### WORKSPACE | Remote Import | rules_rust
 ```bazel
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
@@ -18,6 +18,7 @@ rust_register_toolchains(
 )
 ```
 
+### Thoughts
 ```yaml
 - Similar to YAML | TOML
 - Datatypes | Struct | List | String
