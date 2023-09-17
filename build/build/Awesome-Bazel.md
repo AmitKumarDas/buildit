@@ -18,7 +18,7 @@ rust_register_toolchains(
 )
 ```
 
-### Thoughts
+#### Thoughts
 ```yaml
 - Similar to YAML | TOML
 - Datatypes | Struct | List | String
@@ -27,4 +27,15 @@ rust_register_toolchains(
 - Community growth via REUSABLE RULES | LOAD/IMPORT
 ```
 
-### 
+### FROM bamnet/bqproxy | In Bazel | WORKSPACE at root folder
+```bazel
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+
+container_pull(
+    name = "bqproxy_latest",
+    registry = "index.docker.io",
+    repository = "bamnet/bqproxy",
+    tag = "latest",
+)
+```
+
