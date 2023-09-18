@@ -1,3 +1,14 @@
+### Rules of the Game
+```yaml
+# TODO
+- basics.1: https://github.com/bazelbuild/examples/tree/main
+```
+
+```yaml
+# TODO
+- advanced.1: https://github.com/GoogleContainerTools/distroless
+```
+
 ### WORKSPACE | Remote Import | rules_rust
 ```bazel
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
