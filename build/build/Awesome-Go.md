@@ -19,5 +19,7 @@
 
 ```yaml
 - https://github.com/IBM/fp-go # FUNCTIONAL
+- https://github.com/logic-building/functional-go
+- https://github.com/repeale/fp-go
 ```
 
