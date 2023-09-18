@@ -10,6 +10,14 @@
 ```
 
 ```yaml
-- https://theyahya.com/posts/go-pgo/
-  - Profile Guided Optimisation
+- https://theyahya.com/posts/go-pgo/ # Profile Guided Optimisation
 ```
+
+```yaml
+- https://hackernoon.com/go-design-patterns-an-introduction-to-builder # BUILDER # JOIN
+```
+
+```yaml
+- https://github.com/IBM/fp-go # FUNCTIONAL
+```
+
