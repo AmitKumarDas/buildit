@@ -38,4 +38,8 @@ container_pull(
     tag = "latest",
 )
 ```
+```yaml
+- Above exposes a @{name}//image format
+- I.e. @bgproxy_latest//image can be used in bzl files
+```
 
