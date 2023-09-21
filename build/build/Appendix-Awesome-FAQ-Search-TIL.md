@@ -12,3 +12,14 @@
 - Gitlab Container Registry: registry.gitlab.com
 - Github Packages: docker.pkg.github.com
 ```
+
+```yaml
+- # Idea: Developer Environments @ 21 Sep 2023
+- devenvs/my_cli.go & devenvs/Dockerfile.my_cli.tpl
+ - # Generate a Dockerfile that INSTALL or RUN specific version of my_cli
+ - # Generate the Dockerfile by embedding the Dockerfile.my_cli.tpl
+ - # Generate is a PUBLIC function that can be IMPORTED by other go projects
+ - # go install github.com/someone/project/cmd/my_cli@rev
+ - # go run github.com/someone/project/cmd/my_cli@rev
+ - # rev is a Dockerfile ARG that defaults to main
+```
