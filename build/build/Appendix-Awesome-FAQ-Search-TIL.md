@@ -14,12 +14,26 @@
 ```
 
 ```yaml
+- # ---
 - # Idea: Developer Environments @ 21 Sep 2023
-- devenvs/my_cli.go & devenvs/Dockerfile.my_cli.tpl
- - # Generate a Dockerfile that INSTALL or RUN specific version of my_cli
- - # Generate the Dockerfile by embedding the Dockerfile.my_cli.tpl
- - # Generate is a PUBLIC function that can be IMPORTED by other go projects
- - # go install github.com/someone/project/cmd/my_cli@rev
- - # go run github.com/someone/project/cmd/my_cli@rev
- - # rev is a Dockerfile ARG that defaults to main
+- # ---
+- devenvs/my_cli.go
+- devenvs/Dockerfile.my_cli.tpl
+- Generate a Dockerfile to INSTALL (or RUN) specific version of my_cli
+- Generate the Dockerfile by embedding the Dockerfile.my_cli.tpl
+- my_cli.go's Generate() can be IMPORTED by other go projects
+- Maybe: go install github.com/someone/project/cmd/my_cli@rev
+- Maybe: go run github.com/someone/project/cmd/my_cli@rev
+- Maybe: rev is a Dockerfile ARG to set my_cli version
+- Maybe: rev defaults to main
+```
+
+```yaml
+- # ---
+- # Design: Adapters & Interfaces: Single Contract Interface @ 23 Sep 2023
+- # ---
+- Create a Writer Interface that exposes Write()
+- Create a FileGenerator Interface that exposes GenerateFile()
+- Create an FileGenWriteAdapter struct that composes FileGenerator Interface
+- FileGenWriteAdapter implements Writer using FileGenerator
 ```
