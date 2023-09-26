@@ -1,6 +1,7 @@
 ### Shoutouts
 ```yaml
 - https://github.com/fornwall/rust-script/tree/main/tests/scripts  # 🎖️
+- https://tldp.org/LDP/abs/html/parameter-substitution.html
 ```
 
 ### Test | Assert
