@@ -3,7 +3,9 @@
 - https://pkg.go.dev/golang.org/x/sync/errgroup
 
 - # ENUM
-- https://www.ardanlabs.com/blog/2023/09/implementing-enumerations-in-golang.html # struct with single field
+- # struct # compile safety # marshal # sentinel # marshal # parse # mustParse # validation
+- https://www.ardanlabs.com/blog/2023/09/implementing-enumerations-in-golang.html
+
 
 
 - # Profile Guided Optimisation
