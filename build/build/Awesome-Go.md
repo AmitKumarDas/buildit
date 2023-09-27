@@ -2,6 +2,9 @@
 - # Parallel, Build, Performance, Goroutines, Tasks
 - https://pkg.go.dev/golang.org/x/sync/errgroup
 
+- # ENUM
+- https://www.ardanlabs.com/blog/2023/09/implementing-enumerations-in-golang.html # struct with single field
+
 
 - # Profile Guided Optimisation
 - https://theyahya.com/posts/go-pgo/
@@ -29,4 +32,3 @@
 - https://github.com/repeale/fp-go
 - https://github.com/antonmedv/expr
 ```
-
