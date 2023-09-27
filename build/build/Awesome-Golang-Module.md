@@ -8,3 +8,7 @@
  - ^^ wand vs bingo vs gobin ^^
  - ^^ https://github.com/bwplotka/bingo
 ```
+
+```yaml
+- https://go.dev/doc/modules/layout # Organising Go Modules
+```
