@@ -15,6 +15,7 @@
 - https://github.com/siderolabs/git-verify-chain/tree/main
 
 - # Functional
+- https://github.com/magefile/mage/blob/master/mg/deps.go
 - https://github.com/IBM/fp-go
 - https://github.com/logic-building/functional-go
 - https://github.com/repeale/fp-go
