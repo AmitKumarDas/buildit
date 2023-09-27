@@ -6,6 +6,8 @@
 - # Profile Guided Optimisation
 - https://theyahya.com/posts/go-pgo/
 
+- # shell # bash
+- https://github.com/magefile/mage/tree/master/sh
 
 - # BUILDER # JOIN
 - https://hackernoon.com/go-design-patterns-an-introduction-to-builder
