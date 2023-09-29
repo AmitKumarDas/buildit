@@ -5,6 +5,7 @@
 - https://github.com/distribution/distribution/blob/main/dockerfiles/git.Dockerfile
 - https://github.com/distribution/distribution/blob/main/dockerfiles/lint.Dockerfile
 - https://github.com/distribution/distribution/blob/main/dockerfiles/vendor.Dockerfile
+- https://github.com/rust-lang/docker-rust/tree/master
 ```
 
 ### Commands | Bash | Shell | Snippets | CMD | Script
