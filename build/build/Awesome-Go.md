@@ -5,6 +5,7 @@
 - # ENUM
 - # struct # compile safety # marshal # sentinel # marshal # parse # mustParse # validation
 - https://www.ardanlabs.com/blog/2023/09/implementing-enumerations-in-golang.html
+- https://vladimir.varank.in/notes/2023/09/compile-time-safety-for-enumerations-in-go/ # interface
 
 
 
