@@ -13,6 +13,8 @@
 - https://www.ardanlabs.com/blog/2023/09/implementing-enumerations-in-golang.html
 - https://vladimir.varank.in/notes/2023/09/compile-time-safety-for-enumerations-in-go/ # interface
 
+- # Common # Util # Generic
+- https://github.com/siderolabs/gen
 
 - # Buffer # Template # License # Parse # Regex # IO # File # Header
 - https://github.com/containerd/ltag
