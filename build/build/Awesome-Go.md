@@ -1,4 +1,7 @@
 ```yaml
+- # Proposals # Fellow # Type # Generics
+- https://github.com/golang/go/labels/TypeInference
+
 - # Parallel, Build, Performance, Goroutines, Tasks
 - https://pkg.go.dev/golang.org/x/sync/errgroup
 
@@ -13,6 +16,7 @@
 
 - # OCI # Registry
 - https://github.com/containerd/stargz-snapshotter
+- https://github.com/containerd/nri
 
 - # Profile Guided Optimisation
 - https://theyahya.com/posts/go-pgo/
