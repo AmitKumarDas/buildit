@@ -34,9 +34,10 @@
 - https://hackernoon.com/go-design-patterns-an-introduction-to-builder
 - https://github.com/dagger/dagger/blob/main/internal/mage/sdk/go.go
 
-- # RELEASE # GIT
+- # RELEASE # GIT # os # Exec # Command
 - https://github.com/containerd/release-tool/tree/main
 - https://github.com/siderolabs/git-verify-chain/tree/main
+- https://github.com/siderolabs/conform/blob/main/internal/git/git.go
 
 - # BUILD # DEV ENV
 - https://github.com/dagger/dagger/blob/main/internal/mage/helm.go
