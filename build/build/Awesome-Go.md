@@ -8,9 +8,11 @@
 - https://vladimir.varank.in/notes/2023/09/compile-time-safety-for-enumerations-in-go/ # interface
 
 
-- # BUILD
-- https://github.com/containerd/ltag # License # IO # File # Header
+- # Buffer # Template # License # Parse # Regex # IO # File # Header
+- https://github.com/containerd/ltag
 
+- # OCI # Registry
+- https://github.com/containerd/stargz-snapshotter
 
 - # Profile Guided Optimisation
 - https://theyahya.com/posts/go-pgo/
