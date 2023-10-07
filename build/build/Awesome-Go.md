@@ -2,6 +2,9 @@
 - # Proposals # Fellow # Type # Generics
 - https://github.com/golang/go/labels/TypeInference
 
+- # Kubernetes
+- https://github.com/siderolabs/go-kubernetes
+
 - # Parallel, Build, Performance, Goroutines, Tasks
 - https://pkg.go.dev/golang.org/x/sync/errgroup
 
