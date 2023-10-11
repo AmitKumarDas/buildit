@@ -26,9 +26,13 @@
 - # Profile Guided Optimisation
 - https://theyahya.com/posts/go-pgo/
 
-- # shell # bash
+- # SHELL # BASH # os/exec
 - https://github.com/magefile/mage/tree/master/sh
 - https://github.com/magefile/mage/blob/master/internal/run.go
+- https://github.com/cvilsmeier/sqinn-go # os/exec # stdin # stdout # stderr
+
+- # Go vs CGO
+- https://github.com/cvilsmeier/sqinn-go
 
 - # BUILDER # JOIN
 - https://hackernoon.com/go-design-patterns-an-introduction-to-builder
