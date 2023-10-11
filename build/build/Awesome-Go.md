@@ -7,6 +7,8 @@
 
 - # Proposals # Fellow # Type # Generics
 - https://github.com/golang/go/labels/TypeInference
+- https://go.dev/blog/type-inference
+- https://go.dev/blog/deconstructing-type-parameters
 
 - # Kubernetes
 - https://github.com/siderolabs/go-kubernetes
