@@ -1,4 +1,10 @@
 ```yaml
+- # Date Time
+- https://www.honeybadger.io/blog/complete-guide-to-dates-and-times-in-go/
+
+- # Go Std
+- https://willabides.com/posts/go-slog-handler-part-1/ # slog # functional # Go 1.21
+
 - # Proposals # Fellow # Type # Generics
 - https://github.com/golang/go/labels/TypeInference
 
@@ -7,6 +13,7 @@
 
 - # Parallel, Build, Performance, Goroutines, Tasks
 - https://pkg.go.dev/golang.org/x/sync/errgroup
+- https://shane.ai/posts/threads-and-goroutines/ # vs Rust 
 
 - # ENUM
 - # struct # compile safety # marshal # sentinel # marshal # parse # mustParse # validation
