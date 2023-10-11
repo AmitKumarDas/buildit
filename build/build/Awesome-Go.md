@@ -34,6 +34,9 @@
 - # Go vs CGO
 - https://github.com/cvilsmeier/sqinn-go
 
+- # TESTING # Coverage
+- https://github.com/cvilsmeier/sqinn-go
+
 - # BUILDER # JOIN
 - https://hackernoon.com/go-design-patterns-an-introduction-to-builder
 - https://github.com/dagger/dagger/blob/main/internal/mage/sdk/go.go
