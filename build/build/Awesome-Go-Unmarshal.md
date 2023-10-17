@@ -3,7 +3,7 @@
 - https://abhinavg.net/2021/02/24/flexible-yaml/
 ```
 
-### This is possible
+### Below YAML is possible! Surprising Yet True!
 ```yaml
 users:
   - name: alice 
@@ -75,3 +75,64 @@ func (u *User) UnmarshalYAML(
   return nil
 }
 ```
+
+### Hows above done in gopkg.in/yaml.v3?
+```go
+// Instead of unmarshal function we start to make use of *yaml.Node
+// yaml.Node in turn provides Decode function
+
+type Unmarshaler interface {
+  UnmarshalYAML(value *yaml.Node) error
+}
+```
+
+```go
+// Decode decodes the node and stores its data
+// into the value pointed to by v.
+func (*Node) Decode(interface{}) error
+```
+
+```diff
+ func (u *User) UnmarshalYAML(
+-  unmarshal func(interface{}) error,
++  value *yaml.Node,
+ ) error {
+   var name string
+-  if err := unmarshal(&name); err == nil {
++  if err := value.Decode(&name); err == nil {
+     ...
+   }
+
+   ...
+-  if err := unmarshal((*rawUser)(u)); err != nil {
++  if err := value.Decode((*rawUser)(u)); err != nil {
+     return err
+   }
+```
+
+### How to achieve above in JSON
+```go
+type Unmarshaler interface {
+  UnmarshalJSON([]byte) error
+}
+```
+
+```go
+func (u *User) UnmarshalJSON(data []byte) error {
+  var name string
+  if err := json.Unmarshal(data, &name); err == nil {
+    // {"users": ["carol"]}
+    u.Name = name
+    return nil
+  }
+
+  // {"users": [{"name": "alice", "role": "admin"}]}
+  type rawUser User
+  if err := json.Unmarshal(data, (*rawUser)(u)); err != nil {
+    return err
+  }
+
+  return nil
+}
+```
+
